@@ -1,0 +1,252 @@
+/*
+ * Orasan design tokens: the single source for code.
+ * Mirrors DESIGN.md (semantic token table) and the Figma "Color" / "Dimensions" collections.
+ * Light values live on :root; Dark values under .dark (set on <html>).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Color: background */
+  --color-bg-paper: #f6f4ef;
+  --color-bg-surface: #fcfbf8;
+  --color-bg-sunken: #efece5;
+  --color-bg-raised: #fcfbf8;
+  --color-bg-scrim: rgb(28 27 24 / 0.4);
+
+  /* Color: border */
+  --color-border-rule: #ddd8ce;
+  --color-border-strong: #8f887b;
+
+  /* Color: text */
+  --color-text-ink: #1c1b18;
+  --color-text-muted: #5e5a52;
+  --color-text-faint: #6b665c;
+
+  /* Color: accent (Ledger Green) */
+  --color-accent-default: #1e6b4e;
+  --color-accent-hover: #17573f;
+  --color-accent-tint: #e3efe8;
+  --color-accent-on: #ffffff;
+
+  /* Color: focus, danger */
+  --color-focus: #2b5a8a;
+  --color-danger-default: #a8352a;
+  --color-danger-hover: #8c2a21;
+  --color-danger-on: #ffffff;
+
+  /* Color: status (always paired with a text label) */
+  --color-status-draft-fg: #57534b;
+  --color-status-draft-bg: #ece9e2;
+  --color-status-sent-fg: #2b5a8a;
+  --color-status-sent-bg: #e4ecf5;
+  --color-status-paid-fg: #1e6b4e;
+  --color-status-paid-bg: #e1efe7;
+  --color-status-overdue-fg: #a8352a;
+  --color-status-overdue-bg: #f7e5e1;
+
+  /* Color: inverse (toast) */
+  --color-inverse-bg: #1c1b18;
+  --color-inverse-text: #f6f4ef;
+
+  /* Elevation: only overlays and toasts float */
+  --elevation-overlay: 0 8px 24px rgb(28 27 24 / 0.16);
+  --elevation-toast: 0 4px 12px rgb(28 27 24 / 0.2);
+
+  /* Dimensions */
+  --size-control: 36px;
+  --size-control-touch: 44px;
+  --size-row: 44px;
+  --size-row-touch: 52px;
+  --size-bar: 56px;
+  --size-tabbar: 64px;
+  --size-slideover: 480px;
+  --size-content: 1120px;
+  --border-hairline: 1px;
+  --border-focus: 2px;
+
+  /* Motion (emil-design-eng curves) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dur-press: 160ms;
+  --dur-state: 150ms;
+  --dur-toast: 160ms;
+  --dur-drawer-in: 200ms;
+  --dur-drawer-out: 150ms;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-bg-paper: #151412;
+  --color-bg-surface: #1d1c19;
+  --color-bg-sunken: #11100e;
+  --color-bg-raised: #25231f;
+  --color-bg-scrim: rgb(0 0 0 / 0.6);
+
+  --color-border-rule: #34322d;
+  --color-border-strong: #6e695f;
+
+  --color-text-ink: #edeae3;
+  --color-text-muted: #a9a399;
+  --color-text-faint: #8c867b;
+
+  --color-accent-default: #5dbb91;
+  --color-accent-hover: #74c9a2;
+  --color-accent-tint: #1b2e25;
+  --color-accent-on: #0e1f17;
+
+  --color-focus: #8db4e0;
+  --color-danger-default: #f08a7c;
+  --color-danger-hover: #f5a397;
+  --color-danger-on: #1f0d0a;
+
+  --color-status-draft-fg: #b5afa4;
+  --color-status-draft-bg: #2a2824;
+  --color-status-sent-fg: #8db4e0;
+  --color-status-sent-bg: #1c2633;
+  --color-status-paid-fg: #6cc59c;
+  --color-status-paid-bg: #17291f;
+  --color-status-overdue-fg: #f08a7c;
+  --color-status-overdue-bg: #3a1d19;
+
+  --color-inverse-bg: #edeae3;
+  --color-inverse-text: #151412;
+
+  /* Dark is flat: overlays use raised + strong border instead of a shadow. */
+  --elevation-overlay: 0 0 0 1px var(--color-border-strong);
+  --elevation-toast: 0 0 0 1px var(--color-border-strong);
+}
+
+/*
+ * Tailwind theme: utilities read the variables above, so .dark switches everything.
+ * Default palette, radii and fonts are cleared so only Orasan tokens exist.
+ * Spacing keeps Tailwind's 4px multiplier: p-1=4, p-2=8, p-3=12, p-4=16, p-6=24, p-8=32, p-12=48, p-16=64.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-paper: var(--color-bg-paper);
+  --color-surface: var(--color-bg-surface);
+  --color-sunken: var(--color-bg-sunken);
+  --color-raised: var(--color-bg-raised);
+  --color-scrim: var(--color-bg-scrim);
+  --color-rule: var(--color-border-rule);
+  --color-rule-strong: var(--color-border-strong);
+  --color-ink: var(--color-text-ink);
+  --color-muted: var(--color-text-muted);
+  --color-faint: var(--color-text-faint);
+  --color-accent: var(--color-accent-default);
+  --color-accent-deep: var(--color-accent-hover);
+  --color-tint: var(--color-accent-tint);
+  --color-on-accent: var(--color-accent-on);
+  --color-ring: var(--color-focus);
+  --color-danger: var(--color-danger-default);
+  --color-danger-deep: var(--color-danger-hover);
+  --color-on-danger: var(--color-danger-on);
+  --color-draft: var(--color-status-draft-fg);
+  --color-draft-bg: var(--color-status-draft-bg);
+  --color-sent: var(--color-status-sent-fg);
+  --color-sent-bg: var(--color-status-sent-bg);
+  --color-paid: var(--color-status-paid-fg);
+  --color-paid-bg: var(--color-status-paid-bg);
+  --color-overdue: var(--color-status-overdue-fg);
+  --color-overdue-bg: var(--color-status-overdue-bg);
+  --color-inverse: var(--color-inverse-bg);
+  --color-on-inverse: var(--color-inverse-text);
+
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+
+  --font-*: initial;
+  --font-sans: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-serif: 'IBM Plex Serif', Georgia, serif;
+
+  --shadow-*: initial;
+  --shadow-overlay: var(--elevation-overlay);
+  --shadow-toast: var(--elevation-toast);
+
+  --breakpoint-*: initial;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+}
+
+/* Text styles: one utility per Figma text style. Numbers are tabular wherever they line up. */
+@utility type-statement {
+  font: 600 32px/40px var(--font-sans);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+@utility type-statement-mobile {
+  font: 600 28px/36px var(--font-sans);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+@utility type-timer {
+  font: 500 40px/48px var(--font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+@utility type-timer-compact {
+  font: 500 16px/24px var(--font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+@utility type-headline {
+  font: 600 20px/28px var(--font-sans);
+  letter-spacing: -0.005em;
+}
+@utility type-title {
+  font: 600 16px/24px var(--font-sans);
+}
+@utility type-body {
+  font: 400 14px/20px var(--font-sans);
+}
+@utility type-body-mobile {
+  font: 400 16px/24px var(--font-sans);
+}
+@utility type-figure {
+  font: 500 14px/20px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+@utility type-figure-mobile {
+  font: 500 16px/24px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+@utility type-figure-strong {
+  font: 600 16px/24px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+@utility type-label {
+  font: 500 12px/16px var(--font-sans);
+  letter-spacing: 0.01em;
+}
+@utility type-label-strong {
+  font: 600 12px/16px var(--font-sans);
+  letter-spacing: 0.01em;
+}
+@utility type-button {
+  font: 500 14px/20px var(--font-sans);
+}
+@utility type-column-head {
+  font: 600 11px/16px var(--font-sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@utility type-doc-title {
+  font: 500 28px/36px var(--font-serif);
+}
+@utility type-doc-body {
+  font: 400 14px/22px var(--font-serif);
+  font-variant-numeric: tabular-nums;
+}
+@utility type-doc-figure {
+  font: 500 14px/22px var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}

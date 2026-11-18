@@ -1,0 +1,17 @@
+node_modules
+dist
+.DS_Store
+*.log
+.impeccable/config.local.json
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+.taste-skill/
+
+# Vendored agent skills: reproducible from skills-lock.json
+.agents/
+.opencode/
+.codex/
+.claude/skills/
+.claude/agents/
+.claude/settings.local.json
