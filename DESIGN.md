@@ -112,7 +112,7 @@ components:
 
 **Creative North Star: "The Calm Clinic Desk"**
 
-Orasan looks like a calm, well-kept dashboard: a soft lavender-grey page, white rounded panels that float slightly above it, pastel tints for the numbers that matter, and one dark pill for the main action. The direction came from a reference the user supplied (a health dashboard) and replaced the earlier "paper ledger" look on 18 Nov 2026. That earlier system lives on the `main` branch at commit `14e704f`.
+Orasan looks like a calm, well-kept dashboard: a soft lavender-grey page, white rounded panels that float slightly above it, pastel tints for the numbers that matter, and one dark pill for the main action. The direction came from a reference the user supplied (a health dashboard) and replaced the earlier "paper ledger" look on 18 Nov 2026. That earlier system is tagged `ledger-v1` (commit `14e704f`).
 
 Numbers still lead. The Dashboard opens with three pastel stat cards that answer "how much am I owed?" before anything else: unbilled time, money waiting on sent invoices, and money overdue. Currencies are never added together.
 

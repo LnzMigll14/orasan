@@ -68,7 +68,7 @@ Orasan is built around how Filipino freelancers actually get paid. Each user set
   - Numbers still lead. The answer to "how much am I owed?" is the first thing on the Dashboard.
   - Still ruled out: Inter, Roboto, Arial or system-font defaults; glassmorphism, glows or blurred blobs; emoji; marketing copy inside the product; centered empty states with huge padding. Icons are allowed for navigation, stat cards and actions, from one consistent icon set.
   - On mobile, the desktop sidebar becomes the bottom tab bar with the timer dock above it (priority 1 stays: one tap to start or stop).
-  - The earlier "precise instrument / paper ledger" direction lives on the `main` branch at commit 14e704f.
+  - The earlier "precise instrument / paper ledger" direction is tagged `ledger-v1` (commit 14e704f).
 
 ## Evidence on Hand
 
