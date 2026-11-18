@@ -89,6 +89,18 @@
   flex: none;
 }
 
+/* Status crossfade (StatusSwap). */
+@keyframes orasan-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes orasan-out {
+  to {
+    opacity: 0;
+  }
+}
+
 /* Pressable: instant feedback on press (emil-design-eng). */
 @utility pressable {
   transition:
