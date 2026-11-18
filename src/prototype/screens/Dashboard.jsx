@@ -70,9 +70,15 @@ export function Dashboard() {
         headline="Wala pang singilin. Nothing to bill yet."
         detail="Track time against a client’s project and it will show up here, ready to invoice."
         action={
-          <Button as={Link} to="/timer">
-            Go to timer
-          </Button>
+          state.projects.length ? (
+            <Button as={Link} to="/timer">
+              Go to timer
+            </Button>
+          ) : (
+            <Button as={Link} to="/clients?new=1">
+              Add a client
+            </Button>
+          )
         }
       />
     )

@@ -16,7 +16,7 @@
 
   /* Color: border */
   --color-border-rule: #ddd8ce;
-  --color-border-strong: #8f887b;
+  --color-border-strong: #8a8376;
 
   /* Color: text */
   --color-text-ink: #1c1b18;
@@ -87,11 +87,11 @@
   --color-bg-scrim: rgb(0 0 0 / 0.6);
 
   --color-border-rule: #34322d;
-  --color-border-strong: #6e695f;
+  --color-border-strong: #7f796e;
 
   --color-text-ink: #edeae3;
   --color-text-muted: #a9a399;
-  --color-text-faint: #8c867b;
+  --color-text-faint: #938d82;
 
   --color-accent-default: #5dbb91;
   --color-accent-hover: #74c9a2;

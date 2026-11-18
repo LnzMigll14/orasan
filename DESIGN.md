@@ -7,7 +7,7 @@ colors:
   surface: "#FCFBF8"
   sunken: "#EFECE5"
   rule: "#DDD8CE"
-  rule-strong: "#8F887B"
+  rule-strong: "#8A8376"
   ink: "#1C1B18"
   ink-muted: "#5E5A52"
   ink-faint: "#6B665C"
@@ -33,10 +33,10 @@ colors:
   dark-sunken: "#11100E"
   dark-raised: "#25231F"
   dark-rule: "#34322D"
-  dark-rule-strong: "#6E695F"
+  dark-rule-strong: "#7F796E"
   dark-ink: "#EDEAE3"
   dark-ink-muted: "#A9A399"
-  dark-ink-faint: "#8C867B"
+  dark-ink-faint: "#938D82"
   dark-ledger-green: "#5DBB91"
   dark-ledger-green-deep: "#74C9A2"
   dark-ledger-green-tint: "#1B2E25"
@@ -252,6 +252,8 @@ The palette is two warm neutrals in a range of steps, one green that stands for 
 
 This table is the source of truth for both Figma and code. The Figma file's `Color` collection currently has **Light only**, because the Starter plan allows one mode per collection. When modes become available, add **Dark** as a second mode on the same `Color` collection and alias each token to the Dark value below. The `Primitives` collection already holds every Dark value. In code, define each token as a CSS custom property on `:root` with the Light value, and redefine it under `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`.
 
+**Contrast fix (18 Nov 2026, code audit):** `border/strong` (Light #8F887B → #8A8376, Dark #6E695F → #7F796E) now clears 3:1 on the running-timer tint band, and Dark `text/faint` (#8C867B → #938D82) now clears 4.5:1 on Raised. The Figma `Primitives` still hold the old three values until Figma is unpaused.
+
 | Figma variable | CSS variable | Light | Dark |
 |---|---|---|---|
 | color/bg/paper | `--color-bg-paper` | #F6F4EF | #151412 |
@@ -260,10 +262,10 @@ This table is the source of truth for both Figma and code. The Figma file's `Col
 | color/bg/raised | `--color-bg-raised` | #FCFBF8 | #25231F |
 | color/bg/scrim | `--color-bg-scrim` | #1C1B18 @ 40% | #000000 @ 60% |
 | color/border/rule | `--color-border-rule` | #DDD8CE | #34322D |
-| color/border/strong | `--color-border-strong` | #8F887B | #6E695F |
+| color/border/strong | `--color-border-strong` | #8A8376 | #7F796E |
 | color/text/ink | `--color-text-ink` | #1C1B18 | #EDEAE3 |
 | color/text/muted | `--color-text-muted` | #5E5A52 | #A9A399 |
-| color/text/faint | `--color-text-faint` | #6B665C | #8C867B |
+| color/text/faint | `--color-text-faint` | #6B665C | #938D82 |
 | color/accent/default | `--color-accent-default` | #1E6B4E | #5DBB91 |
 | color/accent/hover | `--color-accent-hover` | #17573F | #74C9A2 |
 | color/accent/tint | `--color-accent-tint` | #E3EFE8 | #1B2E25 |
@@ -291,10 +293,10 @@ This table is the source of truth for both Figma and code. The Figma file's `Col
 - **Surface** (#FCFBF8 / #1D1C19): list bodies, inputs, slide-overs, and the invoice sheet.
 - **Sunken** (#EFECE5 / #11100E): day headers, disabled fills, and table header bands. In dark mode, **Raised** (#25231F) is used for menus and the slide-over so they read above the surface without a shadow.
 - **Rule** (#DDD8CE / #34322D): hairline dividers between rows and sections.
-- **Rule Strong** (#8F887B / #6E695F): input borders and checkbox outlines. These meet 3:1 against the background, as WCAG requires for UI components.
+- **Rule Strong** (#8A8376 / #7F796E): input borders and checkbox outlines. These meet 3:1 against the background, as WCAG requires for UI components.
 - **Ink** (#1C1B18 / #EDEAE3): primary text and figures (15.7:1 / 15.3:1).
 - **Ink Muted** (#5E5A52 / #A9A399): secondary text and metadata (6.2:1 / 6.8:1).
-- **Ink Faint** (#6B665C / #8C867B): placeholders, billed/locked rows and timestamps. It still passes AA at 4.8:1 or better on every surface.
+- **Ink Faint** (#6B665C / #938D82): placeholders, billed/locked rows and timestamps. It still passes AA at 4.8:1 or better on every surface.
 
 ### Status (always shown with a text label)
 | Status | Light fg / bg | Dark fg / bg | Marker |

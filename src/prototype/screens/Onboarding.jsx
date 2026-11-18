@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router'
 import { Button, Icon, Input, Select, Toggle, cn, currencySymbol } from '../../components/ui'
 import { useStore } from '../store'
@@ -50,8 +50,21 @@ export function Onboarding() {
   })
   const [currency, setCurrency] = useState(state.profile.defaultCurrency)
   const [methods, setMethods] = useState(state.methods)
-  const [client, setClient] = useState({ name: '', currency: 'PHP', rate: '', project: '' })
+  // currency: null follows the default currency chosen in step 2 until the user picks one.
+  const [client, setClient] = useState({ name: '', currency: null, rate: '', project: '' })
+  const clientCurrency = client.currency ?? currency
+  const formRef = useRef(null)
   const [errors, setErrors] = useState({})
+
+  // Move focus to the new step's heading so screen readers announce it.
+  useEffect(() => {
+    formRef.current?.querySelector('h1')?.focus()
+    document.title = `Set up Orasan · Step ${step} of 3`
+  }, [step])
+  // After a failed submit, focus the first field with an error.
+  useEffect(() => {
+    if (Object.keys(errors).length) formRef.current?.querySelector('[aria-invalid="true"], [data-error]')?.focus()
+  }, [errors])
 
   if (![1, 2, 3].includes(step)) return <Navigate to="/onboarding/1" replace />
 
@@ -82,6 +95,15 @@ export function Onboarding() {
         setErrors({ methods: 'Turn on at least one way to get paid.' })
         return
       }
+      const missing = methods.filter((m) => m.enabled && m.fields.some((f) => !f.value.trim()))
+      if (missing.length) {
+        setErrors({ methods: `Fill in the details for ${missing.map((m) => m.label).join(', ')}, or turn ${missing.length > 1 ? 'them' : 'it'} off.`, missing: missing.map((m) => m.id) })
+        return
+      }
+      if (!methods.some((m) => m.enabled && m.currency === currency)) {
+        setErrors({ methods: `Turn on a ${currency} method, so ${currency} invoices show how to pay.` })
+        return
+      }
       setErrors({})
       navigate('/onboarding/3')
     } else {
@@ -96,7 +118,7 @@ export function Onboarding() {
         type: 'onboarding/complete',
         profile: { ...profile, defaultCurrency: currency },
         methods,
-        client: { id: clientId, name: client.name.trim(), contact: '', email: '', currency: client.currency, rate: Number(client.rate) },
+        client: { id: clientId, name: client.name.trim(), contact: '', email: '', currency: clientCurrency, rate: Number(client.rate) },
         project: { id: newId('p'), clientId, name: client.project.trim(), rate: null },
       })
       navigate('/timer')
@@ -109,13 +131,13 @@ export function Onboarding() {
         <span className="type-title text-ink">Orasan</span>
       </header>
       <main className="px-4 pt-6 pb-16 md:px-8 md:pt-10">
-        <form onSubmit={next} noValidate className="flex max-w-140 flex-col gap-8">
+        <form ref={formRef} onSubmit={next} noValidate className="flex max-w-140 flex-col gap-8">
           <Stepper step={step} />
 
           {step === 1 ? (
             <section className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h1 className="m-0 type-headline text-ink">Your details</h1>
+                <h1 tabIndex={-1} className="m-0 type-headline text-ink outline-none">Your details</h1>
                 <p className="type-body text-muted">These print on every invoice you send.</p>
               </div>
               <Input label="Your name" value={profile.name} error={errors.name} autoComplete="name" onChange={(e) => setProfile({ ...profile, name: e.target.value })} />
@@ -128,7 +150,7 @@ export function Onboarding() {
           {step === 2 ? (
             <section className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h1 className="m-0 type-headline text-ink">How you get paid</h1>
+                <h1 tabIndex={-1} className="m-0 type-headline text-ink outline-none">How you get paid</h1>
                 <p className="type-body text-muted">Invoices show only the methods that match their currency. You can change these later in Settings.</p>
               </div>
               <Select label="Default currency" help="Used for new clients." value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -150,14 +172,18 @@ export function Onboarding() {
                       {m.enabled ? (
                         <fieldset aria-label={`${m.label} details`} className="m-0 grid gap-3 border-0 p-0 pb-4 md:grid-cols-2">
                           {m.fields.map((f) => (
-                            <Input key={f.key} label={f.label} value={f.value} onChange={(e) => setMethod(m.id, { field: f.key, value: e.target.value })} />
+                            <Input key={f.key} label={f.label} value={f.value} error={errors.missing?.includes(m.id) && !f.value.trim() ? 'Required while this method is on.' : null} onChange={(e) => setMethod(m.id, { field: f.key, value: e.target.value })} />
                           ))}
                         </fieldset>
                       ) : null}
                     </div>
                   ))}
                 </div>
-                {errors.methods ? <p className="mt-2 type-label text-danger">Error: {errors.methods}</p> : null}
+                {errors.methods ? (
+                  <p tabIndex={-1} data-error className="mt-2 type-label text-danger outline-none" role="alert">
+                    Error: {errors.methods}
+                  </p>
+                ) : null}
               </fieldset>
             </section>
           ) : null}
@@ -165,16 +191,16 @@ export function Onboarding() {
           {step === 3 ? (
             <section className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h1 className="m-0 type-headline text-ink">First client and rate</h1>
+                <h1 tabIndex={-1} className="m-0 type-headline text-ink outline-none">First client and rate</h1>
                 <p className="type-body text-muted">Add one client now. You can add more from Clients.</p>
               </div>
-              <Input label="Client name" value={client.name} error={errors.name} placeholder="Reyes Studio" onChange={(e) => setClient({ ...client, name: e.target.value })} />
+              <Input label="Client name" value={client.name} error={errors.name} placeholder="Client or company name" onChange={(e) => setClient({ ...client, name: e.target.value })} />
               <div className="grid gap-4 md:grid-cols-2">
-                <Select label="Currency" value={client.currency} onChange={(e) => setClient({ ...client, currency: e.target.value })}>
+                <Select label="Currency" value={clientCurrency} onChange={(e) => setClient({ ...client, currency: e.target.value })}>
                   <option value="PHP">PHP — Philippine peso</option>
                   <option value="USD">USD — US dollar</option>
                 </Select>
-                <Input label="Hourly rate" currency={currencySymbol(client.currency)} value={client.rate} error={errors.rate} placeholder="0.00" onChange={(e) => setClient({ ...client, rate: e.target.value })} />
+                <Input label="Hourly rate" currency={currencySymbol(clientCurrency)} value={client.rate} error={errors.rate} placeholder="0.00" onChange={(e) => setClient({ ...client, rate: e.target.value })} />
               </div>
               <Input label="First project" help="Time is tracked against a project." value={client.project} error={errors.project} placeholder="Website build" onChange={(e) => setClient({ ...client, project: e.target.value })} />
             </section>

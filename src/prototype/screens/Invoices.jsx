@@ -57,9 +57,18 @@ export function StatusSwap({ status }) {
     return () => clearTimeout(t)
   }, [status, shown])
   return (
-    <span className="inline-grid self-start" aria-live="polite">
-      {prev ? <Badge status={prev} className="col-start-1 row-start-1 animate-[orasan-out_150ms_var(--ease-out)_forwards]" /> : null}
-      <Badge key={shown} status={shown} className={cn('col-start-1 row-start-1', prev && 'animate-[orasan-in_150ms_var(--ease-out)]')} />
+    <span className="inline-grid self-start">
+      <span className="sr-only" aria-live="polite">
+        Status: {shown}
+      </span>
+      {prev ? (
+        <span aria-hidden="true" className="col-start-1 row-start-1 animate-[orasan-out_150ms_var(--ease-out)_forwards]">
+          <Badge status={prev} />
+        </span>
+      ) : null}
+      <span aria-hidden="true" key={shown} className={cn('col-start-1 row-start-1', prev && 'animate-[orasan-in_150ms_var(--ease-out)]')}>
+        <Badge status={shown} />
+      </span>
     </span>
   )
 }
@@ -240,7 +249,7 @@ export function InvoiceBuilder() {
         <Button kind="secondary" disabled={!chosen.length} onClick={() => create('draft')}>
           Save draft
         </Button>
-        <Button disabled={!chosen.length} onClick={() => create('sent')}>
+        <Button disabled={!chosen.length || noMethods} onClick={() => create('sent')}>
           Send invoice
         </Button>
       </div>
@@ -277,7 +286,7 @@ export function InvoiceBuilder() {
         ))}
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)]">
         <div className={cn('flex flex-col gap-6', tab !== 'entries' && 'hidden lg:flex')}>
           {projects.map((p) => {
             const list = unbilled.filter((e) => e.projectId === p.id)
@@ -341,16 +350,18 @@ export function InvoiceSent() {
 
   const copy = async (text, what) => {
     const ok = await copyText(text)
-    toast(ok ? `${what} copied.` : `Could not copy. Select the text and copy it instead.`)
+    toast(ok ? `${what} copied. Paste it into your chat with ${client.name}.` : `Could not copy. Select the text and copy it instead.`)
   }
 
   return (
     <div className="flex max-w-170 flex-col gap-8">
       <div className="flex flex-col gap-3">
         <StatusSwap status={status} />
-        <h1 className="m-0 type-headline text-ink">Naipadala na! Share {invoice.number} with {client.name}.</h1>
+        <h1 className="m-0 type-headline text-ink">
+          {invoice.number} is ready. Copy the link and send it to {client.contact?.split(' ')[0] || client.name}.
+        </h1>
         <p className="type-body text-muted">
-          {formatMoney(invoiceTotal(state, invoice), client.currency)} · due {formatDate(invoice.due)}. Your client opens the link to see the invoice and how to pay.
+          {formatMoney(invoiceTotal(state, invoice), client.currency)} · due {formatDate(invoice.due)}. Orasan doesn’t send anything for you: paste the link or the message into your chat with {client.name}. They open it to see the invoice and how to pay.
         </p>
       </div>
 
@@ -537,7 +548,7 @@ export function InvoiceDetail() {
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <InvoiceSheet invoice={view} statusSlot={<StatusSwap status={status} />} />
         <aside className="flex flex-col gap-8">
           <section aria-labelledby="hist-h">

@@ -1,6 +1,6 @@
-import { DayHeader, EmptyState, EntryRow, PageHeader, TimerControl, formatDuration } from '../../components/ui'
+import { DayHeader, EmptyState, EntryRow, PageHeader, TimerControl, formatHours } from '../../components/ui'
 import { entryRowProps, entrySeconds, groupByDay } from '../model'
-import { useTimerProps } from '../ProtoShell'
+import { useHeroRef, useTimerProps } from '../ProtoShell'
 import { useStore } from '../store'
 import { useTimer } from '../useTimer'
 import { TODAY } from '../mockData'
@@ -9,6 +9,7 @@ export function Timer() {
   const { state } = useStore()
   const timer = useTimerProps()
   const { resume } = useTimer()
+  const heroRef = useHeroRef()
   const days = groupByDay(state, state.entries)
 
   const weekStart = new Date(TODAY)
@@ -21,12 +22,14 @@ export function Timer() {
       <PageHeader title="Timer" flush>
         {state.entries.length ? (
           <span className="type-figure text-muted">
-            This week <span className="text-ink">{formatDuration(week)}</span>
+            This week <span className="text-ink">{formatHours(week)}</span>
           </span>
         ) : null}
       </PageHeader>
 
-      <TimerControl layout="hero" {...timer} />
+      <div ref={heroRef}>
+        <TimerControl layout="hero" {...timer} />
+      </div>
 
       {days.length ? (
         <div className="flex flex-col gap-6">
@@ -42,7 +45,11 @@ export function Timer() {
       ) : (
         <EmptyState
           headline="Wala pang oras dito."
-          detail="Pick a project and start the timer above. Your entries will be listed here, grouped by day."
+          detail={
+            state.projects.length
+              ? 'Pick a project and start the timer above. Your entries will be listed here, grouped by day.'
+              : 'Your entries will be listed here, grouped by day.'
+          }
         />
       )}
     </div>

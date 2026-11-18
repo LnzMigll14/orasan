@@ -52,9 +52,9 @@ export function InvoiceLineItem({ head = false, description, period, hours, rate
 
 function Meta({ label, children, className }) {
   return (
-    <div className={cn('flex flex-col gap-0.5', className)}>
+    <div className={cn('flex min-w-0 flex-col gap-0.5', className)}>
       <dt className="type-column-head text-muted">{label}</dt>
-      <dd className="m-0 type-doc-body text-ink">{children}</dd>
+      <dd className="m-0 type-doc-body text-ink [overflow-wrap:anywhere]">{children}</dd>
     </div>
   )
 }
@@ -64,7 +64,9 @@ function Meta({ label, children, className }) {
  * Everything here is client-facing, so it stays in English.
  * `onCopy(value, label)` shows a copy button beside each payment detail (public view).
  */
-export function InvoiceSheet({ invoice, onCopy, className, statusSlot }) {
+export function InvoiceSheet({ invoice, onCopy, className, statusSlot, headingLevel = 2 }) {
+  const Title = `h${headingLevel}`
+  const Sub = `h${headingLevel + 1}`
   const { number, issued, due, from, to, lines, subtotal, total, currencyName, methods = [], note, amountLabel = 'Amount due' } = invoice
   return (
     <div className={cn('@container', className)}>
@@ -77,7 +79,7 @@ export function InvoiceSheet({ invoice, onCopy, className, statusSlot }) {
           {from.tin ? <p className="type-doc-body text-muted">TIN {from.tin}</p> : null}
         </div>
         <div className="flex flex-col items-start gap-1 @md:items-end">
-          <h1 className="m-0 type-doc-title text-ink">Invoice {number}</h1>
+          <Title className="m-0 type-doc-title text-ink">Invoice {number}</Title>
           {statusSlot}
         </div>
       </header>
@@ -114,7 +116,7 @@ export function InvoiceSheet({ invoice, onCopy, className, statusSlot }) {
 
       {methods.length ? (
         <section className="mt-10 border-t border-rule pt-6" aria-label="How to pay">
-          <h2 className="m-0 type-title text-ink">How to pay</h2>
+          <Sub className="m-0 type-title text-ink">How to pay</Sub>
           <div className="mt-4 grid gap-6 @xl:grid-cols-2">
             {methods.map((m) => (
               <div key={m.id} className="flex flex-col">

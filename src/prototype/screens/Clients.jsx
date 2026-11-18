@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import {
   Badge,
   Button,
@@ -85,13 +85,18 @@ export function AddClient({ open, onClose }) {
 
 export function Clients() {
   const { state } = useStore()
-  const [adding, setAdding] = useState(false)
+  const [params, setParams] = useSearchParams()
+  const [adding, setAddingState] = useState(params.get('new') === '1')
+  const setAdding = (v) => {
+    setAddingState(v)
+    if (!v && params.get('new')) setParams({}, { replace: true })
+  }
   const unbilled = unbilledByClient(state)
 
   return (
     <>
       <PageHeader title="Clients">
-        <Button onClick={() => setAdding(true)}>Add client</Button>
+        {state.clients.length ? <Button onClick={() => setAdding(true)}>Add client</Button> : null}
       </PageHeader>
       {state.clients.length ? (
         <div>
@@ -222,7 +227,7 @@ export function ClientDetail() {
           <div className="mt-2 flex flex-col gap-4">
             {groupByDay(state, unbilled).map((d) => (
               <div key={d.key}>
-                <DayHeader label={d.label} total={d.total} />
+                <DayHeader label={d.label} total={d.total} level={3} />
                 {d.entries.map((e) => (
                   <EntryRow key={e.id} {...entryRowProps(state, e)} client={null} onResume={() => resume(e)} />
                 ))}

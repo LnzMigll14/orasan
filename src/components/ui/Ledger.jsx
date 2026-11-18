@@ -4,10 +4,11 @@ import { Icon } from './Icon'
 import { cn } from './cn'
 
 /** Sunken band that groups a day of entries. Total is right-aligned, tabular. */
-export function DayHeader({ label, total, className }) {
+export function DayHeader({ label, total, level = 2, className }) {
+  const H = `h${level}`
   return (
     <div className={cn('flex h-9 items-center justify-between bg-sunken px-4', className)}>
-      <h3 className="type-label-strong text-ink">{label}</h3>
+      <H className="m-0 type-label-strong text-ink">{label}</H>
       <span className="type-figure text-ink">
         <span className="sr-only">Total </span>
         {total}

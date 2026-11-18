@@ -17,6 +17,10 @@ export function PublicInvoice() {
   useEffect(() => {
     document.documentElement.style.setProperty('--toast-offset', '16px')
   }, [])
+  useEffect(() => {
+    // Link previews in chat apps show this title.
+    if (invoice) document.title = `Invoice ${invoice.number} from ${state.profile.business || state.profile.name}`
+  }, [invoice, state.profile])
 
   if (!invoice) {
     return (
@@ -62,7 +66,8 @@ export function PublicInvoice() {
         <InvoiceSheet
           invoice={invoiceView(state, invoice)}
           onCopy={status === 'paid' ? undefined : copy}
-          statusSlot={status === 'draft' ? null : <Badge status={status} />}
+          statusSlot={status === 'overdue' || status === 'paid' ? <Badge status={status} /> : null}
+          headingLevel={1}
         />
         <p className="type-label text-faint">Sent with Orasan</p>
       </div>

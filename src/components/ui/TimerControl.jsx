@@ -107,11 +107,25 @@ export function TimerControl({
   onDescriptionChange,
   onStart,
   onStop,
+  emptyAction,
   className,
 }) {
   const descId = useId()
   const band = 'transition-colors duration-(--dur-state) ease-(--ease-out)'
   const noProject = !projectId
+  // No projects yet: say why the timer can't start and offer the way forward.
+  if (!running && projects.length === 0 && emptyAction) {
+    const hint = <span className="min-w-0 flex-1 type-label text-muted">Add a client to start tracking.</span>
+    if (layout === 'bar') return <div className={cn('flex h-11 w-105 flex-none items-center justify-end gap-3', className)}>{hint}{emptyAction}</div>
+    if (layout === 'dock') return <div className={cn('flex h-(--size-bar) items-center gap-3 border-t border-rule bg-surface px-4', className)}>{hint}{emptyAction}</div>
+    return (
+      <section aria-label="Timer" className={cn('flex flex-col items-start gap-3 rounded-md border border-rule bg-surface p-4 md:p-6', className)}>
+        <span className="type-timer text-faint" aria-hidden="true">00:00:00</span>
+        <p className="type-body text-muted">Time is tracked against a client’s project. Add one to start the timer.</p>
+        {emptyAction}
+      </section>
+    )
+  }
 
   if (layout === 'bar') {
     return (
