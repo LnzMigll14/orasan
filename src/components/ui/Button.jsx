@@ -12,6 +12,8 @@ const KIND = {
   secondary: 'bg-surface text-ink border border-rule-strong hover-fine:bg-sunken',
   ghost: 'bg-transparent text-ink hover-fine:bg-sunken',
   danger: 'bg-danger text-on-danger hover-fine:bg-danger-deep',
+  // Quiet destructive action next to a primary (e.g. Delete entry in a footer).
+  'danger-ghost': 'bg-transparent text-danger hover-fine:bg-sunken',
 }
 const SIZE = {
   auto: 'h-(--size-control-touch) md:h-(--size-control)',
@@ -32,11 +34,11 @@ export const Button = forwardRef(function Button(
       aria-disabled={!isButton && disabled ? true : undefined}
       className={cn(
         'pressable inline-flex items-center justify-center gap-2 rounded-sm whitespace-nowrap type-button no-underline select-none',
-        kind === 'ghost' ? 'px-3' : 'px-4',
+        kind === 'ghost' || kind === 'danger-ghost' ? 'px-3' : 'px-4',
         SIZE[size],
         block && 'w-full',
         disabled
-          ? cn('cursor-not-allowed text-faint', kind === 'ghost' ? 'bg-transparent' : 'bg-sunken')
+          ? cn('cursor-not-allowed text-faint', kind === 'ghost' || kind === 'danger-ghost' ? 'bg-transparent' : 'bg-sunken')
           : cn('cursor-pointer', KIND[kind]),
         className,
       )}

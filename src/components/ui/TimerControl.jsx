@@ -8,11 +8,11 @@ import { formatClock } from './format'
  * Start and Stop share one grid cell, so the timer toggles in place with one tap.
  * The inactive button fades out (150ms) and is inert, never just hidden by color.
  */
-function StartStop({ running, onStart, onStop, startLabel, stopLabel, size, startDisabled }) {
+function StartStop({ running, onStart, onStop, startLabel, stopLabel, size, startDisabled, startKind = 'primary' }) {
   return (
     <span className="grid flex-none">
       <Button
-        kind="primary"
+        kind={startKind}
         size={size}
         onClick={onStart}
         disabled={startDisabled}
@@ -154,6 +154,7 @@ export function TimerControl({
           stopLabel="Stop timer"
           size="compact"
           startDisabled={noProject}
+          startKind="secondary"
         />
       </div>
     )
@@ -188,6 +189,7 @@ export function TimerControl({
           stopLabel="Stop"
           size="touch"
           startDisabled={noProject}
+          startKind="secondary"
         />
       </div>
     )

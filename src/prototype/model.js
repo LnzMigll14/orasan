@@ -169,7 +169,7 @@ export function groupByDay(state, entries) {
       d.key === TODAY.toDateString()
         ? `Today, ${d.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
         : formatDay(d.date),
-    total: formatDuration(d.entries.reduce((s, e) => s + entrySeconds(state, e), 0)),
+    total: formatHours(d.entries.reduce((s, e) => s + entrySeconds(state, e), 0)),
   }))
 }
 

@@ -19,6 +19,7 @@ import {
 } from '../../components/ui'
 import { byId, entryRowProps, entrySeconds, groupByDay, invoiceStatus, invoiceTotal, projectRate, unbilledByClient } from '../model'
 import { useStore } from '../store'
+import { EditEntry } from '../EditEntry'
 import { useTimer } from '../useTimer'
 
 function outstanding(state, clientId) {
@@ -157,6 +158,7 @@ export function ClientDetail() {
   const navigate = useNavigate()
   const { state } = useStore()
   const { resume } = useTimer()
+  const [editing, setEditing] = useState(null)
   const client = byId(state.clients, id)
   if (!client) {
     return (
@@ -229,7 +231,7 @@ export function ClientDetail() {
               <div key={d.key}>
                 <DayHeader label={d.label} total={d.total} level={3} />
                 {d.entries.map((e) => (
-                  <EntryRow key={e.id} {...entryRowProps(state, e)} client={null} onResume={() => resume(e)} />
+                  <EntryRow key={e.id} {...entryRowProps(state, e)} client={null} onResume={() => resume(e)} onEdit={() => setEditing(e)} />
                 ))}
               </div>
             ))}
@@ -257,6 +259,7 @@ export function ClientDetail() {
           <p className="py-4 type-body text-muted">No invoices yet.</p>
         )}
       </section>
+      <EditEntry entry={editing} onClose={() => setEditing(null)} />
     </div>
   )
 }

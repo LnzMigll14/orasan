@@ -101,13 +101,13 @@ export function Checkbox({ className, ...rest }) {
     <span className={cn('relative inline-flex size-4 flex-none', className)}>
       <input
         type="checkbox"
-        className="peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-xs border border-rule-strong bg-surface checked:border-accent checked:bg-accent"
+        className="peer absolute inset-0 m-0 cursor-pointer appearance-none rounded-xs border border-rule-strong bg-surface checked:border-ink checked:bg-ink"
         {...rest}
       />
       <Icon
         name="check"
         size={14}
-        className="pointer-events-none absolute top-px left-px text-on-accent opacity-0 peer-checked:opacity-100"
+        className="pointer-events-none absolute top-px left-px text-paper opacity-0 peer-checked:opacity-100"
       />
     </span>
   )

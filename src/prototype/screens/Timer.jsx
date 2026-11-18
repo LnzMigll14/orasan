@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { DayHeader, EmptyState, EntryRow, PageHeader, TimerControl, formatHours } from '../../components/ui'
 import { entryRowProps, entrySeconds, groupByDay } from '../model'
 import { useHeroRef, useTimerProps } from '../ProtoShell'
 import { useStore } from '../store'
+import { EditEntry } from '../EditEntry'
 import { useTimer } from '../useTimer'
 import { TODAY } from '../mockData'
 
@@ -10,6 +12,7 @@ export function Timer() {
   const timer = useTimerProps()
   const { resume } = useTimer()
   const heroRef = useHeroRef()
+  const [editing, setEditing] = useState(null)
   const days = groupByDay(state, state.entries)
 
   const weekStart = new Date(TODAY)
@@ -37,7 +40,7 @@ export function Timer() {
             <section key={d.key} aria-label={d.label}>
               <DayHeader label={d.label} total={d.total} />
               {d.entries.map((e) => (
-                <EntryRow key={e.id} {...entryRowProps(state, e)} onResume={() => resume(e)} />
+                <EntryRow key={e.id} {...entryRowProps(state, e)} onResume={() => resume(e)} onEdit={() => setEditing(e)} />
               ))}
             </section>
           ))}
@@ -52,6 +55,7 @@ export function Timer() {
           }
         />
       )}
+      <EditEntry entry={editing} onClose={() => setEditing(null)} />
     </div>
   )
 }

@@ -422,7 +422,10 @@ function MarkPaid({ open, onClose, invoice }) {
       return
     }
     dispatch({ type: 'invoice/paid', id: invoice.id, payment: { method, reference: reference.trim(), date: new Date(`${date}T09:00:00`) } })
-    toast(`Bayad na! ${invoice.number} marked as paid.`)
+    toast(`Bayad na! ${invoice.number} marked as paid.`, {
+      action: { label: 'Undo', onClick: () => dispatch({ type: 'invoice/unpaid', id: invoice.id }) },
+    })
+    setReference('')
     onClose()
   }
   return (
@@ -538,6 +541,17 @@ export function InvoiceDetail() {
                   Mark as paid
                 </Button>
               </>
+            ) : null}
+            {status === 'paid' ? (
+              <Button
+                kind="ghost"
+                onClick={() => {
+                  dispatch({ type: 'invoice/unpaid', id: invoice.id })
+                  toast(`${invoice.number} marked as unpaid. The payment record was removed.`)
+                }}
+              >
+                Mark as unpaid
+              </Button>
             ) : null}
             {invoice.status !== 'draft' ? (
               <Button as={Link} to={`/i/${invoice.token}`} kind="ghost">

@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { Badge, Button, EmptyState, SectionHead, formatDate, formatHours, formatMoney } from '../../components/ui'
+import { Badge, Button, EmptyState, Icon, SectionHead, formatDate, formatHours, formatMoney } from '../../components/ui'
 import { daysLate, invoiceClient, invoiceStatus, invoiceTotal, unbilledByClient, unbilledByCurrency } from '../model'
 import { useStore } from '../store'
 
@@ -41,21 +41,32 @@ function Outstanding({ state }) {
     if (invoiceStatus(i) === 'overdue') row.overdue += invoiceTotal(state, i)
     byCur.set(cur, row)
   }
+  const overdue = open.filter((i) => invoiceStatus(i) === 'overdue')
+  const rows = [...byCur.entries()]
   return (
-    <p className="mt-3 type-body text-muted">
-      {[...byCur.entries()].map(([cur, r], idx) => (
-        <span key={cur}>
-          {idx ? ' ' : ''}
-          {formatMoney(r.total, cur)} is waiting on {r.count} sent {r.count === 1 ? 'invoice' : 'invoices'}
-          {r.overdue ? (
-            <>
-              , <span className="text-overdue">{formatMoney(r.overdue, cur)} of it overdue</span>
-            </>
-          ) : null}
-          .
-        </span>
-      ))}
-    </p>
+    <div className="mt-4 flex flex-col gap-1">
+      {overdue.length ? (
+        <p className="flex flex-wrap items-center gap-x-2 type-title text-ink">
+          <Icon name="square-filled" size={12} className="text-overdue" />
+          {rows
+            .filter(([, r]) => r.overdue)
+            .map(([cur, r]) => formatMoney(r.overdue, cur, { cents: false }))
+            .join(' and ')}{' '}
+          <span className="text-overdue">
+            overdue from {overdue.length === 1 ? invoiceClient(state, overdue[0]).name : `${overdue.length} invoices`}
+          </span>
+        </p>
+      ) : null}
+      <p className="type-body text-muted">
+        {rows.map(([cur, r], idx) => (
+          <span key={cur}>
+            {idx ? ' ' : ''}
+            {formatMoney(r.total, cur)} is waiting on {r.count} sent {r.count === 1 ? 'invoice' : 'invoices'}
+            {r.overdue ? ', overdue included' : ''}.
+          </span>
+        ))}
+      </p>
+    </div>
   )
 }
 
@@ -110,7 +121,7 @@ export function Dashboard() {
                   </span>
                   <span className="flex flex-col items-end gap-0.5">
                     <span className="type-figure-mobile text-ink md:type-figure">{formatMoney(u.amount, u.client.currency)}</span>
-                    <span className="type-label-strong text-accent md:hidden">Create invoice</span>
+                    <span className="type-label-strong text-ink underline underline-offset-3 md:hidden">Create invoice</span>
                   </span>
                   <span
                     aria-hidden="true"

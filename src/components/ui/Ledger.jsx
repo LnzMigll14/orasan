@@ -35,6 +35,7 @@ export function EntryRow({
   checked = false,
   onCheckedChange,
   onResume,
+  onEdit,
   showMeta = true,
   className,
 }) {
@@ -58,7 +59,21 @@ export function EntryRow({
       ) : null}
 
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className={cn('truncate type-body-mobile md:type-body', ink)}>{description}</span>
+        {onEdit && !billed && !selectable ? (
+          <button
+            type="button"
+            onClick={onEdit}
+            aria-label={`Edit ${description}`}
+            className={cn(
+              '-my-2.5 cursor-pointer truncate py-2.5 text-left type-body-mobile underline-offset-3 hover-fine:underline md:my-0 md:py-0 md:type-body',
+              ink,
+            )}
+          >
+            {description}
+          </button>
+        ) : (
+          <span className={cn('truncate type-body-mobile md:type-body', ink)}>{description}</span>
+        )}
         <span className={cn('flex min-w-0 items-center gap-1 type-label md:hidden', muted)}>
           {billed ? <Icon name="lock" size={12} /> : null}
           <span className="truncate">

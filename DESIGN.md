@@ -309,7 +309,7 @@ This table is the source of truth for both Figma and code. The Figma file's `Col
 In both modes, every pair of label text on its badge background is at least 5.4:1. **Danger** reuses the overdue red (#A8352A / #F08A7C) for destructive buttons. **Focus** (#2B5A8A / #8DB4E0) is a 2px ring with a 2px offset. It is kept separate from the green, so the focus ring is never mistaken for a selection.
 
 ### Named Rules
-**The One Green Rule.** Ledger Green appears on at most one primary action per view, plus the running timer. If two things on a screen are green, one of them is wrong.
+**The One Green Rule.** Ledger Green appears on at most one primary action per view, plus the running timer. If two things on a screen are green, one of them is wrong. The *idle* timer in the top bar and mobile dock is not "the running timer": its Start is a secondary button, so the page's own money action keeps the green. Only the Timer screen's large timer uses a green Start. Checked checkboxes are ink, not green.
 
 **The Label Rule.** Status color always comes with its word and its marker. A badge without text is a bug.
 
@@ -337,7 +337,7 @@ In both modes, every pair of label text on its badge background is at least 5.4:
 ### Named Rules
 **The Tabular Rule.** Every number that can change or sit in a column uses `tnum`: amounts, hours, dates in rows, invoice numbers. Figures align to the right, and decimal points line up.
 
-**The Format Rule.** Amounts are written `₱48,200.00` or `$1,250.00`, with the symbol first and no space. The Dashboard statement may drop centavos. Durations are written `2:45` in rows and `02:45:12` on the running clock. Totals are written `38.5 h`.
+**The Format Rule.** Amounts are written `₱48,200.00` or `$1,250.00`, with the symbol first and no space. The Dashboard statement may drop centavos. Durations are written `2:45` in rows and `02:45:12` on the running clock. Totals (day, week, project, client, builder summary) are written `38.5 h`. The one exception is the invoice document's Hours column, a billing quantity, written `18.50`.
 
 ## Layout
 
@@ -394,7 +394,7 @@ Dark mode uses Raised plus a Rule Strong border instead of a shadow.
   - Select uses a chevron, which is the only icon in the component.
 - **Badge (status).** A 20px-high status badge holding the marker glyph and the status word in sentence case ("Overdue"). It is never shown as a dot alone.
 - **Timer control.**
-  - *Idle:* a project select and a primary "Start timer" button.
+  - *Idle:* a project select and a "Start timer" button: secondary in the top bar and dock, primary only in the Timer screen's large timer.
   - *Running:* a Ledger Green Tint band with a pulsing 8px green dot, the project name, a Mono clock and a secondary "Stop" button.
   - Start and Stop occupy the same position, so they can be toggled with one tap without moving.
 - **Entry row.**

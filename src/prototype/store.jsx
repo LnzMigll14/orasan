@@ -136,6 +136,13 @@ function reducer(state, a) {
         ...state,
         invoices: state.invoices.map((i) => (i.id === a.id ? { ...i, status: 'sent', issued: new Date(TODAY) } : i)),
       }
+    case 'invoice/unpaid':
+      return {
+        ...state,
+        invoices: state.invoices.map((i) => (i.id === a.id ? { ...i, status: 'sent', payment: null } : i)),
+      }
+    case 'entry/update':
+      return { ...state, entries: state.entries.map((e) => (e.id === a.id ? { ...e, ...a.patch } : e)) }
     case 'invoice/paid':
       return {
         ...state,
