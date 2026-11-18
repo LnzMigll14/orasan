@@ -60,8 +60,15 @@ Orasan is built around how Filipino freelancers actually get paid. Each user set
 - **Everything a client sees is in English.**
 - **No marketing copy inside the product.**
 - **Visual constraints the user made binding** (DESIGN.md turns these into specifics):
-  - The product should feel like a precise instrument: a good stopwatch crossed with a paper ledger. Quiet, dense and confident. Numbers are the hero, never decoration.
-  - Do not use any of these: a generic SaaS dashboard (sidebar plus a row of stat cards plus a chart); Inter, Roboto, Arial or system-font defaults; purple or blue gradients, glassmorphism, glows or blurred blobs; rounded cards with drop shadows everywhere; decorative icons or emoji; centered empty states with huge padding.
+  - **Direction (changed 18 Nov 2026 by the user):** a calm, soft dashboard, modelled on a health-dashboard reference the user supplied. They asked to "restyle Orasan like this" and named four things they like:
+    - the chart: bars with values on them, today highlighted, a dashed reference line;
+    - color and softness: a lavender-grey background, white rounded panels, pastel tints, light shadows;
+    - layout and nav: a desktop sidebar with grouped, icon-labelled sections, a greeting header, one dark call to action;
+    - lists and tables: people rows with avatars and quick actions, tables with progress rings and status chips.
+  - Numbers still lead. The answer to "how much am I owed?" is the first thing on the Dashboard.
+  - Still ruled out: Inter, Roboto, Arial or system-font defaults; glassmorphism, glows or blurred blobs; emoji; marketing copy inside the product; centered empty states with huge padding. Icons are allowed for navigation, stat cards and actions, from one consistent icon set.
+  - On mobile, the desktop sidebar becomes the bottom tab bar with the timer dock above it (priority 1 stays: one tap to start or stop).
+  - The earlier "precise instrument / paper ledger" direction lives on the `main` branch at commit 14e704f.
 
 ## Evidence on Hand
 

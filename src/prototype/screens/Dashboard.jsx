@@ -1,176 +1,258 @@
 import { Link } from 'react-router'
-import { Badge, Button, EmptyState, Icon, SectionHead, formatDate, formatHours, formatMoney } from '../../components/ui'
-import { daysLate, invoiceClient, invoiceStatus, invoiceTotal, unbilledByClient, unbilledByCurrency } from '../model'
+import {
+  Avatar,
+  Badge,
+  BarChart,
+  Button,
+  Card,
+  CardHead,
+  EmptyState,
+  Icon,
+  ProgressRing,
+  StatCard,
+  formatDate,
+  formatHours,
+  formatMoney,
+} from '../../components/ui'
+import { TODAY } from '../mockData'
+import { daysLate, entrySeconds, invoiceClient, invoiceStatus, invoiceTotal, unbilledByClient, unbilledByCurrency } from '../model'
 import { useStore } from '../store'
 
-/** "₱47,850 unbilled across 2 clients and $210 from Northwind Remote LLC" — one currency at a time. */
-function Statement({ state }) {
-  const groups = unbilledByCurrency(state)
-  const perClient = unbilledByClient(state)
-  const part = (g) => {
-    const amount = formatMoney(g.amount, g.currency, { cents: false })
-    if (g.clients === 1) {
-      const name = perClient.find((u) => u.client.currency === g.currency)?.client.name
-      return { amount, rest: `from ${name}` }
-    }
-    return { amount, rest: `across ${g.clients} clients` }
+const GOAL_HOURS = 8
+
+/** Sum per currency, never across currencies: "₱42,075" + "and $123". */
+function money(rows) {
+  if (!rows.length) return { value: '—', note: null }
+  const [first, ...rest] = rows
+  return {
+    value: formatMoney(first.amount, first.currency, { cents: false }),
+    note: rest.length ? `and ${rest.map((r) => formatMoney(r.amount, r.currency, { cents: false })).join(', ')}` : null,
   }
-  const [first, second] = groups.map(part)
-  return (
-    <h1 className="m-0 max-w-[30ch] type-statement-mobile text-ink md:type-statement">
-      {first.amount} <span className="text-muted">unbilled {first.rest}</span>
-      {second ? (
-        <>
-          {' '}
-          <span className="text-muted">and</span> {second.amount} <span className="text-muted">{second.rest}</span>
-        </>
-      ) : null}
-    </h1>
-  )
 }
 
-function Outstanding({ state }) {
-  const open = state.invoices.filter((i) => ['sent', 'overdue'].includes(invoiceStatus(i)))
-  if (!open.length) return null
-  const byCur = new Map()
-  for (const i of open) {
+function byCurrency(state, invoices) {
+  const map = new Map()
+  for (const i of invoices) {
     const cur = invoiceClient(state, i).currency
-    const row = byCur.get(cur) ?? { total: 0, overdue: 0, count: 0 }
-    row.total += invoiceTotal(state, i)
-    row.count += 1
-    if (invoiceStatus(i) === 'overdue') row.overdue += invoiceTotal(state, i)
-    byCur.set(cur, row)
+    map.set(cur, (map.get(cur) ?? 0) + invoiceTotal(state, i))
   }
-  const overdue = open.filter((i) => invoiceStatus(i) === 'overdue')
-  const rows = [...byCur.entries()]
-  return (
-    <div className="mt-4 flex flex-col gap-1">
-      {overdue.length ? (
-        <p className="flex flex-wrap items-center gap-x-2 type-title text-ink">
-          <Icon name="square-filled" size={12} className="text-overdue" />
-          {rows
-            .filter(([, r]) => r.overdue)
-            .map(([cur, r]) => formatMoney(r.overdue, cur, { cents: false }))
-            .join(' and ')}{' '}
-          <span className="text-overdue">
-            overdue from {overdue.length === 1 ? invoiceClient(state, overdue[0]).name : `${overdue.length} invoices`}
-          </span>
-        </p>
-      ) : null}
-      <p className="type-body text-muted">
-        {rows.map(([cur, r], idx) => (
-          <span key={cur}>
-            {idx ? ' ' : ''}
-            {formatMoney(r.total, cur)} is waiting on {r.count} sent {r.count === 1 ? 'invoice' : 'invoices'}
-            {r.overdue ? ', overdue included' : ''}.
-          </span>
-        ))}
-      </p>
-    </div>
-  )
+  return [...map.entries()]
+    .map(([currency, amount]) => ({ currency, amount }))
+    .sort((a) => (a.currency === state.profile.defaultCurrency ? -1 : 1))
+}
+
+function lastSevenDays(state) {
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(TODAY)
+    d.setDate(TODAY.getDate() - (6 - i))
+    const key = d.toDateString()
+    const secs = state.entries.filter((e) => e.start.toDateString() === key).reduce((s, e) => s + entrySeconds(state, e), 0)
+    const value = secs / 3600
+    return {
+      key,
+      label: d.toLocaleDateString('en-GB', { weekday: 'short' }),
+      value,
+      display: value ? `${value.toFixed(1)} h` : '–',
+      active: key === TODAY.toDateString(),
+    }
+  })
+}
+
+/** Share of the payment term that has passed (overdue = 100%). */
+function termProgress(inv) {
+  const span = inv.due - inv.issued
+  return span > 0 ? (TODAY - inv.issued) / span : 1
 }
 
 export function Dashboard() {
   const { state } = useStore()
-  const ready = unbilledByClient(state).sort((a, b) => b.since - a.since)
-  const overdue = state.invoices.filter((i) => invoiceStatus(i) === 'overdue').sort((a, b) => a.due - b.due)
+  const first = state.profile.name.split(' ')[0]
+  const ready = unbilledByClient(state).sort((a, b) => b.amount - a.amount)
+  const open = state.invoices.filter((i) => invoiceStatus(i) !== 'paid')
+  const sent = open.filter((i) => ['sent', 'overdue'].includes(invoiceStatus(i)))
+  const overdue = open.filter((i) => invoiceStatus(i) === 'overdue')
 
   if (!ready.length && !state.invoices.length) {
     return (
-      <EmptyState
-        headline="Wala pang singilin. Nothing to bill yet."
-        detail="Track time against a client’s project and it will show up here, ready to invoice."
-        action={
-          state.projects.length ? (
-            <Button as={Link} to="/timer">
-              Go to timer
-            </Button>
-          ) : (
-            <Button as={Link} to="/clients?new=1">
-              Add a client
-            </Button>
-          )
-        }
-      />
+      <>
+        <Header first={first} />
+        <EmptyState
+          headline="Wala pang singilin. Nothing to bill yet."
+          detail="Track time against a client’s project and it will show up here, ready to invoice."
+          action={
+            state.projects.length ? (
+              <Button as={Link} to="/timer">
+                Go to timer
+              </Button>
+            ) : (
+              <Button as={Link} to="/clients?new=1">
+                Add a client
+              </Button>
+            )
+          }
+        />
+      </>
     )
   }
 
+  const unbilled = money(unbilledByCurrency(state))
+  const waiting = money(byCurrency(state, sent))
+  const late = money(byCurrency(state, overdue))
+  const days = lastSevenDays(state)
+  const worked = days.filter((d) => d.value)
+  const avg = worked.length ? worked.reduce((s, d) => s + d.value, 0) / worked.length : 0
+
   return (
-    <div className="flex flex-col gap-10 md:gap-12">
-      <section aria-label="Money owed">
-        {ready.length ? <Statement state={state} /> : <h1 className="m-0 type-statement-mobile text-ink md:type-statement">Everything tracked is invoiced.</h1>}
-        <Outstanding state={state} />
+    <>
+      <Header first={first} />
+
+      <section aria-label="Money owed" className="grid gap-3 md:grid-cols-3">
+        <StatCard tone="lavender" icon="wallet" label="Unbilled time" value={unbilled.value} note={unbilled.note ?? `${ready.length} clients`} />
+        <StatCard tone="blend" icon="sent" label="Waiting on sent invoices" value={waiting.value} note={waiting.note ?? `${sent.length} invoices`} />
+        <StatCard
+          tone="rose"
+          icon="overdue"
+          label="Overdue"
+          value={late.value}
+          note={overdue.length ? (overdue.length === 1 ? `${invoiceClient(state, overdue[0]).name} · ${daysLate(overdue[0])} days late` : `${overdue.length} invoices`) : 'Nothing overdue'}
+        />
       </section>
 
-      <section aria-labelledby="ready-h">
-        <SectionHead id="ready-h" title="Ready to invoice" aside={ready.length ? `${ready.length} ${ready.length === 1 ? 'client' : 'clients'}` : null} />
-        {ready.length ? (
-          <ul className="m-0 list-none p-0">
-            {ready.map((u) => (
-              <li key={u.client.id}>
-                <Link
-                  to={`/invoices/new?client=${u.client.id}`}
-                  aria-label={`Create invoice for ${u.client.name}, ${formatMoney(u.amount, u.client.currency)} unbilled`}
-                  className="group flex min-h-(--size-row-touch) items-center gap-4 border-b border-rule bg-surface px-4 py-3 no-underline hover-fine:bg-sunken md:py-2"
-                >
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="type-body-mobile text-ink md:type-body">{u.client.name}</span>
-                    <span className="type-label text-muted">
-                      {formatHours(u.seconds)} since {formatDate(u.since).replace(/ \d{4}$/, '')} · {u.entries.length} entries
-                    </span>
-                  </span>
-                  <span className="flex flex-col items-end gap-0.5">
-                    <span className="type-figure-mobile text-ink md:type-figure">{formatMoney(u.amount, u.client.currency)}</span>
-                    <span className="type-label-strong text-ink underline underline-offset-3 md:hidden">Create invoice</span>
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="hidden h-(--size-control) items-center rounded-sm border border-rule-strong bg-surface px-4 type-button text-ink group-hover:bg-paper md:inline-flex"
-                  >
-                    Create invoice
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="py-4 type-body text-muted">Nothing unbilled. New time entries will show up here.</p>
-        )}
-      </section>
+      <div className="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <Card aria-labelledby="hours-h" className="p-5 md:p-6">
+          <CardHead id="hours-h" title="Hours tracked">
+            <span className="type-label text-muted">Last 7 days</span>
+            <span className="ml-3 flex items-baseline gap-1 border-l border-rule pl-3">
+              <span className="type-stat text-ink">{avg.toFixed(1)}</span>
+              <span className="type-label text-muted">h avg</span>
+            </span>
+          </CardHead>
+          <BarChart
+            className="mt-6"
+            data={days}
+            reference={GOAL_HOURS}
+            referenceLabel={`${GOAL_HOURS} h goal`}
+            caption="Hours tracked per day, last 7 days"
+          />
+        </Card>
 
-      <section aria-labelledby="overdue-h">
-        <SectionHead id="overdue-h" title="Overdue" aside={overdue.length ? `${overdue.length} ${overdue.length === 1 ? 'invoice' : 'invoices'}` : null} />
-        {overdue.length ? (
-          <ul className="m-0 list-none p-0">
-            {overdue.map((inv) => {
-              const client = invoiceClient(state, inv)
-              return (
-                <li key={inv.id}>
+        <Card aria-labelledby="ready-h" className="flex flex-col p-5 md:p-6">
+          <CardHead id="ready-h" title="Ready to invoice">
+            <Link to="/clients" className="type-label-strong text-muted no-underline hover-fine:text-ink">
+              See all
+            </Link>
+          </CardHead>
+          {ready.length ? (
+            <ul className="m-0 mt-2 flex-1 list-none p-0">
+              {ready.map((u) => (
+                <li key={u.client.id} className="border-b border-rule last:border-b-0">
                   <Link
-                    to={`/invoices/${inv.id}`}
-                    className="flex min-h-(--size-row-touch) items-center gap-4 border-b border-rule bg-surface px-4 py-3 no-underline hover-fine:bg-sunken md:py-2"
+                    to={`/invoices/new?client=${u.client.id}`}
+                    aria-label={`Create invoice for ${u.client.name}, ${formatMoney(u.amount, u.client.currency)} unbilled`}
+                    className="-mx-2 flex min-h-(--size-row-touch) items-center gap-3 rounded-md px-2 py-2 no-underline hover-fine:bg-sunken"
                   >
-                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <span className="type-body-mobile text-ink md:type-body">
-                        {inv.number} · {client.name}
-                      </span>
+                    <Avatar name={u.client.name} />
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="truncate type-label-strong text-ink">{u.client.name}</span>
                       <span className="type-label text-muted">
-                        {daysLate(inv)} days late · due {formatDate(inv.due)}
+                        {formatHours(u.seconds)} · {u.entries.length} entries
                       </span>
-                    </div>
-                    <span className="type-figure-mobile text-ink md:type-figure">{formatMoney(invoiceTotal(state, inv), client.currency)}</span>
-                    <span className="hidden md:block">
-                      <Badge status="overdue" />
+                    </span>
+                    <span className="flex flex-col items-end">
+                      <span className="type-figure text-ink">{formatMoney(u.amount, u.client.currency)}</span>
+                      <span className="type-label text-accent">Invoice</span>
                     </span>
                   </Link>
                 </li>
-              )
-            })}
-          </ul>
-        ) : (
-          <p className="py-4 type-body text-muted">No overdue invoices.</p>
-        )}
+              ))}
+            </ul>
+          ) : (
+            <p className="py-4 type-body text-muted">Nothing unbilled. New time entries show up here.</p>
+          )}
+          <Button as={Link} to="/clients?new=1" kind="secondary" block className="mt-4">
+            <Icon name="plus" />
+            Add client
+          </Button>
+        </Card>
+      </div>
+
+      <section aria-labelledby="tracker-h" className="mt-8">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <h2 id="tracker-h" className="m-0 flex items-center gap-2 type-headline text-ink">
+            Invoice tracker
+            {overdue.length ? (
+              <span className="rounded-pill bg-surface px-2.5 py-0.5 type-label-strong text-overdue shadow-card">{overdue.length} overdue</span>
+            ) : null}
+          </h2>
+          <Link to="/invoices" className="type-label-strong text-muted no-underline hover-fine:text-ink">
+            All invoices
+          </Link>
+        </div>
+        <Card as="div" className="overflow-hidden">
+          {open.length ? (
+            <table className="w-full border-collapse">
+              <thead className="hidden md:table-header-group">
+                <tr className="border-b border-rule type-column-head text-muted">
+                  <th scope="col" className="px-5 py-3 text-left font-semibold">Invoice</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold">Term used</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold">Issued</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold">Due</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold">Status</th>
+                  <th scope="col" className="px-5 py-3 text-right font-semibold">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {open
+                  .sort((a, b) => a.due - b.due)
+                  .map((inv) => {
+                    const client = invoiceClient(state, inv)
+                    const status = invoiceStatus(inv)
+                    return (
+                      <tr key={inv.id} className="border-b border-rule last:border-b-0 hover-fine:bg-sunken">
+                        <td className="px-5 py-3 md:py-4">
+                          <Link to={`/invoices/${inv.id}`} className="flex flex-col no-underline">
+                            <span className="type-label-strong text-ink">{inv.number}</span>
+                            <span className="type-label text-muted">{client.name}</span>
+                          </Link>
+                        </td>
+                        <td className="hidden px-3 md:table-cell">
+                          {status === 'draft' ? (
+                            <span className="type-label text-faint">Not sent</span>
+                          ) : (
+                            <ProgressRing value={termProgress(inv)} tone={status === 'overdue' ? 'rose' : 'accent'} />
+                          )}
+                        </td>
+                        <td className="hidden px-3 type-figure text-muted md:table-cell">{formatDate(inv.issued)}</td>
+                        <td className="hidden px-3 type-figure text-muted md:table-cell">{formatDate(inv.due)}</td>
+                        <td className="px-3">
+                          <Badge status={status} />
+                        </td>
+                        <td className="px-5 text-right type-figure text-ink">{formatMoney(invoiceTotal(state, inv), client.currency)}</td>
+                      </tr>
+                    )
+                  })}
+              </tbody>
+            </table>
+          ) : (
+            <p className="px-5 py-6 type-body text-muted">No open invoices. Paid ones are under Invoices.</p>
+          )}
+        </Card>
       </section>
+    </>
+  )
+}
+
+function Header({ first }) {
+  return (
+    <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col">
+        <h1 className="m-0 type-display text-ink">Welcome back, {first}!</h1>
+        <p className="type-body text-muted">{TODAY.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+      </div>
+      <Button as={Link} to="/invoices/new">
+        <Icon name="plus" />
+        New invoice
+      </Button>
     </div>
   )
 }

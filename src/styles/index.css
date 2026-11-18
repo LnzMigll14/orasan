@@ -1,12 +1,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
-@import '@fontsource/ibm-plex-sans/400.css';
-@import '@fontsource/ibm-plex-sans/500.css';
-@import '@fontsource/ibm-plex-sans/600.css';
-@import '@fontsource/ibm-plex-mono/500.css';
-@import '@fontsource/ibm-plex-serif/400.css';
-@import '@fontsource/ibm-plex-serif/500.css';
+@import '@fontsource-variable/mulish/index.css';
 
 /* Dark mode is a class on <html>, toggled from app state. */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -30,7 +25,7 @@
     margin: 0;
     background: var(--color-bg-paper);
     color: var(--color-text-ink);
-    font: 400 14px/20px var(--font-sans);
+    font: 500 14px/20px var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
   ::selection {

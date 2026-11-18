@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import {
+  Avatar,
   Badge,
+  Card,
+  Icon,
   Button,
   DayHeader,
   EmptyState,
@@ -97,49 +100,71 @@ export function Clients() {
   return (
     <>
       <PageHeader title="Clients">
-        {state.clients.length ? <Button onClick={() => setAdding(true)}>Add client</Button> : null}
+        {state.clients.length ? (
+          <Button onClick={() => setAdding(true)}>
+            <Icon name="plus" />
+            Add client
+          </Button>
+        ) : null}
       </PageHeader>
       {state.clients.length ? (
-        <div>
-          <LedgerHead>
+        <>
+        <Card as="div" className="overflow-hidden">
+          <LedgerHead className="px-5">
             <span className="flex-1">Client</span>
             <span className="w-32">Rate</span>
             <span className="w-32 text-right">Unbilled</span>
             <span className="w-32 text-right">Outstanding</span>
+            <span className="w-11" />
           </LedgerHead>
           <ul className="m-0 list-none p-0">
             {state.clients.map((c) => {
               const u = unbilled.find((x) => x.client.id === c.id)
               const out = outstanding(state, c.id)
               return (
-                <li key={c.id}>
-                  <Link
-                    to={`/clients/${c.id}`}
-                    className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule bg-surface px-4 py-2 no-underline hover-fine:bg-sunken md:min-h-(--size-row) md:py-0"
-                  >
+                <li key={c.id} className="flex items-center gap-3 border-b border-rule pr-3 pl-5 last:border-b-0 hover-fine:bg-sunken">
+                  <Link to={`/clients/${c.id}`} className="flex min-h-(--size-row-touch) min-w-0 flex-1 items-center gap-3 py-2 no-underline md:min-h-(--size-row)">
+                    <Avatar name={c.name} />
                     <span className="flex min-w-0 flex-1 flex-col">
-                      <span className="truncate type-body-mobile text-ink md:type-body">{c.name}</span>
-                      <span className="type-label text-muted md:hidden">
-                        {formatMoney(c.rate, c.currency)}/h · {c.currency}
+                      <span className="truncate type-label-strong text-ink md:type-body md:font-bold">{c.name}</span>
+                      <span className="truncate type-label text-muted">
+                        <span className="md:hidden">
+                          {formatMoney(c.rate, c.currency)}/h ·{' '}
+                        </span>
+                        {c.email || c.currency}
                       </span>
                     </span>
-                    <span className="hidden w-32 type-figure text-muted md:block">
-                      {formatMoney(c.rate, c.currency)}/h
+                    <span className="hidden w-32 md:block">
+                      <span className="rounded-pill bg-sunken px-2.5 py-1 type-figure text-ink">{formatMoney(c.rate, c.currency)}/h</span>
                     </span>
-                    <span className="w-32 text-right type-figure-mobile text-ink md:type-figure">
+                    <span className="w-28 text-right type-figure-mobile text-ink md:w-32 md:type-figure">
                       <span className="sr-only">Unbilled </span>
                       {u ? formatMoney(u.amount, c.currency) : <span className="text-faint">—</span>}
                     </span>
                     <span className="hidden w-32 text-right type-figure text-ink md:block">
+                      <span className="sr-only">Outstanding </span>
                       {out ? formatMoney(out, c.currency) : <span className="text-faint">—</span>}
                     </span>
                   </Link>
+                  {c.email ? (
+                    <a
+                      href={`mailto:${c.email}`}
+                      aria-label={`Email ${c.name}`}
+                      title={`Email ${c.name}`}
+                      className="hidden size-11 flex-none items-center justify-center rounded-pill text-muted hover-fine:bg-surface hover-fine:text-ink md:inline-flex"
+                    >
+                      <Icon name="mail" size={18} />
+                    </a>
+                  ) : (
+                    <span className="hidden w-11 md:block" />
+                  )}
                 </li>
               )
             })}
           </ul>
-          <p className="mt-3 type-label text-muted md:hidden">Amounts on the right are unbilled.</p>
-        </div>
+        </Card>
+        <p className="mt-3 type-label text-muted md:hidden">Amounts on the right are unbilled.</p>
+        </>
       ) : (
         <EmptyState
           headline="Wala pang kliyente."
@@ -182,7 +207,7 @@ export function ClientDetail() {
   const invoices = state.invoices.filter((i) => i.clientId === client.id).sort((a, b) => b.issued - a.issued)
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-4">
       <div>
         <Link to="/clients" className="type-label text-muted hover-fine:text-ink">
           Clients
@@ -205,13 +230,13 @@ export function ClientDetail() {
         </dl>
       </div>
 
-      <section aria-labelledby="proj-h">
+      <Card aria-labelledby="proj-h" className="p-5 md:p-6">
         <SectionHead id="proj-h" title="Projects" aside={`${projects.length}`} />
         <ul className="m-0 list-none p-0">
           {projects.map((p) => {
             const secs = unbilled.filter((e) => e.projectId === p.id).reduce((s, e) => s + entrySeconds(state, e), 0)
             return (
-              <li key={p.id} className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule bg-surface px-4 md:min-h-(--size-row)">
+              <li key={p.id} className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule px-1 last:border-b-0 md:min-h-(--size-row)">
                 <span className="flex-1 truncate type-body-mobile text-ink md:type-body">{p.name}</span>
                 <span className="type-figure text-muted">
                   {formatMoney(projectRate(state, p.id), client.currency)}/h{p.rate ? ' (own rate)' : ''}
@@ -221,12 +246,12 @@ export function ClientDetail() {
             )
           })}
         </ul>
-      </section>
+      </Card>
 
-      <section aria-labelledby="unb-h">
+      <Card aria-labelledby="unb-h" className="p-5 md:p-6">
         <SectionHead id="unb-h" title="Unbilled time" aside={formatMoney(unbilledAmount, client.currency)} />
         {unbilled.length ? (
-          <div className="mt-2 flex flex-col gap-4">
+          <div className="-mx-5 mt-2 flex flex-col gap-4 md:-mx-6">
             {groupByDay(state, unbilled).map((d) => (
               <div key={d.key}>
                 <DayHeader label={d.label} total={d.total} level={3} />
@@ -239,15 +264,15 @@ export function ClientDetail() {
         ) : (
           <p className="py-4 type-body text-muted">No unbilled time for this client.</p>
         )}
-      </section>
+      </Card>
 
-      <section aria-labelledby="inv-h">
+      <Card aria-labelledby="inv-h" className="p-5 md:p-6">
         <SectionHead id="inv-h" title="Invoices" aside={`${invoices.length}`} />
         {invoices.length ? (
           <ul className="m-0 list-none p-0">
             {invoices.map((i) => (
               <li key={i.id}>
-                <Link to={`/invoices/${i.id}`} className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule bg-surface px-4 no-underline hover-fine:bg-sunken md:min-h-(--size-row)">
+                <Link to={`/invoices/${i.id}`} className="-mx-2 flex min-h-(--size-row-touch) items-center gap-3 rounded-md border-b border-rule px-3 no-underline last:border-b-0 hover-fine:bg-sunken md:min-h-(--size-row)">
                   <span className="flex-1 type-body-mobile text-ink md:type-body">{i.number}</span>
                   <Badge status={invoiceStatus(i)} />
                   <span className="w-28 text-right type-figure text-ink">{formatMoney(invoiceTotal(state, i), client.currency)}</span>
@@ -258,7 +283,7 @@ export function ClientDetail() {
         ) : (
           <p className="py-4 type-body text-muted">No invoices yet.</p>
         )}
-      </section>
+      </Card>
       <EditEntry entry={editing} onClose={() => setEditing(null)} />
     </div>
   )

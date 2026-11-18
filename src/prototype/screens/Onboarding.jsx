@@ -20,9 +20,9 @@ function Stepper({ step }) {
           >
             <span
               className={cn(
-                'inline-flex size-5 items-center justify-center rounded-xs border type-label-strong',
-                current && 'border-ink bg-ink text-paper',
-                done && 'border-accent bg-accent text-on-accent',
+                'inline-flex size-6 items-center justify-center rounded-pill border type-label-strong',
+                current && 'border-cta-fill bg-cta-fill text-on-cta',
+                done && 'border-accent bg-tint text-accent',
                 !current && !done && 'border-rule-strong',
               )}
             >
@@ -127,11 +127,14 @@ export function Onboarding() {
 
   return (
     <div className="min-h-dvh bg-paper">
-      <header className="flex h-(--size-bar) items-center border-b border-rule bg-surface px-4 md:px-8">
-        <span className="type-title text-ink">Orasan</span>
+      <header className="flex h-(--size-bar) items-center gap-2.5 px-4 md:px-8">
+        <span className="flex size-8 items-center justify-center rounded-sm bg-cta-fill text-on-cta">
+          <Icon name="timer" size={18} strokeWidth={2.25} />
+        </span>
+        <span className="type-headline text-ink">orasan</span>
       </header>
-      <main className="px-4 pt-6 pb-16 md:px-8 md:pt-10">
-        <form ref={formRef} onSubmit={next} noValidate className="flex max-w-140 flex-col gap-8">
+      <main className="px-4 pt-2 pb-16 md:px-8 md:pt-6">
+        <form ref={formRef} onSubmit={next} noValidate className="flex max-w-150 flex-col gap-8 rounded-xl bg-surface p-5 shadow-card md:p-8">
           <Stepper step={step} />
 
           {step === 1 ? (

@@ -96,14 +96,14 @@ export function SlideOver({ open, onClose, title, footer, children }) {
         tabIndex={-1}
         className={cn(
           'absolute inset-0 flex flex-col bg-raised outline-none transition-[transform,opacity]',
-          'md:inset-y-0 md:right-0 md:left-auto md:w-(--size-slideover) md:border-l md:border-rule md:shadow-overlay',
+          'md:inset-y-2 md:right-2 md:left-auto md:w-(--size-slideover) md:overflow-hidden md:rounded-xl md:shadow-overlay',
           shown
             ? 'translate-y-0 opacity-100 duration-(--dur-drawer-in) ease-(--ease-drawer) md:translate-x-0'
             : 'translate-y-4 opacity-0 duration-(--dur-drawer-out) ease-(--ease-exit) md:translate-x-4 md:translate-y-0',
         )}
       >
-        <div className="flex h-(--size-bar) flex-none items-center justify-between border-b border-rule pr-2 pl-4 md:pl-6">
-          <h2 className="m-0 type-title text-ink">{title}</h2>
+        <div className="flex h-(--size-bar) flex-none items-center justify-between border-b border-rule pr-3 pl-4 md:pl-6">
+          <h2 className="m-0 type-headline text-ink">{title}</h2>
           <IconButton label="Close" onClick={onClose}>
             <Icon name="close" />
           </IconButton>
@@ -136,7 +136,7 @@ export function Dialog({ open, onClose, title, description, footer, children }) 
         aria-label={title}
         tabIndex={-1}
         className={cn(
-          'relative flex w-full max-w-110 flex-col rounded-md border border-rule bg-raised shadow-overlay outline-none transition-[transform,opacity]',
+          'relative flex w-full max-w-110 flex-col rounded-xl bg-raised shadow-overlay outline-none transition-[transform,opacity]',
           shown
             ? 'scale-100 opacity-100 duration-(--dur-drawer-in) ease-(--ease-out)'
             : 'scale-97 opacity-0 duration-(--dur-drawer-out) ease-(--ease-exit)',

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DayHeader, EmptyState, EntryRow, PageHeader, TimerControl, formatHours } from '../../components/ui'
+import { Card, DayHeader, EmptyState, EntryRow, PageHeader, TimerControl, formatHours } from '../../components/ui'
 import { entryRowProps, entrySeconds, groupByDay } from '../model'
 import { useHeroRef, useTimerProps } from '../ProtoShell'
 import { useStore } from '../store'
@@ -35,14 +35,14 @@ export function Timer() {
       </div>
 
       {days.length ? (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           {days.map((d) => (
-            <section key={d.key} aria-label={d.label}>
+            <Card key={d.key} aria-label={d.label} className="overflow-hidden">
               <DayHeader label={d.label} total={d.total} />
               {d.entries.map((e) => (
                 <EntryRow key={e.id} {...entryRowProps(state, e)} onResume={() => resume(e)} onEdit={() => setEditing(e)} />
               ))}
-            </section>
+            </Card>
           ))}
         </div>
       ) : (

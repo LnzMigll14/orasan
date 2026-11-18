@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import {
   Badge,
+  Card,
   Button,
   Checkbox,
   Dialog,
@@ -88,8 +89,8 @@ export function Invoices() {
         ) : null}
       </PageHeader>
       {rows.length ? (
-        <div>
-          <LedgerHead>
+        <Card as="div" className="overflow-hidden">
+          <LedgerHead className="px-5">
             <span className="w-24">Number</span>
             <span className="flex-1">Client</span>
             <span className="w-28">Due</span>
@@ -104,7 +105,7 @@ export function Invoices() {
                 <li key={inv.id}>
                   <Link
                     to={`/invoices/${inv.id}`}
-                    className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule bg-surface px-4 py-2 no-underline hover-fine:bg-sunken md:min-h-(--size-row) md:py-0"
+                    className="flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule px-5 py-2 no-underline hover-fine:bg-sunken md:min-h-(--size-row) md:py-0"
                   >
                     <span className="hidden w-24 type-figure text-ink md:block">{inv.number}</span>
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -127,7 +128,7 @@ export function Invoices() {
               )
             })}
           </ul>
-        </div>
+        </Card>
       ) : (
         <EmptyState
           headline="Wala pang invoice."
@@ -231,7 +232,7 @@ export function InvoiceBuilder() {
   }
 
   const summary = (
-    <div className="flex flex-col gap-4 rounded-md border border-rule bg-surface p-4">
+    <div className="flex flex-col gap-4 rounded-lg bg-surface p-5 shadow-card">
       <div className="flex items-baseline justify-between gap-3">
         <span className="type-label text-muted">
           {chosen.length} of {unbilled.length} entries · {formatHours(seconds)}
@@ -295,14 +296,14 @@ export function InvoiceBuilder() {
             const all = ids.every((id) => selected.has(id))
             const sub = list.filter((e) => selected.has(e.id)).reduce((s, e) => s + entryAmount(state, e), 0)
             return (
-              <section key={p.id} aria-label={p.name}>
-                <label className="flex min-h-11 cursor-pointer items-center gap-3 bg-sunken px-4">
+              <Card key={p.id} aria-label={p.name} className="overflow-hidden">
+                <label className="flex min-h-12 cursor-pointer items-center gap-3 border-b border-rule px-4">
                   <Checkbox
                     checked={all}
                     aria-label={`Include all ${p.name} entries`}
                     onChange={(e) => toggle(ids, e.target.checked)}
                   />
-                  <span className="flex-1 type-label-strong text-ink">{p.name}</span>
+                  <span className="flex-1 type-title text-ink">{p.name}</span>
                   <span className="type-figure text-ink">{formatMoney(sub, client.currency)}</span>
                 </label>
                 {list.map((e) => (
@@ -317,7 +318,7 @@ export function InvoiceBuilder() {
                     onCheckedChange={(on) => toggle([e.id], on)}
                   />
                 ))}
-              </section>
+              </Card>
             )
           })}
         </div>
@@ -365,19 +366,19 @@ export function InvoiceSent() {
         </p>
       </div>
 
-      <section aria-labelledby="link-h" className="flex flex-col gap-3">
+      <Card aria-labelledby="link-h" className="flex flex-col gap-3 p-5 md:p-6">
         <SectionHead id="link-h" title="Invoice link" />
         <div className="flex flex-col gap-2 md:flex-row md:items-center">
-          <code className="flex h-(--size-control-touch) min-w-0 flex-1 items-center truncate rounded-sm border border-rule bg-sunken px-3 font-mono type-body text-ink md:h-(--size-control)">
+          <code className="flex h-(--size-control-touch) min-w-0 flex-1 items-center truncate rounded-pill bg-sunken px-4 type-body text-ink md:h-(--size-control)">
             {link}
           </code>
           <Button onClick={() => copy(link, 'Link')}>Copy link</Button>
         </div>
-      </section>
+      </Card>
 
-      <section aria-labelledby="msg-h" className="flex flex-col gap-3">
+      <Card aria-labelledby="msg-h" className="flex flex-col gap-3 p-5 md:p-6">
         <SectionHead id="msg-h" title="Message to paste" />
-        <p className="m-0 rounded-sm border border-rule bg-surface p-4 type-body text-ink">{message}</p>
+        <p className="m-0 rounded-md bg-sunken p-4 type-body text-ink">{message}</p>
         <div className="flex flex-col gap-2 md:flex-row">
           <Button kind="secondary" onClick={() => copy(message, 'Message')}>
             Copy message
@@ -386,9 +387,9 @@ export function InvoiceSent() {
             Download PDF
           </Button>
         </div>
-      </section>
+      </Card>
 
-      <div className="flex flex-col gap-2 border-t border-rule pt-6 md:flex-row">
+      <div className="flex flex-col gap-2 md:flex-row">
         <Button as={Link} to={`/i/${invoice.token}`} kind="ghost">
           View as client
         </Button>
@@ -565,7 +566,7 @@ export function InvoiceDetail() {
       <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <InvoiceSheet invoice={view} statusSlot={<StatusSwap status={status} />} />
         <aside className="flex flex-col gap-8">
-          <section aria-labelledby="hist-h">
+          <Card aria-labelledby="hist-h" className="p-5">
             <SectionHead id="hist-h" title="History" />
             <ol className="m-0 list-none p-0">
               {history.map(([k, v]) => (
@@ -575,8 +576,8 @@ export function InvoiceDetail() {
                 </li>
               ))}
             </ol>
-          </section>
-          <section aria-labelledby="bill-h">
+          </Card>
+          <Card aria-labelledby="bill-h" className="p-5">
             <SectionHead id="bill-h" title="Billed to" />
             <p className="mt-3 type-body text-ink">
               <Link to={`/clients/${client.id}`}>{client.name}</Link>
@@ -587,7 +588,7 @@ export function InvoiceDetail() {
                 {entries.length} time entries are locked to this invoice.
               </p>
             ) : null}
-          </section>
+          </Card>
         </aside>
       </div>
 

@@ -47,7 +47,7 @@ function ProjectPicker({ projects, value, onChange, className, size = 'compact',
   return (
     <span
       className={cn(
-        'relative flex min-w-0 items-center rounded-sm border border-rule-strong bg-surface focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring',
+        'relative flex min-w-0 items-center rounded-pill border border-rule-strong bg-surface focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring',
         size === 'touch' && 'h-(--size-control-touch)',
         size === 'compact' && 'h-(--size-control)',
         size === 'auto' && 'h-(--size-control-touch) md:h-(--size-control)',
@@ -59,7 +59,7 @@ function ProjectPicker({ projects, value, onChange, className, size = 'compact',
         value={value ?? ''}
         onChange={(e) => onChange?.(e.target.value)}
         className={cn(
-          'h-full w-full min-w-0 cursor-pointer appearance-none truncate bg-transparent pr-9 pl-3 outline-none focus-visible:outline-none',
+          'h-full w-full min-w-0 cursor-pointer appearance-none truncate bg-transparent pr-9 pl-4 outline-none focus-visible:outline-none',
           size === 'touch' && 'type-body-mobile',
           size === 'compact' && 'type-body',
           size === 'auto' && 'type-body-mobile md:type-body',
@@ -116,10 +116,10 @@ export function TimerControl({
   // No projects yet: say why the timer can't start and offer the way forward.
   if (!running && projects.length === 0 && emptyAction) {
     const hint = <span className="min-w-0 flex-1 type-label text-muted">Add a client to start tracking.</span>
-    if (layout === 'bar') return <div className={cn('flex h-11 w-105 flex-none items-center justify-end gap-3', className)}>{hint}{emptyAction}</div>
-    if (layout === 'dock') return <div className={cn('flex h-(--size-bar) items-center gap-3 border-t border-rule bg-surface px-4', className)}>{hint}{emptyAction}</div>
+    if (layout === 'bar') return <div className={cn('flex h-12 w-110 flex-none items-center justify-end gap-3', className)}>{hint}{emptyAction}</div>
+    if (layout === 'dock') return <div className={cn('flex h-(--size-dock) items-center gap-3 bg-surface px-4', className)}>{hint}{emptyAction}</div>
     return (
-      <section aria-label="Timer" className={cn('flex flex-col items-start gap-3 rounded-md border border-rule bg-surface p-4 md:p-6', className)}>
+      <section aria-label="Timer" className={cn('flex flex-col items-start gap-3 rounded-lg bg-surface p-5 shadow-card md:p-6', className)}>
         <span className="type-timer text-faint" aria-hidden="true">00:00:00</span>
         <p className="type-body text-muted">Time is tracked against a client’s project. Add one to start the timer.</p>
         {emptyAction}
@@ -131,9 +131,9 @@ export function TimerControl({
     return (
       <div
         className={cn(
-          'flex h-11 w-105 flex-none items-center justify-end gap-3 rounded-sm p-1',
+          'flex h-12 w-110 flex-none items-center justify-end gap-3 rounded-pill p-1',
           band,
-          running ? 'bg-tint pl-3' : 'bg-transparent',
+          running ? 'bg-tint pl-4' : 'bg-transparent',
           className,
         )}
       >
@@ -164,7 +164,7 @@ export function TimerControl({
     return (
       <div
         className={cn(
-          'flex h-(--size-bar) items-center gap-3 border-t border-rule px-4',
+          'flex h-(--size-dock) items-center gap-3 px-4',
           band,
           running ? 'bg-tint' : 'bg-surface',
           className,
@@ -200,9 +200,9 @@ export function TimerControl({
     <section
       aria-label="Timer"
       className={cn(
-        'flex flex-col gap-4 rounded-md border p-4 md:p-6',
+        'flex flex-col gap-4 rounded-lg p-5 shadow-card md:p-6',
         band,
-        running ? 'border-tint bg-tint' : 'border-rule bg-surface',
+        running ? 'bg-tint' : 'bg-surface',
         className,
       )}
     >
@@ -219,7 +219,7 @@ export function TimerControl({
           value={description}
           onChange={(e) => onDescriptionChange?.(e.target.value)}
           placeholder="What are you working on?"
-          className="h-(--size-control-touch) w-full min-w-0 flex-none rounded-sm md:w-auto md:flex-1 border border-rule-strong bg-surface px-3 type-body-mobile outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:h-(--size-control) md:type-body"
+          className="h-(--size-control-touch) w-full min-w-0 flex-none rounded-pill md:w-auto md:flex-1 border border-rule-strong bg-surface px-4 type-body-mobile outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:h-(--size-control) md:type-body"
         />
         <ProjectPicker
           projects={projects}

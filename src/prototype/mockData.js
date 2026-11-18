@@ -150,6 +150,7 @@ export const ENTRIES = [
   e('e23', 'web', '17', '10:00', '12:15', 'Responsive checks, homepage'),
   e('e24', 'brand', '17', '13:30', '16:00', 'Brand guidelines, final pass'),
   e('e25', 'va', '17', '16:15', '17:30', 'Inbox triage and client replies'),
+  e('e26', 'inbox', '18', '08:15', '09:45', 'Morning inbox and calendar'),
 ]
 
 /**

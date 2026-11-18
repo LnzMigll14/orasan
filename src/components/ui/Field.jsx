@@ -11,7 +11,7 @@ function FieldShell({ id, label, help, error, className, children }) {
   return (
     <div className={cn('flex flex-col gap-1', className)}>
       {label ? (
-        <label htmlFor={id} className="type-label text-ink">
+        <label htmlFor={id} className="type-label-strong text-ink">
           {label}
         </label>
       ) : null}
@@ -30,7 +30,7 @@ function FieldShell({ id, label, help, error, className, children }) {
 }
 
 const BOX =
-  'flex items-center gap-2 rounded-sm border bg-surface px-3 h-(--size-control-touch) md:h-(--size-control) transition-[border-color] duration-100'
+  'flex items-center gap-2 rounded-md border bg-surface px-3.5 h-(--size-control-touch) md:h-(--size-control) transition-[border-color] duration-100'
 
 function boxState({ error, disabled }) {
   if (disabled) return 'border-rule bg-sunken text-faint'

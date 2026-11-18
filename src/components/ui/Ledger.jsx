@@ -7,9 +7,9 @@ import { cn } from './cn'
 export function DayHeader({ label, total, level = 2, className }) {
   const H = `h${level}`
   return (
-    <div className={cn('flex h-9 items-center justify-between bg-sunken px-4', className)}>
-      <H className="m-0 type-label-strong text-ink">{label}</H>
-      <span className="type-figure text-ink">
+    <div className={cn('flex h-12 items-center justify-between border-b border-rule px-4', className)}>
+      <H className="m-0 type-title text-ink">{label}</H>
+      <span className="rounded-pill bg-sunken px-2.5 py-0.5 type-figure text-ink">
         <span className="sr-only">Total </span>
         {total}
       </span>
@@ -49,7 +49,7 @@ export function EntryRow({
     <Row
       className={cn(
         'flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule px-4 py-2 md:h-(--size-row) md:min-h-0 md:py-0',
-        billed ? 'bg-paper' : 'bg-surface',
+        billed ? 'bg-sunken/60' : 'bg-transparent',
         selectable && 'cursor-pointer hover-fine:bg-sunken',
         className,
       )}
@@ -119,7 +119,7 @@ export function LedgerRow({ as: As = 'div', className, children, ...rest }) {
   return (
     <As
       className={cn(
-        'flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule bg-surface px-4 py-2 md:min-h-(--size-row) md:py-0',
+        'flex min-h-(--size-row-touch) items-center gap-3 border-b border-rule px-4 py-2 last:border-b-0 md:min-h-(--size-row) md:py-0',
         className,
       )}
       {...rest}
@@ -132,7 +132,7 @@ export function LedgerRow({ as: As = 'div', className, children, ...rest }) {
 /** Column heads for a ledger list. Use the same widths as the rows below. */
 export function LedgerHead({ className, children }) {
   return (
-    <div className={cn('hidden h-9 items-center gap-3 border-b border-rule-strong px-4 type-column-head text-muted md:flex', className)}>
+    <div className={cn('hidden h-11 items-center gap-3 border-b border-rule px-4 type-column-head text-muted md:flex', className)}>
       {children}
     </div>
   )

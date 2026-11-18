@@ -70,7 +70,7 @@ export function InvoiceSheet({ invoice, onCopy, className, statusSlot, headingLe
   const { number, issued, due, from, to, lines, subtotal, total, currencyName, methods = [], note, amountLabel = 'Amount due' } = invoice
   return (
     <div className={cn('@container', className)}>
-    <article aria-label={`Invoice ${number}`} className="rounded-md border border-rule bg-surface p-6 text-ink @md:p-12">
+    <article aria-label={`Invoice ${number}`} className="rounded-lg bg-surface p-6 text-ink shadow-card @md:p-10">
       <header className="flex flex-col gap-6 @md:flex-row @md:items-start @md:justify-between">
         <div className="flex flex-col gap-0.5">
           <p className="type-title text-ink">{from.business}</p>

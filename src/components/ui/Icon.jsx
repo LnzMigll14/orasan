@@ -1,43 +1,87 @@
+import {
+  AlarmClock,
+  ArrowRight,
+  Ban,
+  Bell,
+  Check,
+  ChevronDown,
+  CircleCheck,
+  Clock,
+  Copy,
+  Ellipsis,
+  FilePen,
+  FileText,
+  Hourglass,
+  LayoutGrid,
+  Lock,
+  LogOut,
+  Mail,
+  Play,
+  Plus,
+  Search,
+  Send,
+  Settings,
+  Square,
+  Timer,
+  TriangleAlert,
+  Users,
+  Wallet,
+  X,
+} from 'lucide-react'
+
 /**
- * Functional glyphs only (DESIGN.md): status markers, lock, copy, chevron, close, check.
- * 16×16 grid, 1.5px stroke, currentColor. Decorative icons are not allowed.
+ * One icon set (Lucide), one stroke. Icons label navigation, stat cards, status and actions.
+ * Old glyph names map onto Lucide so existing screens keep working.
  */
-const PATHS = {
-  check: <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />,
-  arrow: <path d="M3 8h9M9 4.5L12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.5" />,
-  'square-hollow': <rect x="4.25" y="4.25" width="7.5" height="7.5" fill="none" stroke="currentColor" strokeWidth="1.5" />,
-  'square-filled': <rect x="4" y="4" width="8" height="8" fill="currentColor" />,
-  lock: (
-    <>
-      <rect x="3.5" y="7.25" width="9" height="6.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.5 7.25V5.5a2.5 2.5 0 015 0v1.75" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    </>
-  ),
-  copy: (
-    <>
-      <rect x="5.75" y="5.75" width="7.5" height="7.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M3 10.25V2.75h7.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    </>
-  ),
-  play: <path d="M5 3.5v9l7.5-4.5z" fill="currentColor" />,
-  chevron: <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" />,
-  close: <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" strokeWidth="1.5" />,
+const ICONS = {
+  // status
+  draft: FilePen,
+  sent: Send,
+  paid: CircleCheck,
+  overdue: TriangleAlert,
+  missed: Ban,
+  // actions and glyphs
+  check: Check,
+  arrow: ArrowRight,
+  'square-hollow': FilePen,
+  'square-filled': TriangleAlert,
+  lock: Lock,
+  copy: Copy,
+  chevron: ChevronDown,
+  close: X,
+  play: Play,
+  stop: Square,
+  plus: Plus,
+  mail: Mail,
+  more: Ellipsis,
+  search: Search,
+  bell: Bell,
+  logout: LogOut,
+  // navigation and stats
+  dashboard: LayoutGrid,
+  timer: Timer,
+  clients: Users,
+  invoices: FileText,
+  settings: Settings,
+  wallet: Wallet,
+  clock: Clock,
+  hourglass: Hourglass,
+  alarm: AlarmClock,
 }
 
-export function Icon({ name, size = 16, className, title }) {
+export function Icon({ name, size = 16, className, title, strokeWidth = 1.75 }) {
+  const C = ICONS[name]
+  if (!C) return null
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 16 16"
+    <C
+      size={size}
+      strokeWidth={strokeWidth}
       className={className}
       aria-hidden={title ? undefined : true}
+      aria-label={title}
       role={title ? 'img' : undefined}
       focusable="false"
       style={{ flex: 'none' }}
-    >
-      {title ? <title>{title}</title> : null}
-      {PATHS[name]}
-    </svg>
+    />
   )
 }

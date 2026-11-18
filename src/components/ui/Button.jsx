@@ -8,8 +8,8 @@ import { cn } from './cn'
  * Pass `as={Link}` (or "a") to render a link that looks like a button.
  */
 const KIND = {
-  primary: 'bg-accent text-on-accent hover-fine:bg-accent-deep',
-  secondary: 'bg-surface text-ink border border-rule-strong hover-fine:bg-sunken',
+  primary: 'bg-cta-fill text-on-cta hover-fine:bg-cta-deep',
+  secondary: 'bg-surface text-ink border border-rule hover-fine:bg-sunken',
   ghost: 'bg-transparent text-ink hover-fine:bg-sunken',
   danger: 'bg-danger text-on-danger hover-fine:bg-danger-deep',
   // Quiet destructive action next to a primary (e.g. Delete entry in a footer).
@@ -33,8 +33,8 @@ export const Button = forwardRef(function Button(
       disabled={isButton ? disabled : undefined}
       aria-disabled={!isButton && disabled ? true : undefined}
       className={cn(
-        'pressable inline-flex items-center justify-center gap-2 rounded-sm whitespace-nowrap type-button no-underline select-none',
-        kind === 'ghost' || kind === 'danger-ghost' ? 'px-3' : 'px-4',
+        'pressable inline-flex items-center justify-center gap-2 rounded-pill whitespace-nowrap type-button no-underline select-none',
+        kind === 'ghost' || kind === 'danger-ghost' ? 'px-3' : 'px-5',
         SIZE[size],
         block && 'w-full',
         disabled
@@ -57,7 +57,7 @@ export function IconButton({ label, size = 'auto', className, children, ...rest 
       aria-label={label}
       title={label}
       className={cn(
-        'pressable inline-flex flex-none cursor-pointer items-center justify-center rounded-sm text-muted hover-fine:bg-sunken hover-fine:text-ink',
+        'pressable inline-flex flex-none cursor-pointer items-center justify-center rounded-pill text-muted hover-fine:bg-sunken hover-fine:text-ink',
         size === 'auto' && 'size-(--size-control-touch) md:size-(--size-control)',
         size === 'touch' && 'size-(--size-control-touch)',
         size === 'compact' && 'size-(--size-control)',

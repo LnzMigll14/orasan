@@ -49,7 +49,7 @@ function ToastItem({ item, onDone }) {
       onFocus={pause}
       onBlur={run}
       className={cn(
-        'pointer-events-auto flex max-w-[calc(100vw-32px)] items-center gap-6 rounded-sm bg-inverse px-4 py-3 text-on-inverse shadow-toast transition-[transform,opacity]',
+        'pointer-events-auto flex max-w-[calc(100vw-32px)] items-center gap-6 rounded-md bg-inverse px-4 py-3 text-on-inverse shadow-toast transition-[transform,opacity]',
         shown && !leaving
           ? 'translate-y-0 opacity-100 duration-(--dur-toast) ease-(--ease-out)'
           : 'translate-y-2 opacity-0',

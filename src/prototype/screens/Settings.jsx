@@ -4,7 +4,7 @@ import { useStore } from '../store'
 
 function Group({ id, title, note, children }) {
   return (
-    <section aria-labelledby={id} className="grid gap-4 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8">
+    <section aria-labelledby={id} className="grid gap-4 rounded-lg bg-surface p-5 shadow-card md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8 md:p-6">
       <div className="flex flex-col gap-1">
         <h2 id={id} className="m-0 type-title text-ink">
           {title}
@@ -27,7 +27,7 @@ export function Settings() {
       <PageHeader title="Settings">
         <span className="type-label text-muted">Changes save as you type.</span>
       </PageHeader>
-      <div className="flex flex-col gap-10 [&>section+section]:border-t [&>section+section]:border-rule [&>section+section]:pt-10">
+      <div className="flex flex-col gap-4">
         <Group id="s-biz" title="Business info" note="Printed on every invoice.">
           <Input label="Your name" value={profile.name} onChange={(e) => setP({ name: e.target.value })} />
           <Input label="Business name" value={profile.business} onChange={(e) => setP({ business: e.target.value })} />
@@ -83,7 +83,7 @@ export function Settings() {
         <Group id="s-theme" title="Appearance">
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-2 type-label text-ink">Theme</legend>
-            <div className="flex max-w-90 rounded-sm border border-rule-strong">
+            <div className="flex max-w-90 gap-1 rounded-pill bg-sunken p-1">
               {[
                 ['light', 'Light'],
                 ['dark', 'Dark'],
@@ -92,8 +92,8 @@ export function Settings() {
                 <label
                   key={v}
                   className={cn(
-                    'flex h-(--size-control-touch) flex-1 cursor-pointer items-center justify-center type-label-strong has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring md:h-(--size-control)',
-                    settings.theme === v ? 'bg-ink text-paper' : 'text-ink hover-fine:bg-sunken',
+                    'flex h-(--size-control-touch) flex-1 cursor-pointer items-center justify-center rounded-pill type-label-strong has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring md:h-(--size-control)',
+                    settings.theme === v ? 'bg-cta-fill text-on-cta' : 'text-ink hover-fine:bg-sunken',
                   )}
                 >
                   <input type="radio" name="theme" value={v} checked={settings.theme === v} onChange={() => dispatch({ type: 'theme', theme: v })} className="sr-only" />
