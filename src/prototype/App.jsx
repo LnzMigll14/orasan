@@ -7,6 +7,9 @@ import { ClientDetail, Clients } from './screens/Clients'
 import { Dashboard } from './screens/Dashboard'
 import { Onboarding } from './screens/Onboarding'
 import { Timer } from './screens/Timer'
+import { InvoiceBuilder, InvoiceDetail, InvoiceSent, Invoices } from './screens/Invoices'
+import { PublicInvoice } from './screens/PublicInvoice'
+import { Settings } from './screens/Settings'
 
 function Root() {
   return (
@@ -23,6 +26,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: '/onboarding/:step', element: <Onboarding /> },
+      { path: '/i/:token', element: <PublicInvoice /> },
       {
         element: <ProtoShell />,
         children: [
@@ -30,6 +34,11 @@ const router = createBrowserRouter([
           { path: 'timer', element: <Timer /> },
           { path: 'clients', element: <Clients /> },
           { path: 'clients/:id', element: <ClientDetail /> },
+          { path: 'invoices', element: <Invoices /> },
+          { path: 'invoices/new', element: <InvoiceBuilder /> },
+          { path: 'invoices/:id', element: <InvoiceDetail /> },
+          { path: 'invoices/:id/sent', element: <InvoiceSent /> },
+          { path: 'settings', element: <Settings /> },
         ],
       },
     ],
