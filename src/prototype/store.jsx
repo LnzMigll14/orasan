@@ -164,7 +164,7 @@ export function StoreProvider({ children }) {
     const apply = () => {
       const dark = state.settings.theme === 'dark' || (state.settings.theme === 'system' && mq.matches)
       document.documentElement.classList.toggle('dark', dark)
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#151412' : '#F6F4EF')
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#121219' : '#EFEFF5')
     }
     apply()
     mq.addEventListener('change', apply)

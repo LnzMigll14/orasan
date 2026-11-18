@@ -8,7 +8,7 @@ import { formatClock } from './format'
  * Start and Stop share one grid cell, so the timer toggles in place with one tap.
  * The inactive button fades out (150ms) and is inert, never just hidden by color.
  */
-function StartStop({ running, onStart, onStop, startLabel, stopLabel, size, startDisabled, startKind = 'primary' }) {
+function StartStop({ running, onStart, onStop, startLabel, stopLabel, size, startDisabled, startKind = 'primary', stopKind = 'secondary' }) {
   return (
     <span className="grid flex-none">
       <Button
@@ -26,7 +26,7 @@ function StartStop({ running, onStart, onStop, startLabel, stopLabel, size, star
         {startLabel}
       </Button>
       <Button
-        kind="secondary"
+        kind={stopKind}
         size={size}
         onClick={onStop}
         inert={running ? undefined : true}
@@ -166,7 +166,7 @@ export function TimerControl({
         className={cn(
           'flex h-(--size-dock) items-center gap-3 px-4',
           band,
-          running ? 'bg-tint' : 'bg-surface',
+          'bg-surface',
           className,
         )}
       >
@@ -202,13 +202,14 @@ export function TimerControl({
       className={cn(
         'flex flex-col gap-4 rounded-lg p-5 shadow-card md:p-6',
         band,
-        running ? 'bg-tint' : 'bg-surface',
+        'bg-surface',
         className,
       )}
     >
       <div className="flex items-center gap-3">
-        {running ? <span className="running-dot" /> : null}
-        <Clock seconds={elapsed} running={running} className={cn('type-timer', running ? 'text-ink' : 'text-faint')} />
+        {running ? <span className="running-dot size-3" /> : null}
+        <Clock seconds={elapsed} running={running} className={cn('type-timer', running ? 'text-accent' : 'text-faint')} />
+        {running ? <span className="ml-auto rounded-pill bg-tint px-3 py-1 type-label-strong text-accent">Tracking</span> : null}
       </div>
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <label htmlFor={descId} className="sr-only">
@@ -236,6 +237,7 @@ export function TimerControl({
           stopLabel="Stop timer"
           size="auto"
           startDisabled={noProject}
+          stopKind="primary"
         />
       </div>
     </section>

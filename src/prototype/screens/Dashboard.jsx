@@ -18,7 +18,7 @@ import { TODAY } from '../mockData'
 import { daysLate, entrySeconds, invoiceClient, invoiceStatus, invoiceTotal, unbilledByClient, unbilledByCurrency } from '../model'
 import { useStore } from '../store'
 
-const GOAL_HOURS = 8
+const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`
 
 /** Sum per currency, never across currencies: "₱42,075" + "and $123". */
 function money(rows) {
@@ -69,13 +69,14 @@ export function Dashboard() {
   const first = state.profile.name.split(' ')[0]
   const ready = unbilledByClient(state).sort((a, b) => b.amount - a.amount)
   const open = state.invoices.filter((i) => invoiceStatus(i) !== 'paid')
-  const sent = open.filter((i) => ['sent', 'overdue'].includes(invoiceStatus(i)))
+  // Disjoint groups: sent-and-not-due and overdue never overlap, so the cards can be read alone.
+  const sent = open.filter((i) => invoiceStatus(i) === 'sent')
   const overdue = open.filter((i) => invoiceStatus(i) === 'overdue')
 
   if (!ready.length && !state.invoices.length) {
     return (
       <>
-        <Header first={first} />
+        <Header first={first} fresh />
         <EmptyState
           headline="Wala pang singilin. Nothing to bill yet."
           detail="Track time against a client’s project and it will show up here, ready to invoice."
@@ -101,42 +102,34 @@ export function Dashboard() {
   const days = lastSevenDays(state)
   const worked = days.filter((d) => d.value)
   const avg = worked.length ? worked.reduce((s, d) => s + d.value, 0) / worked.length : 0
+  const goal = Number(state.settings.dailyGoal) || 0
+  const overdueTo = overdue.length === 1 ? `/invoices/${overdue[0].id}` : overdue.length ? '/invoices' : undefined
 
   return (
     <>
       <Header first={first} />
 
       <section aria-label="Money owed" className="grid gap-3 md:grid-cols-3">
-        <StatCard tone="lavender" icon="wallet" label="Unbilled time" value={unbilled.value} note={unbilled.note ?? `${ready.length} clients`} />
-        <StatCard tone="blend" icon="sent" label="Waiting on sent invoices" value={waiting.value} note={waiting.note ?? `${sent.length} invoices`} />
+        <StatCard tone="lavender" icon="wallet" label="Unbilled time" value={unbilled.value} note={unbilled.note ?? plural(ready.length, 'client')} />
+        <StatCard tone="blend" icon="sent" label="Sent, not due yet" value={waiting.value} note={waiting.note ?? plural(sent.length, 'invoice')} />
         <StatCard
           tone="rose"
           icon="overdue"
           label="Overdue"
           value={late.value}
-          note={overdue.length ? (overdue.length === 1 ? `${invoiceClient(state, overdue[0]).name} · ${daysLate(overdue[0])} days late` : `${overdue.length} invoices`) : 'Nothing overdue'}
+          to={overdueTo}
+          note={
+            overdue.length
+              ? overdue.length === 1
+                ? `${invoiceClient(state, overdue[0]).name} · ${daysLate(overdue[0])} days late`
+                : plural(overdue.length, 'invoice')
+              : 'Nothing overdue'
+          }
         />
       </section>
 
       <div className="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1fr)_22rem]">
-        <Card aria-labelledby="hours-h" className="p-5 md:p-6">
-          <CardHead id="hours-h" title="Hours tracked">
-            <span className="type-label text-muted">Last 7 days</span>
-            <span className="ml-3 flex items-baseline gap-1 border-l border-rule pl-3">
-              <span className="type-stat text-ink">{avg.toFixed(1)}</span>
-              <span className="type-label text-muted">h avg</span>
-            </span>
-          </CardHead>
-          <BarChart
-            className="mt-6"
-            data={days}
-            reference={GOAL_HOURS}
-            referenceLabel={`${GOAL_HOURS} h goal`}
-            caption="Hours tracked per day, last 7 days"
-          />
-        </Card>
-
-        <Card aria-labelledby="ready-h" className="flex flex-col p-5 md:p-6">
+        <Card aria-labelledby="ready-h" className="flex flex-col p-5 md:p-6 xl:col-start-2 xl:row-start-1">
           <CardHead id="ready-h" title="Ready to invoice">
             <Link to="/clients" className="type-label-strong text-muted no-underline hover-fine:text-ink">
               See all
@@ -174,6 +167,23 @@ export function Dashboard() {
             Add client
           </Button>
         </Card>
+        <Card aria-labelledby="hours-h" className="p-5 md:p-6 xl:col-start-1 xl:row-start-1">
+          <CardHead id="hours-h" title="Hours tracked">
+            <span className="type-label text-muted">Last 7 days</span>
+            <span className="ml-3 flex items-baseline gap-1 border-l border-rule pl-3">
+              <span className="type-stat text-ink">{avg.toFixed(1)}</span>
+              <span className="type-label text-muted">h a day worked</span>
+            </span>
+          </CardHead>
+          <BarChart
+            className="mt-6"
+            data={days}
+            reference={goal || undefined}
+            referenceLabel={`${goal} h goal`}
+            caption="Hours tracked per day, last 7 days"
+          />
+        </Card>
+
       </div>
 
       <section aria-labelledby="tracker-h" className="mt-8">
@@ -194,7 +204,7 @@ export function Dashboard() {
               <thead className="hidden md:table-header-group">
                 <tr className="border-b border-rule type-column-head text-muted">
                   <th scope="col" className="px-5 py-3 text-left font-semibold">Invoice</th>
-                  <th scope="col" className="px-3 py-3 text-left font-semibold">Term used</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold">Payment term</th>
                   <th scope="col" className="px-3 py-3 text-left font-semibold">Issued</th>
                   <th scope="col" className="px-3 py-3 text-left font-semibold">Due</th>
                   <th scope="col" className="px-3 py-3 text-left font-semibold">Status</th>
@@ -213,13 +223,20 @@ export function Dashboard() {
                           <Link to={`/invoices/${inv.id}`} className="flex flex-col no-underline">
                             <span className="type-label-strong text-ink">{inv.number}</span>
                             <span className="type-label text-muted">{client.name}</span>
+                            <span className="type-label text-muted md:hidden">
+                              {status === 'overdue' ? `${daysLate(inv)} days late` : `Due ${formatDate(inv.due)}`}
+                            </span>
                           </Link>
                         </td>
                         <td className="hidden px-3 md:table-cell">
                           {status === 'draft' ? (
                             <span className="type-label text-faint">Not sent</span>
                           ) : (
-                            <ProgressRing value={termProgress(inv)} tone={status === 'overdue' ? 'rose' : 'accent'} />
+                            <ProgressRing
+                              value={termProgress(inv)}
+                              tone={status === 'overdue' ? 'rose' : 'accent'}
+                              label={status === 'overdue' ? `${daysLate(inv)} days late` : `${Math.max(0, Math.ceil((inv.due - TODAY) / 86400000))} days left`}
+                            />
                           )}
                         </td>
                         <td className="hidden px-3 type-figure text-muted md:table-cell">{formatDate(inv.issued)}</td>
@@ -242,17 +259,19 @@ export function Dashboard() {
   )
 }
 
-function Header({ first }) {
+function Header({ first, fresh = false }) {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
       <div className="flex flex-col">
-        <h1 className="m-0 type-display text-ink">Welcome back, {first}!</h1>
+        <h1 className="m-0 type-display text-ink">{fresh ? `Welcome, ${first}!` : `Welcome back, ${first}!`}</h1>
         <p className="type-body text-muted">{TODAY.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
       </div>
-      <Button as={Link} to="/invoices/new">
-        <Icon name="plus" />
-        New invoice
-      </Button>
+      {fresh ? null : (
+        <Button as={Link} to="/invoices/new">
+          <Icon name="plus" />
+          New invoice
+        </Button>
+      )}
     </div>
   )
 }

@@ -54,7 +54,7 @@ function Meta({ label, children, className }) {
   return (
     <div className={cn('flex min-w-0 flex-col gap-0.5', className)}>
       <dt className="type-column-head text-muted">{label}</dt>
-      <dd className="m-0 type-doc-body text-ink [overflow-wrap:anywhere]">{children}</dd>
+      <dd className="m-0 type-doc-body text-ink break-words">{children}</dd>
     </div>
   )
 }
@@ -84,8 +84,8 @@ export function InvoiceSheet({ invoice, onCopy, className, statusSlot, headingLe
         </div>
       </header>
 
-      <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 @md:grid-cols-4">
-        <Meta label="Billed to" className="col-span-2 @md:col-span-1">
+      <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 @md:grid-cols-3">
+        <Meta label="Billed to" className="col-span-2 @md:col-span-3">
           {to.name}
           {to.email ? <span className="block text-muted">{to.email}</span> : null}
         </Meta>

@@ -4,6 +4,7 @@ import {
   Avatar,
   Badge,
   Card,
+  cn,
   Icon,
   Button,
   DayHeader,
@@ -205,6 +206,8 @@ export function ClientDetail() {
   const unbilled = state.entries.filter((e) => !e.invoiceId && pIds.includes(e.projectId))
   const unbilledAmount = unbilled.reduce((s, e) => s + (entrySeconds(state, e) / 3600) * projectRate(state, e.projectId), 0)
   const invoices = state.invoices.filter((i) => i.clientId === client.id).sort((a, b) => b.issued - a.issued)
+  const owed = invoices.filter((i) => ['sent', 'overdue'].includes(invoiceStatus(i))).reduce((s, i) => s + invoiceTotal(state, i), 0)
+  const overdueAmt = invoices.filter((i) => invoiceStatus(i) === 'overdue').reduce((s, i) => s + invoiceTotal(state, i), 0)
 
   return (
     <div className="flex flex-col gap-4">
@@ -215,16 +218,17 @@ export function ClientDetail() {
         <PageHeader title={client.name} className="mt-1">
           {unbilled.length ? <Button onClick={() => navigate(`/invoices/new?client=${client.id}`)}>Create invoice</Button> : null}
         </PageHeader>
-        <dl className="-mt-2 grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-4">
+        <dl className="-mt-2 grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3 xl:grid-cols-5">
           {[
             ['Contact', client.contact || '—'],
             ['Email', client.email || '—'],
             ['Rate', `${formatMoney(client.rate, client.currency)}/h · ${client.currency}`],
             ['Unbilled', formatMoney(unbilledAmount, client.currency)],
+            ['Owed on invoices', owed ? formatMoney(owed, client.currency) + (overdueAmt ? (overdueAmt === owed ? ', all overdue' : ` · ${formatMoney(overdueAmt, client.currency)} overdue`) : '') : '—'],
           ].map(([k, v]) => (
             <div key={k} className="flex min-w-0 flex-col gap-0.5">
               <dt className="type-column-head text-muted">{k}</dt>
-              <dd className="m-0 truncate type-figure text-ink">{v}</dd>
+              <dd className={cn("m-0 type-figure", k === "Owed on invoices" && overdueAmt ? "text-overdue" : "text-ink", k === "Email" ? "truncate" : "")}>{v}</dd>
             </div>
           ))}
         </dl>
@@ -248,24 +252,6 @@ export function ClientDetail() {
         </ul>
       </Card>
 
-      <Card aria-labelledby="unb-h" className="p-5 md:p-6">
-        <SectionHead id="unb-h" title="Unbilled time" aside={formatMoney(unbilledAmount, client.currency)} />
-        {unbilled.length ? (
-          <div className="-mx-5 mt-2 flex flex-col gap-4 md:-mx-6">
-            {groupByDay(state, unbilled).map((d) => (
-              <div key={d.key}>
-                <DayHeader label={d.label} total={d.total} level={3} />
-                {d.entries.map((e) => (
-                  <EntryRow key={e.id} {...entryRowProps(state, e)} client={null} onResume={() => resume(e)} onEdit={() => setEditing(e)} />
-                ))}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="py-4 type-body text-muted">No unbilled time for this client.</p>
-        )}
-      </Card>
-
       <Card aria-labelledby="inv-h" className="p-5 md:p-6">
         <SectionHead id="inv-h" title="Invoices" aside={`${invoices.length}`} />
         {invoices.length ? (
@@ -284,6 +270,24 @@ export function ClientDetail() {
           <p className="py-4 type-body text-muted">No invoices yet.</p>
         )}
       </Card>
+      <Card aria-labelledby="unb-h" className="p-5 md:p-6">
+        <SectionHead id="unb-h" title="Unbilled time" aside={formatMoney(unbilledAmount, client.currency)} />
+        {unbilled.length ? (
+          <div className="-mx-5 mt-2 flex flex-col gap-4 md:-mx-6">
+            {groupByDay(state, unbilled).map((d) => (
+              <div key={d.key}>
+                <DayHeader label={d.label} total={d.total} level={3} />
+                {d.entries.map((e) => (
+                  <EntryRow key={e.id} {...entryRowProps(state, e)} client={null} onResume={() => resume(e)} onEdit={() => setEditing(e)} />
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="py-4 type-body text-muted">No unbilled time for this client.</p>
+        )}
+      </Card>
+
       <EditEntry entry={editing} onClose={() => setEditing(null)} />
     </div>
   )

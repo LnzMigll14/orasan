@@ -163,6 +163,8 @@ Source of truth for code: `src/styles/tokens.css`. Every text pair passes WCAG A
 
 **The Label Rule.** Status is never color alone: every chip carries an icon and its word.
 
+**The Disjoint Cards Rule.** The three money cards never overlap: sent-and-not-due excludes overdue, so no amount is counted twice.
+
 **The Separate Currencies Rule.** PHP and USD are never added together. A stat card shows the default currency large and the other below ("and $141").
 
 ## Typography
@@ -187,7 +189,7 @@ Source of truth for code: `src/styles/tokens.css`. Every text pair passes WCAG A
 
 - **Desktop (lg, 1024px+):** a 248px sidebar on the page background with the brand mark, grouped icon nav (Dashboard, Timer, Clients, Invoices; then Settings), an overdue count badge on Invoices, and the profile at the bottom. The content column (max 1180px, left-aligned, 32px side padding) has a header strip holding the timer pill on the right.
 - **Mobile and tablet (below lg):** no sidebar. The timer dock (64px) sits directly above an icon-over-label tab bar (64px). Content uses 16px side padding and stacks.
-- **Dashboard:** greeting and the dark "New invoice" pill; three stat cards; a "Hours tracked" chart card beside a "Ready to invoice" card (stacked below xl); the "Invoice tracker" table.
+- **Dashboard:** greeting and the dark "New invoice" pill (hidden on first run); three disjoint stat cards (Unbilled · Sent, not due yet · Overdue, which links to the overdue invoice); "Ready to invoice" beside an "Hours tracked" chart (Ready comes first below xl); the "Invoice tracker" table, whose rings read "6 days left" or "11 days late".
 - **Spacing:** 4px base. Cards use 20px padding on mobile and 24px on desktop, with 12px gaps between cards.
 
 ## Elevation & Depth
@@ -202,11 +204,11 @@ Radius scale: 4 (checkbox), 8 (brand mark), 12 (inputs, message box), 16 (cards,
 
 - **Button:** primary = dark pill (`cta`), secondary = white pill with a `rule` outline, ghost, danger, and danger-ghost (quiet delete). 44px on touch widths, 40px from md. Press scales to 0.97.
 - **StatCard:** pastel tint, white circular icon, muted label, `type-stat` value, muted note.
-- **BarChart:** hatched bars on `chart-bar`; today solid `chart-active` with an accent value pill; values printed on every bar; a dashed rose goal line with a pill label; faint axis labels; a screen-reader table with the same data.
+- **BarChart:** hatched bars on `chart-bar`; today solid `chart-active` with an accent value pill; values printed on every bar; a dashed rose goal line set in Settings → Daily goal (off hides it); faint axis labels; a screen-reader table with the same data. 160px tall on mobile, 224px from md.
 - **Card / CardHead:** white rounded-16 panel; headline title with optional controls on the right.
 - **Avatar:** initials on a stable pastel tone. **ProgressRing:** a small ring, always followed by its percentage.
 - **Badge (status chip):** pill with icon and word: Draft (file-pen), Sent (send), Paid (circle-check), Overdue (triangle-alert).
-- **TimerControl:** header pill (desktop), dock (mobile) and hero card (Timer screen). Running = accent tint with a pulsing accent dot.
+- **TimerControl:** header pill (desktop), dock (mobile) and hero card (Timer screen). Running header pill and dock use the accent tint with a pulsing dot; the running hero stays white with a periwinkle clock, a "Tracking" tag and a dark Stop pill (Start and Stop are never visible together).
 - **EntryRow:** inside day cards; tap the description to edit; a play button (mobile) or "Resume" (desktop); billed rows are locked with the invoice number.
 - **SlideOver / Dialog:** raised, radius 20, overlay shadow; the slide-over floats 8px from the right edge on desktop and is a full sheet on mobile.
 - **Sidebar / TabBar / NavItem:** icon + label; the active sidebar item is a white pill.

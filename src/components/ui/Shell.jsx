@@ -28,7 +28,10 @@ export function NavItem({ to, icon, children, placement = 'side', end, badge }) 
           {icon ? <Icon name={icon} size={placement === 'tab' ? 20 : 18} strokeWidth={isActive ? 2.25 : 1.75} /> : null}
           <span className="truncate">{children}</span>
           {badge ? (
-            <span className="ml-auto rounded-pill bg-rose-tint px-2 type-label-strong text-overdue">{badge}</span>
+            <span className="ml-auto rounded-pill bg-rose-tint px-2 type-label-strong text-overdue">
+              {badge}
+              <span className="sr-only"> overdue</span>
+            </span>
           ) : null}
         </>
       )}

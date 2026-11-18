@@ -92,7 +92,7 @@ export function ToastProvider({ children }) {
       <div
         role="status"
         aria-live="polite"
-        className="pointer-events-none fixed bottom-[var(--toast-offset,16px)] left-4 z-50 flex flex-col items-start gap-2 md:bottom-8 md:left-8"
+        className="pointer-events-none fixed bottom-[var(--toast-offset,16px)] left-4 z-50 flex flex-col items-start gap-2 lg:bottom-8 lg:left-8"
       >
         {items.map((t) => (
           <ToastItem key={t.id} item={t} onDone={done} />

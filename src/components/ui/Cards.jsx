@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { Icon } from './Icon'
 import { cn } from './cn'
 
@@ -30,9 +31,18 @@ const TONE = {
 }
 
 /** Pastel stat card: icon in a white circle, label, big tabular value, small unit. */
-export function StatCard({ tone = 'lavender', icon, label, value, unit, note, className }) {
+export function StatCard({ tone = 'lavender', icon, label, value, unit, note, to, className }) {
+  const Root = to ? Link : 'div'
   return (
-    <div className={cn('flex min-w-0 items-center gap-3 rounded-lg p-4', TONE[tone], className)}>
+    <Root
+      to={to}
+      className={cn(
+        'flex min-w-0 items-center gap-3 rounded-lg p-4 no-underline',
+        to && 'pressable cursor-pointer ring-rose-ink/0 hover-fine:ring-2 hover-fine:ring-rose-ink/30',
+        TONE[tone],
+        className,
+      )}
+    >
       <span className="flex size-10 flex-none items-center justify-center rounded-pill bg-surface text-ink">
         <Icon name={icon} size={18} />
       </span>
@@ -44,7 +54,8 @@ export function StatCard({ tone = 'lavender', icon, label, value, unit, note, cl
         </span>
         {note ? <span className="type-label text-muted">{note}</span> : null}
       </div>
-    </div>
+      {to ? <Icon name="arrow" size={16} className="ml-auto text-muted" /> : null}
+    </Root>
   )
 }
 
@@ -109,7 +120,7 @@ export function BarChart({ data, max, reference, referenceLabel, caption, unit =
   return (
     <figure className={cn('m-0', className)}>
       <div className="flex gap-3" aria-hidden="true">
-        <div className="flex h-56 flex-col justify-between pb-0 type-label text-faint">
+        <div className="flex h-40 flex-col justify-between pb-0 type-label text-faint md:h-56">
           {ticks.map((t) => (
             <span key={t} className="-translate-y-2 leading-4">
               {Math.round(t * 10) / 10}
@@ -117,7 +128,7 @@ export function BarChart({ data, max, reference, referenceLabel, caption, unit =
           ))}
         </div>
         <div className="relative flex-1">
-          <div className="relative flex h-56 items-end gap-2 md:gap-3">
+          <div className="relative flex h-40 items-end gap-2 md:h-56 md:gap-3">
             {reference ? (
               <div
                 className="pointer-events-none absolute inset-x-0 z-10 border-t-2 border-dashed border-rose-ink"

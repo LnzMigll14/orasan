@@ -208,4 +208,12 @@ export function copyMessage(state, invoice) {
   return `Hi ${first}, here is invoice ${invoice.number} for ${total}, due ${formatDate(invoice.due)}. You can view it and see payment details here: https://${publicLink(invoice)}. Thank you!`
 }
 
+/** Polite overdue reminder, ready to paste. Client-facing, so English only. */
+export function reminderMessage(state, invoice) {
+  const client = invoiceClient(state, invoice)
+  const total = formatMoney(invoiceTotal(state, invoice), client.currency)
+  const first = client.contact?.split(' ')[0] ?? 'there'
+  return `Hi ${first}, a friendly reminder that invoice ${invoice.number} for ${total} was due on ${formatDate(invoice.due)}. You can view it and the payment details here: https://${publicLink(invoice)}. If you've already paid, please send me the reference number so I can mark it as paid. Thank you!`
+}
+
 export { formatHours }

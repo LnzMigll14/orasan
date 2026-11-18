@@ -24,6 +24,7 @@ import { TODAY } from '../mockData'
 import {
   byId,
   copyMessage,
+  reminderMessage,
   entryAmount,
   entryRowProps,
   entrySeconds,
@@ -192,7 +193,21 @@ export function InvoiceBuilder() {
             </Select>
           </div>
         ) : (
-          <EmptyState headline="Nothing to invoice yet." detail="Every tracked entry is already on an invoice." rows={2} band={false} />
+          <EmptyState
+            headline={state.entries.length ? 'Nothing to invoice yet.' : 'No tracked time yet.'}
+            detail={
+              state.entries.length
+                ? 'Every tracked entry is already on an invoice. New time will show up here.'
+                : 'Invoices are built from tracked time. Start the timer on a client’s project first.'
+            }
+            action={
+              <Button as={Link} to={state.projects.length ? '/timer' : '/clients?new=1'}>
+                {state.projects.length ? 'Go to timer' : 'Add a client'}
+              </Button>
+            }
+            rows={2}
+            band={false}
+          />
         )}
       </>
     )
@@ -538,6 +553,17 @@ export function InvoiceDetail() {
                 >
                   Copy link
                 </Button>
+                {status === 'overdue' ? (
+                  <Button
+                    kind="secondary"
+                    onClick={async () => {
+                      const ok = await copyText(reminderMessage(state, invoice))
+                      toast(ok ? `Reminder copied. Paste it into your chat with ${client.name}.` : 'Could not copy the reminder.')
+                    }}
+                  >
+                    Copy reminder
+                  </Button>
+                ) : null}
                 <Button onClick={() => setPaying(true)} className="order-first md:order-none">
                   Mark as paid
                 </Button>

@@ -80,6 +80,17 @@ export function Settings() {
           </Select>
         </Group>
 
+        <Group id="s-goal" title="Daily goal" note="Shown as a dashed line on the Dashboard’s hours chart.">
+          <Select label="Hours a day" value={String(settings.dailyGoal || 0)} onChange={(e) => setS({ dailyGoal: Number(e.target.value) })}>
+            <option value="0">Off, no goal line</option>
+            {[4, 5, 6, 7, 8, 9, 10].map((h) => (
+              <option key={h} value={h}>
+                {h} hours
+              </option>
+            ))}
+          </Select>
+        </Group>
+
         <Group id="s-theme" title="Appearance">
           <fieldset className="m-0 border-0 p-0">
             <legend className="mb-2 type-label text-ink">Theme</legend>

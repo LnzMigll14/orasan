@@ -75,6 +75,7 @@ export const SETTINGS = {
   nextNumber: 13,
   dueDays: 14,
   rounding: 'none', // none | 6 | 15 (minutes, per entry, rounded up)
+  dailyGoal: 8, // hours; 0 hides the goal line on the Dashboard chart
   theme: 'system', // light | dark | system
 }
 

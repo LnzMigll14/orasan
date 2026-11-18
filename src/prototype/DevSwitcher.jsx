@@ -52,7 +52,7 @@ export function DevSwitcher() {
     go(to)
   }
   return (
-    <div className="fixed right-2 bottom-[calc(var(--size-bar)+var(--size-tabbar)+8px)] z-[35] flex flex-col-reverse items-end gap-2 md:right-4 md:bottom-4 print:hidden">
+    <div className="fixed right-2 bottom-[calc(var(--size-bar)+var(--size-tabbar)+8px)] z-[35] flex flex-col-reverse items-end gap-2 lg:right-4 lg:bottom-4 print:hidden">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
