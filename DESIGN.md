@@ -145,7 +145,7 @@ Orasan is a dark, quiet working surface, the kind you keep open all day beside c
 The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light).
 
 Where things live:
-- **`src/`**: a clean React + Vite + Tailwind 4 boilerplate (JavaScript). The tokens below are defined in `src/styles/tokens.css` inside Tailwind's `@theme`, so each one is also a utility (`bg-surface`, `text-text-secondary`, `rounded-lg`, `text-display`). No screens are built yet.
+- **`src/`**: a clean React + Vite + Tailwind 4 boilerplate (JavaScript). The tokens below are defined in `src/styles/tokens.css` inside Tailwind's `@theme`, so each one is also a utility (`bg-surface`, `text-text-secondary`, `rounded-lg`, `text-display`). No screens are built yet. Brand mark: `src/components/brand/Logo.jsx` (`Logo`, `LogoMark`) and `public/favicon.svg`. A style guide at `/styleguide` shows every token with its class. Extra type helpers: `figure` (bold, tabular) and `caps-label` (invoice labels).
 - **`design/screenshots/`**: full-page 2× screenshots of every screen at 1440 and 375, the visual reference for building.
 - **Tag `prototype-v1`**: the finished prototypes this system was proven on: the static HTML/CSS pages for Figma (`static/`) and the React prototype (`src/`), both in Midnight amber.
 - Earlier directions: tag `ledger-v1` (paper ledger), tag `soft-dashboard-v1` (soft lavender dashboard).

@@ -31,6 +31,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
   ::selection {
     background: var(--color-amber-tint);
     color: var(--color-text);
@@ -45,6 +51,21 @@
     scrollbar-color: var(--color-border-strong) transparent;
     scrollbar-width: thin;
   }
+}
+
+/* Money and durations: bold, tabular figures that line up in columns. */
+@utility figure {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small uppercase labels on the invoice document (column heads, meta labels). */
+@utility caps-label {
+  font-size: var(--text-micro);
+  line-height: var(--text-micro--line-height);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* Reduced motion: keep state changes as short fades, drop movement. */

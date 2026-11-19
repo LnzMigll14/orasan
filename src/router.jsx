@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import { Home } from './pages/Home'
+import { StyleGuide } from './pages/StyleGuide'
 
 /**
  * Routes. Add pages here as you build them, e.g.
@@ -8,4 +9,6 @@ import { Home } from './pages/Home'
  */
 export const router = createBrowserRouter([
   { path: '/', element: <Home /> },
+  // Design reference: every token with its Tailwind class. Remove or hide before launch.
+  { path: '/styleguide', element: <StyleGuide /> },
 ])
