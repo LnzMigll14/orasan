@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0D12" />
+    <title>INV-0009 · Orasan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/motion.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Sidebar">
+        <a class="sidebar__brand" href="index.html" aria-label="Orasan home">
+          <span class="brand-mark">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+          </span>
+          <span class="brand-name">orasan</span>
+        </a>
+
+        <nav class="sidebar__nav" aria-label="Main">
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link" href="index.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="timer.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+                Timer
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="clients.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                Clients
+              </a>
+            </li>
+            <li>
+              <a class="nav-link nav-link--active" aria-current="page" href="invoices.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                Invoices
+                <span class="nav-link__badge">1<span class="visually-hidden"> overdue</span></span>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link" href="settings.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+                Settings
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar__profile">
+          <span class="avatar" aria-hidden="true">MS</span>
+          <span class="sidebar__profile-text">
+            <span class="text-label text-strong truncate">Mika Santos</span>
+            <span class="text-label text-muted truncate">mika@mikasantos.example</span>
+          </span>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="app-header">
+          <div class="app-header__text">
+            <a class="breadcrumb" href="invoices.html"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>Invoices</a>
+            <h1 class="page-title">INV-0009 <span class="status-chip status-chip--overdue"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>Overdue</span></h1>
+          </div>
+
+          <div class="app-header__actions">
+
+            <button class="button button--secondary" type="button" data-copy="https://orasan.app/i/r9x2kq" data-copy-label="Link">Copy link</button>
+            <button class="button button--secondary" type="button" data-copy="Hi Carla, a friendly reminder that invoice INV-0009 for ₱36,000.00 was due on 7 Nov 2026." data-copy-label="Reminder">Copy reminder</button>
+            <a class="button button--primary" href="#mark-paid"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg><span class="app-header__new-label">Mark as paid</span></a>
+          </div>
+        </header>
+
+        <main id="main" class="page" tabindex="-1">
+          <div class="split-grid split-grid--detail">
+            <article class="invoice-sheet" aria-label="Invoice INV-0009">
+              <div class="invoice-sheet__head">
+                <div class="invoice-sheet__from">
+                  <span class="invoice-sheet__business">Mika Santos Studio</span>
+                  <span>Mika Santos</span>
+                  <span>mika@mikasantos.example</span>
+                </div>
+                <div class="invoice-sheet__title-block">
+                  <h2 class="invoice-sheet__title">Invoice INV-0009</h2>
+                  <span class="paper-chip paper-chip--overdue"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>Overdue</span>
+                </div>
+              </div>
+
+              <dl class="invoice-sheet__meta">
+                <div class="invoice-sheet__meta-item invoice-sheet__meta-item--wide">
+                  <dt class="invoice-sheet__label">Billed to</dt>
+                  <dd class="text-strong">Reyes Studio</dd>
+                  <dd class="invoice-sheet__muted">billing@reyesstudio.example</dd>
+                </div>
+                <div class="invoice-sheet__meta-item">
+                  <dt class="invoice-sheet__label">Issued</dt>
+                  <dd>24 Oct 2026</dd>
+                </div>
+                <div class="invoice-sheet__meta-item">
+                  <dt class="invoice-sheet__label">Due</dt>
+                  <dd>7 Nov 2026</dd>
+                </div>
+                <div class="invoice-sheet__meta-item">
+                  <dt class="invoice-sheet__label">Amount due</dt>
+                  <dd class="figure">₱36,000.00</dd>
+                </div>
+              </dl>
+
+              <div class="invoice-lines" role="table" aria-label="Line items">
+                <div class="invoice-line invoice-line--head" role="row">
+                  <span class="invoice-line__item" role="columnheader">Description</span>
+                  <span class="invoice-line__num invoice-line__num--wide" role="columnheader">Hours</span>
+                  <span class="invoice-line__num invoice-line__num--wide" role="columnheader">Rate</span>
+                  <span class="invoice-line__num" role="columnheader">Amount</span>
+                </div>
+                <div class="invoice-line">
+                  <div class="invoice-line__item">
+                    <span class="text-strong">Brand discovery and research</span>
+                    <span class="text-label invoice-sheet__muted">13–24 Oct<span class="invoice-line__period-extra"> · 30.00 h × ₱1,200.00</span></span>
+                  </div>
+                  <span class="invoice-line__num invoice-line__num--wide figure">30.00</span>
+                  <span class="invoice-line__num invoice-line__num--wide figure">₱1,200.00</span>
+                  <span class="invoice-line__num figure">₱36,000.00</span>
+                </div>
+              </div>
+
+              <div class="invoice-totals">
+                <div class="invoice-totals__row invoice-sheet__muted"><span>Subtotal</span><span class="figure">₱36,000.00</span></div>
+                <div class="invoice-totals__row invoice-totals__row--total"><span>Total (PHP)</span><span class="figure">₱36,000.00</span></div>
+              </div>
+
+              <section class="invoice-pay" aria-label="How to pay">
+                <h3 class="text-strong">How to pay</h3>
+                <div class="invoice-pay__methods">
+                  <div class="invoice-pay__method">
+                    <span class="text-label text-strong">GCash</span>
+                    <div class="invoice-pay__row">
+                      <span class="invoice-pay__key">Account name</span>
+                      <span class="invoice-pay__value truncate">Mika Santos</span>
+                    </div>
+                    <div class="invoice-pay__row">
+                      <span class="invoice-pay__key">Number</span>
+                      <span class="invoice-pay__value truncate">0917 555 0142</span>
+                    </div>
+                  </div>
+                  <div class="invoice-pay__method">
+                    <span class="text-label text-strong">Bank transfer</span>
+                    <div class="invoice-pay__row">
+                      <span class="invoice-pay__key">Bank</span>
+                      <span class="invoice-pay__value truncate">BPI</span>
+                    </div>
+                    <div class="invoice-pay__row">
+                      <span class="invoice-pay__key">Account name</span>
+                      <span class="invoice-pay__value truncate">Mika Santos</span>
+                    </div>
+                    <div class="invoice-pay__row">
+                      <span class="invoice-pay__key">Account no.</span>
+                      <span class="invoice-pay__value truncate">1234 5678 90</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <p class="invoice-sheet__muted">Please include INV-0009 as the payment reference. Thank you.</p>
+            </article>
+            <div class="side-column">
+              <section class="card" aria-labelledby="history-title">
+                <h2 class="card-title" id="history-title">History</h2>
+                <ol>
+                  <li class="history-item"><span class="text-strong">Created</span><span class="text-label text-muted">24 Oct 2026</span></li>
+                  <li class="history-item"><span class="text-strong">Sent</span><span class="text-label text-muted">24 Oct 2026</span></li>
+                  <li class="history-item"><span class="text-strong history-item__title--overdue">Overdue since</span><span class="text-label text-muted">7 Nov 2026 · 11 days</span></li>
+                </ol>
+              </section>
+              <section class="card" aria-labelledby="billed-title">
+                <h2 class="card-title" id="billed-title">Billed to</h2>
+                <div class="stack">
+                  <a class="inline-link" href="client-detail.html">Reyes Studio</a>
+                  <span class="text-label text-muted">billing@reyesstudio.example</span>
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+
+        <div class="mobile-chrome">
+          <div class="timer-dock timer-control" data-timer>
+            <div class="timer-control__running">
+              <span class="running-dot" aria-hidden="true"></span>
+              <span class="timer-dock__text">
+                <span class="timer-control__project truncate">Reyes · Brand refresh</span>
+                <span class="timer-control__clock" role="timer" data-timer-clock>00:00:00</span>
+              </span>
+            </div>
+            <button class="select-pill select-pill--grow" type="button" aria-haspopup="listbox">
+              <span class="visually-hidden">Project: </span>
+              <span class="select-pill__value">Reyes · Brand refresh</span>
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <span class="timer-control__toggle">
+              <button class="button button--secondary" type="button" data-when="idle" data-timer-start>Start timer</button>
+              <button class="button button--secondary" type="button" data-when="running" data-timer-stop tabindex="-1" aria-hidden="true">Stop</button>
+            </span>
+          </div>
+          <nav class="tab-bar" aria-label="Main">
+            <a class="tab-link" href="index.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+              Dashboard
+            </a>
+            <a class="tab-link" href="timer.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+              Timer
+            </a>
+            <a class="tab-link" href="clients.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              Clients
+            </a>
+            <a class="tab-link tab-link--active" aria-current="page" href="invoices.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+              Invoices
+            </a>
+            <a class="tab-link" href="settings.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+              Settings
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="mark-paid" role="dialog" aria-modal="true" aria-labelledby="mark-paid-title">
+      <a class="overlay__scrim-link" href="#" aria-label="Close"></a>
+      <div class="dialog">
+        <div class="dialog__head">
+          <h2 class="card-title" id="mark-paid-title">Mark INV-0009 as paid</h2>
+          <p class="text-secondary">Reyes Studio · ₱36,000.00 · due 7 Nov 2026</p>
+        </div>
+        <form class="dialog__body">
+          <div class="field">
+            <label class="field__label" for="paid-method">Payment method</label>
+            <select class="select" id="paid-method"><option>GCash — 0917 555 0142</option><option>Bank transfer — BPI 1234 5678 90</option><option>Other</option></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="paid-ref">Reference number</label>
+            <input class="input" id="paid-ref" type="text" value="4012 778 9921" />
+            <span class="field__help">From the GCash, bank or Wise receipt.</span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="paid-date">Date received</label>
+            <input class="input" id="paid-date" type="text" value="18 Nov 2026" />
+          </div>
+        </form>
+        <div class="dialog__foot">
+          <a class="button button--secondary" href="#">Cancel</a>
+          <a class="button button--primary" href="#" data-toast="Bayad na! INV-0009 marked as paid.">Mark as paid</a>
+        </div>
+      </div>
+    </div>
+    <div class="toast-region" role="status" aria-live="polite" data-toast-region></div>
+  </body>
+</html>

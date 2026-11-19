@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0D12" />
+    <title>Settings · Orasan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/motion.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Sidebar">
+        <a class="sidebar__brand" href="index.html" aria-label="Orasan home">
+          <span class="brand-mark">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+          </span>
+          <span class="brand-name">orasan</span>
+        </a>
+
+        <nav class="sidebar__nav" aria-label="Main">
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link" href="index.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="timer.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+                Timer
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="clients.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                Clients
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="invoices.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                Invoices
+                <span class="nav-link__badge">1<span class="visually-hidden"> overdue</span></span>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link nav-link--active" aria-current="page" href="settings.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+                Settings
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar__profile">
+          <span class="avatar" aria-hidden="true">MS</span>
+          <span class="sidebar__profile-text">
+            <span class="text-label text-strong truncate">Mika Santos</span>
+            <span class="text-label text-muted truncate">mika@mikasantos.example</span>
+          </span>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="app-header">
+          <div class="app-header__text">
+            <h1 class="page-title">Settings</h1>
+            <p class="page-subtitle">Changes save as you type.</p>
+          </div>
+
+          <div class="app-header__actions">
+            <div class="app-header__timer header-timer timer-control" data-timer>
+              <div class="timer-control__running">
+                <span class="running-dot" aria-hidden="true"></span>
+                <span class="timer-control__project truncate">Reyes · Brand refresh</span>
+                <span class="timer-control__clock" role="timer" data-timer-clock>00:00:00</span>
+              </div>
+              <button class="select-pill select-pill--grow" type="button" aria-haspopup="listbox">
+                <span class="visually-hidden">Project: </span>
+                <span class="select-pill__value">Reyes · Brand refresh</span>
+                <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              </button>
+              <span class="timer-control__toggle">
+                <button class="button button--secondary" type="button" data-when="idle" data-timer-start>Start timer</button>
+                <button class="button button--secondary" type="button" data-when="running" data-timer-stop tabindex="-1" aria-hidden="true">Stop timer</button>
+              </span>
+            </div>
+
+          </div>
+        </header>
+
+        <main id="main" class="page" tabindex="-1">
+          <section class="card settings-group" aria-label="Business info">
+            <div class="settings-group__intro">
+              <h2 class="card-title">Business info</h2>
+              <p class="text-label text-muted">Printed on every invoice.</p>
+            </div>
+            <div class="settings-group__body">
+              <div class="field"><label class="field__label" for="s-name">Your name</label><input class="input" id="s-name" type="text" value="Mika Santos" /></div>
+              <div class="field"><label class="field__label" for="s-biz">Business name</label><input class="input" id="s-biz" type="text" value="Mika Santos Studio" /></div>
+              <div class="field"><label class="field__label" for="s-email">Email</label><input class="input" id="s-email" type="email" value="mika@mikasantos.example" /></div>
+              <div class="field"><label class="field__label" for="s-tin">TIN</label><input class="input" id="s-tin" type="text" placeholder="Optional" /><span class="field__help">Optional. Orasan does not make BIR-compliant receipts.</span></div>
+            </div>
+          </section>
+          <section class="card settings-group" aria-label="Payment details">
+            <div class="settings-group__intro">
+              <h2 class="card-title">Payment details</h2>
+              <p class="text-label text-muted">Invoices show only the methods that are on and match their currency.</p>
+            </div>
+            <div class="settings-group__body">
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">GCash</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept GCash" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="gca-0">Account name</label><input class="input" id="gca-0" type="text" value="Mika Santos" /></div>
+                <div class="field"><label class="field__label" for="gca-1">Number</label><input class="input" id="gca-1" type="text" value="0917 555 0142" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Maya</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept Maya" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Bank transfer</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept Bank transfer" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="ban-0">Bank</label><input class="input" id="ban-0" type="text" value="BPI" /></div>
+                <div class="field"><label class="field__label" for="ban-1">Account no.</label><input class="input" id="ban-1" type="text" value="1234 5678 90" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Wise</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept Wise" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="wis-0">Email</label><input class="input" id="wis-0" type="text" value="mika@mikasantos.example" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">PayPal</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept PayPal" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="pay-0">Email</label><input class="input" id="pay-0" type="text" value="pay@mikasantos.example" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Payoneer</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept Payoneer" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+            </div>
+          </section>
+          <section class="card settings-group" aria-label="Invoice numbering">
+            <div class="settings-group__intro">
+              <h2 class="card-title">Invoice numbering</h2>
+              <p class="text-label text-muted">Next invoice: INV-0013</p>
+            </div>
+            <div class="settings-group__body">
+              <div class="form-grid form-grid--3">
+                <div class="field"><label class="field__label" for="s-prefix">Prefix</label><input class="input" id="s-prefix" type="text" value="INV-" /></div>
+                <div class="field"><label class="field__label" for="s-next">Next number</label><input class="input" id="s-next" type="text" inputmode="numeric" value="13" /></div>
+                <div class="field"><label class="field__label" for="s-due">Due after (days)</label><input class="input" id="s-due" type="text" inputmode="numeric" value="14" /></div>
+              </div>
+            </div>
+          </section>
+          <section class="card settings-group" aria-label="Rounding">
+            <div class="settings-group__intro">
+              <h2 class="card-title">Rounding</h2>
+              <p class="text-label text-muted">Applied to each entry when it goes on an invoice.</p>
+            </div>
+            <div class="settings-group__body">
+              <div class="field"><label class="field__label" for="s-round">Round each entry</label><select class="select" id="s-round"><option>No rounding</option><option>Up to the next 6 minutes</option><option>Up to the next 15 minutes</option></select></div>
+            </div>
+          </section>
+          <section class="card settings-group" aria-label="Daily goal">
+            <div class="settings-group__intro">
+              <h2 class="card-title">Daily goal</h2>
+              <p class="text-label text-muted">Shown as a dashed line on the Dashboard’s hours chart.</p>
+            </div>
+            <div class="settings-group__body">
+              <div class="field"><label class="field__label" for="s-goal">Hours a day</label><select class="select" id="s-goal"><option>Off, no goal line</option><option selected>8 hours</option><option>6 hours</option></select></div>
+            </div>
+          </section>
+        </main>
+
+        <div class="mobile-chrome">
+          <div class="timer-dock timer-control" data-timer>
+            <div class="timer-control__running">
+              <span class="running-dot" aria-hidden="true"></span>
+              <span class="timer-dock__text">
+                <span class="timer-control__project truncate">Reyes · Brand refresh</span>
+                <span class="timer-control__clock" role="timer" data-timer-clock>00:00:00</span>
+              </span>
+            </div>
+            <button class="select-pill select-pill--grow" type="button" aria-haspopup="listbox">
+              <span class="visually-hidden">Project: </span>
+              <span class="select-pill__value">Reyes · Brand refresh</span>
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <span class="timer-control__toggle">
+              <button class="button button--secondary" type="button" data-when="idle" data-timer-start>Start timer</button>
+              <button class="button button--secondary" type="button" data-when="running" data-timer-stop tabindex="-1" aria-hidden="true">Stop</button>
+            </span>
+          </div>
+          <nav class="tab-bar" aria-label="Main">
+            <a class="tab-link" href="index.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+              Dashboard
+            </a>
+            <a class="tab-link" href="timer.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+              Timer
+            </a>
+            <a class="tab-link" href="clients.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              Clients
+            </a>
+            <a class="tab-link" href="invoices.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+              Invoices
+            </a>
+            <a class="tab-link tab-link--active" aria-current="page" href="settings.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+              Settings
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-region" role="status" aria-live="polite" data-toast-region></div>
+  </body>
+</html>

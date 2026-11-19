@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0D12" />
+    <title>Timer · Orasan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/motion.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Sidebar">
+        <a class="sidebar__brand" href="index.html" aria-label="Orasan home">
+          <span class="brand-mark">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+          </span>
+          <span class="brand-name">orasan</span>
+        </a>
+
+        <nav class="sidebar__nav" aria-label="Main">
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link" href="index.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a class="nav-link nav-link--active" aria-current="page" href="timer.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+                Timer
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="clients.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                Clients
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="invoices.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                Invoices
+                <span class="nav-link__badge">1<span class="visually-hidden"> overdue</span></span>
+              </a>
+            </li>
+          </ul>
+          <ul class="nav-group">
+            <li>
+              <a class="nav-link" href="settings.html">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+                Settings
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar__profile">
+          <span class="avatar" aria-hidden="true">MS</span>
+          <span class="sidebar__profile-text">
+            <span class="text-label text-strong truncate">Mika Santos</span>
+            <span class="text-label text-muted truncate">mika@mikasantos.example</span>
+          </span>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="app-header">
+          <div class="app-header__text">
+            <h1 class="page-title">Timer</h1>
+            <p class="page-subtitle">This week 13.8 h</p>
+          </div>
+
+          <div class="app-header__actions">
+
+
+          </div>
+        </header>
+
+        <main id="main" class="page" tabindex="-1">
+          <section class="card timer-hero timer-control" data-timer aria-label="Timer">
+            <div class="timer-hero__clock-row">
+              <span class="running-dot" aria-hidden="true"></span>
+              <span class="timer-hero__clock figure" role="timer" data-timer-clock>00:00:00</span>
+              <span class="timer-hero__tag count-chip">Tracking</span>
+            </div>
+            <div class="timer-hero__controls">
+              <label class="visually-hidden" for="timer-description">What are you working on?</label>
+              <input class="input" id="timer-description" type="text" placeholder="What are you working on?" />
+              <label class="visually-hidden" for="timer-project">Project</label>
+              <select class="select" id="timer-project">
+                <option>Reyes · Brand refresh</option>
+                <option>Reyes · Website build</option>
+                <option>Northwind · VA retainer</option>
+                <option>Northwind · Inbox &amp; calendar</option>
+                <option>Kalye · Menu copy</option>
+                <option>Kalye · Social captions</option>
+              </select>
+              <span class="timer-control__toggle">
+                <button class="button button--primary" type="button" data-when="idle" data-timer-start>Start timer</button>
+                <button class="button button--primary" type="button" data-when="running" data-timer-stop tabindex="-1" aria-hidden="true">Stop timer</button>
+              </span>
+            </div>
+          </section>
+
+          <div class="stack">
+            <section class="day-card" aria-label="Today, 18 Nov">
+              <div class="day-card__head">
+                <h2 class="text-strong">Today, 18 Nov</h2>
+                <span class="total-pill figure"><span class="visually-hidden">Total </span>1.5 h</span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Morning inbox and calendar</span>
+                  <span class="entry-row__meta truncate">Inbox &amp; calendar · Northwind Remote LLC · 8:15–9:45</span>
+                </div>
+                <span class="entry-row__meta-wide">Inbox &amp; calendar · Northwind Remote LLC</span>
+                <span class="entry-row__range">8:15–9:45</span>
+                <span class="entry-row__duration figure">1:30</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Morning inbox and calendar"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+            </section>
+            <section class="day-card" aria-label="Tue 17 Nov">
+              <div class="day-card__head">
+                <h2 class="text-strong">Tue 17 Nov</h2>
+                <span class="total-pill figure"><span class="visually-hidden">Total </span>7.0 h</span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Inbox triage and client replies</span>
+                  <span class="entry-row__meta truncate">VA retainer · Northwind Remote LLC · 16:15–17:30</span>
+                </div>
+                <span class="entry-row__meta-wide">VA retainer · Northwind Remote LLC</span>
+                <span class="entry-row__range">16:15–17:30</span>
+                <span class="entry-row__duration figure">1:15</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Inbox triage and client replies"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Brand guidelines, final pass</span>
+                  <span class="entry-row__meta truncate">Brand refresh · Reyes Studio · 13:30–16:00</span>
+                </div>
+                <span class="entry-row__meta-wide">Brand refresh · Reyes Studio</span>
+                <span class="entry-row__range">13:30–16:00</span>
+                <span class="entry-row__duration figure">2:30</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Brand guidelines, final pass"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Responsive checks, homepage</span>
+                  <span class="entry-row__meta truncate">Website build · Reyes Studio · 10:00–12:15</span>
+                </div>
+                <span class="entry-row__meta-wide">Website build · Reyes Studio</span>
+                <span class="entry-row__range">10:00–12:15</span>
+                <span class="entry-row__duration figure">2:15</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Responsive checks, homepage"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Calendar and meeting notes</span>
+                  <span class="entry-row__meta truncate">Inbox &amp; calendar · Northwind Remote LLC · 8:30–9:30</span>
+                </div>
+                <span class="entry-row__meta-wide">Inbox &amp; calendar · Northwind Remote LLC</span>
+                <span class="entry-row__range">8:30–9:30</span>
+                <span class="entry-row__duration figure">1:00</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Calendar and meeting notes"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+            </section>
+            <section class="day-card" aria-label="Mon 16 Nov">
+              <div class="day-card__head">
+                <h2 class="text-strong">Mon 16 Nov</h2>
+                <span class="total-pill figure"><span class="visually-hidden">Total </span>5.3 h</span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Brand guidelines draft</span>
+                  <span class="entry-row__meta truncate">Brand refresh · Reyes Studio · 10:00–13:30</span>
+                </div>
+                <span class="entry-row__meta-wide">Brand refresh · Reyes Studio</span>
+                <span class="entry-row__range">10:00–13:30</span>
+                <span class="entry-row__duration figure">3:30</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Brand guidelines draft"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+              <div class="entry-row">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Inbox triage and client replies</span>
+                  <span class="entry-row__meta truncate">VA retainer · Northwind Remote LLC · 8:00–9:45</span>
+                </div>
+                <span class="entry-row__meta-wide">VA retainer · Northwind Remote LLC</span>
+                <span class="entry-row__range">8:00–9:45</span>
+                <span class="entry-row__duration figure">1:45</span>
+                <span class="entry-row__end"><button class="button button--ghost" type="button" aria-label="Resume Inbox triage and client replies"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3" /></svg><span class="entry-row__resume-label">Resume</span></button></span>
+              </div>
+            </section>
+            <section class="day-card" aria-label="Fri 6 Nov">
+              <div class="day-card__head">
+                <h2 class="text-strong">Fri 6 Nov</h2>
+                <span class="total-pill figure"><span class="visually-hidden">Total </span>5.0 h</span>
+              </div>
+              <div class="entry-row entry-row--billed">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Menu copy, drinks and pastries</span>
+                  <span class="entry-row__meta truncate">On INV-0011 · Menu copy · Kalye Coffee Co. · 13:00–16:00</span>
+                </div>
+                <span class="entry-row__meta-wide">Menu copy · Kalye Coffee Co.</span>
+                <span class="entry-row__range">13:00–16:00</span>
+                <span class="entry-row__duration figure">3:00</span>
+                <span class="entry-row__end"><span class="entry-row__locked"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg><span class="entry-row__locked-label">On&nbsp;</span>INV-0011</span></span><span class="visually-hidden">Billed on INV-0011, locked.</span>
+              </div>
+              <div class="entry-row entry-row--billed">
+                <div class="entry-row__main">
+                  <span class="entry-row__title truncate">Vendor follow-ups</span>
+                  <span class="entry-row__meta truncate">On INV-0012 · VA retainer · Northwind Remote LLC · 9:00–11:00</span>
+                </div>
+                <span class="entry-row__meta-wide">VA retainer · Northwind Remote LLC</span>
+                <span class="entry-row__range">9:00–11:00</span>
+                <span class="entry-row__duration figure">2:00</span>
+                <span class="entry-row__end"><span class="entry-row__locked"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg><span class="entry-row__locked-label">On&nbsp;</span>INV-0012</span></span><span class="visually-hidden">Billed on INV-0012, locked.</span>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <div class="mobile-chrome">
+
+          <nav class="tab-bar" aria-label="Main">
+            <a class="tab-link" href="index.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+              Dashboard
+            </a>
+            <a class="tab-link tab-link--active" aria-current="page" href="timer.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg>
+              Timer
+            </a>
+            <a class="tab-link" href="clients.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              Clients
+            </a>
+            <a class="tab-link" href="invoices.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+              Invoices
+            </a>
+            <a class="tab-link" href="settings.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+              Settings
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-region" role="status" aria-live="polite" data-toast-region></div>
+  </body>
+</html>

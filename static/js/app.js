@@ -44,9 +44,30 @@
     showToast(`Saved ${format(s)} to Brand refresh.`, 'Undo')
   }
 
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('[data-timer-start]')) start()
-    else if (e.target.closest('[data-timer-stop]')) stop()
+  document.addEventListener('click', async (e) => {
+    if (e.target.closest('[data-timer-start]')) return start()
+    if (e.target.closest('[data-timer-stop]')) return stop()
+
+    // Copy buttons: data-copy holds the text, data-copy-label names it in the toast.
+    const copy = e.target.closest('[data-copy]')
+    if (copy) {
+      const what = copy.dataset.copyLabel || 'Detail'
+      try {
+        await navigator.clipboard.writeText(copy.dataset.copy)
+        showToast(`${what} copied.`)
+      } catch {
+        showToast('Could not copy. Select the text and copy it instead.')
+      }
+      return
+    }
+
+    // Prototype-only actions that just confirm with a toast.
+    const say = e.target.closest('[data-toast]')
+    if (say) showToast(say.dataset.toast)
+
+    // Switches flip aria-checked; CSS draws the state.
+    const sw = e.target.closest('[data-toggle]')
+    if (sw) sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true'))
   })
 
   /* Toast: rises in, waits 5s (paused on hover), leaves faster than it came. */

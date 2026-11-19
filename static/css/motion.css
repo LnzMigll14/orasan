@@ -76,6 +76,53 @@
   transition-timing-function: var(--ease-exit);
 }
 
+
+/* Overlays: the scrim fades; the dialog scales up from 0.97 (never from 0);
+   the slide-over moves in 24px. Closing is faster than opening. */
+.overlay {
+  transition:
+    opacity var(--duration-exit) var(--ease-exit),
+    visibility 0s linear var(--duration-exit);
+}
+
+.overlay:target {
+  transition:
+    opacity var(--duration-enter) var(--ease-out),
+    visibility 0s;
+}
+
+.dialog {
+  transform: scale(0.97);
+  transition: transform var(--duration-exit) var(--ease-exit);
+}
+
+.overlay:target .dialog {
+  transform: scale(1);
+  transition: transform var(--duration-enter) var(--ease-out);
+}
+
+.slide-over {
+  transform: translateX(24px);
+  transition: transform var(--duration-exit) var(--ease-exit);
+}
+
+.overlay:target .slide-over {
+  transform: translateX(0);
+  transition: transform var(--duration-enter) var(--ease-out);
+}
+
+/* Toggles and copy buttons press like buttons. */
+.toggle,
+.copy-button,
+.segmented__option {
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.toggle:active,
+.copy-button:active {
+  transform: scale(0.95);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -94,7 +141,15 @@
   }
 
   .toast,
-  .toast.is-leaving {
+  .toast.is-leaving,
+  .dialog,
+  .slide-over,
+  .toggle:active,
+  .copy-button:active {
     transform: none;
+  }
+
+  .toggle[aria-checked='true'] .toggle__knob {
+    transform: translateX(18px); /* position, not motion: keep the knob on the right */
   }
 }

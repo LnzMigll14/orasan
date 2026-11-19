@@ -35,6 +35,22 @@
   --color-draft: #9ba2b3;
   --color-draft-tint: #252931;
 
+  /* ---- Color: paper (the invoice document stays light, like a printed page) ---- */
+  --color-paper: #f4f2ec;
+  --color-paper-ink: #1a1c22;
+  --color-paper-muted: #5e6270;
+  --color-paper-rule: #dedad0;
+  --color-paper-accent: #8a5a12;
+  --color-paper-overdue: #a61e35;
+  --color-paper-overdue-tint: #f9e1e4;
+  --color-paper-paid: #17694a;
+  --color-paper-paid-tint: #dcefe5;
+  --color-paper-draft-tint: #e7e5de;
+
+  /* ---- Color: controls ---- */
+  --color-toggle-off: #3a4052;
+  --color-scrim: rgba(5, 6, 9, 0.72);
+
   /* ---- Color: chart ---- */
   --color-bar: #1e2330;
   --color-bar-hatch: #2a3040;

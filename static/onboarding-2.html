@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0D12" />
+    <title>Set up Orasan · Step 2 of 3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/motion.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="onboarding">
+      <a class="sidebar__brand" href="index.html" aria-label="Orasan">
+        <span class="brand-mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg></span>
+        <span class="brand-name">orasan</span>
+      </a>
+      <main class="onboarding__card">
+        <ol class="stepper" aria-label="Setup steps">
+          <li class="stepper__step stepper__step--done"><span class="stepper__number"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg></span><span class="stepper__name">Your details</span></li>
+          <li class="stepper__step stepper__step--current" aria-current="step"><span class="stepper__number">2</span><span class="stepper__name">How you get paid</span></li>
+          <li class="stepper__step stepper__step--todo"><span class="stepper__number">3</span><span class="stepper__name">First client and rate</span></li>
+        </ol>
+        <section class="onboarding__section">
+          <div class="stack stack--tight">
+            <h1 class="page-title">How you get paid</h1>
+            <p class="text-secondary">Invoices show only the methods that match their currency. You can change these later in Settings.</p>
+          </div>
+          <div class="field"><label class="field__label" for="o-cur">Default currency</label><select class="select" id="o-cur"><option>PHP — Philippine peso</option><option>USD — US dollar</option></select><span class="field__help">Used for new clients.</span></div>
+          <div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">GCash</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept GCash" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="gca-0">Account name</label><input class="input" id="gca-0" type="text" value="Mika Santos" /></div>
+                <div class="field"><label class="field__label" for="gca-1">Number</label><input class="input" id="gca-1" type="text" value="0917 555 0142" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Maya</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept Maya" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Bank transfer</span> <span class="text-label text-muted">PHP invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept Bank transfer" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Wise</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Accept Wise" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+              <div class="form-grid form-grid--2">
+                <div class="field"><label class="field__label" for="wis-0">Email</label><input class="input" id="wis-0" type="text" value="mika@mikasantos.example" /></div>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">PayPal</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept PayPal" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+            <div class="method">
+              <div class="method__head">
+                <span><span class="text-strong">Payoneer</span> <span class="text-label text-muted">USD invoices</span></span>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Accept Payoneer" data-toggle><span class="toggle__knob"></span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="onboarding__footer">
+          <a class="button button--secondary" href="onboarding-1.html">Back</a>
+          <a class="button button--primary" href="onboarding-3.html">Continue</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
