@@ -142,9 +142,12 @@ components:
 
 Orasan is a dark, quiet working surface, the kind you keep open all day beside chat and email. Near-black layers do the structure; one warm amber marks the single thing to do next (start the timer on its own screen, send the invoice, mark it paid) and today's bar on the chart. Status colors (overdue rose, sent blue, paid green) only ever appear with an icon and a word. The invoice is the exception to the dark: it stays a light paper sheet, because clients read, print and forward it as a document.
 
-The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light). Implementations:
-- **`static/`**: the reference build of this system: plain HTML + CSS for import into Figma with html.to.design. Tokens in `static/css/tokens.css`.
-- **`src/`**: the React prototype, ported on 19 Nov 2026. Same values in `src/styles/tokens.css` (variable names kept from earlier directions: `paper` = canvas, `sunken`/`raised` = raised layer, `cta` = amber). The invoice sheet uses the `.paper` scope, which re-points the same variables to the paper colors. Dark only, so the theme switch was removed.
+The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light).
+
+Where things live:
+- **`src/`**: a clean React + Vite + Tailwind 4 boilerplate (JavaScript). The tokens below are defined in `src/styles/tokens.css` inside Tailwind's `@theme`, so each one is also a utility (`bg-surface`, `text-text-secondary`, `rounded-lg`, `text-display`). No screens are built yet.
+- **`design/screenshots/`**: full-page 2× screenshots of every screen at 1440 and 375, the visual reference for building.
+- **Tag `prototype-v1`**: the finished prototypes this system was proven on: the static HTML/CSS pages for Figma (`static/`) and the React prototype (`src/`), both in Midnight amber.
 - Earlier directions: tag `ledger-v1` (paper ledger), tag `soft-dashboard-v1` (soft lavender dashboard).
 
 The layout keeps what the user liked about the soft dashboard: a desktop sidebar with icon navigation, a greeting header, three money cards, an hours chart with values on the bars, an avatar list, and tables with progress rings and status chips.

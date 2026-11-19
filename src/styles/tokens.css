@@ -1,181 +1,96 @@
 /*
- * Orasan design tokens: the single source for code.
- * Direction: "Midnight amber" (dark only). See DESIGN.md; the static reference build
- * uses the same values in static/css/tokens.css.
- * Variable names are kept from earlier directions so components did not need renaming:
- * "paper" = page canvas, "surface" = cards, "sunken"/"raised" = raised layer, "cta" = amber.
+ * Orasan · "Midnight amber" design tokens (see DESIGN.md).
+ * Defined in Tailwind's @theme, so each token is both a CSS variable and a utility:
+ *   --color-surface      → bg-surface, text-surface, border-surface
+ *   --color-text         → text-text (primary text)
+ *   --text-display       → text-display (size + line height + weight)
+ *   --radius-lg          → rounded-lg
+ * Spacing uses Tailwind's 4px scale (p-1 = 4px, p-4 = 16px, gap-6 = 24px).
+ * Tailwind's default palette and radii are cleared, so only these tokens exist.
  */
-
-:root {
-  color-scheme: dark;
-
-  /* Color: layers */
-  --color-bg-paper: #0b0d12; /* canvas */
-  --color-bg-surface: #12151c;
-  --color-bg-sunken: #191d27; /* raised: pills, hover rows, message box */
-  --color-bg-raised: #191d27; /* raised: inputs, dialog, slide-over */
-  --color-bg-scrim: rgb(5 6 9 / 0.72);
-
-  /* Color: border */
-  --color-border-rule: #262b38;
-  --color-border-strong: #646b80; /* input + checkbox outlines, 3:1+ */
-
-  /* Color: text */
-  --color-text-ink: #eceef3;
-  --color-text-muted: #9ba2b3; /* secondary */
-  --color-text-faint: #858ca0; /* small muted text; #6b7286 is decorative only */
-
-  /* Color: call to action (one amber pill per view) */
-  --color-cta: #f2b256;
-  --color-cta-hover: #f6c47a;
-  --color-cta-on: #1a1206;
-
-  /* Color: accent (amber: today, links, focus, running timer, toggles) */
-  --color-accent-default: #f2b256;
-  --color-accent-hover: #f6c47a;
-  --color-accent-tint: #312b24;
-  --color-accent-on: #1a1206;
-
-  /* Color: stat-card icon tints (cards themselves stay on surface) */
-  --color-tint-rose: #312029;
-  --color-tint-lavender: #312b24;
-  --color-tint-blend-from: #1f293b;
-  --color-tint-blend-to: #1f293b;
-  --color-rose: #f2667a;
-
-  /* Color: chart */
-  --color-chart-bar: #1e2330;
-  --color-chart-hatch: #2a3040;
-  --color-chart-active: #f2b256;
-
-  /* Color: focus, danger */
-  --color-focus: #f2b256;
-  --color-danger-default: #f2667a;
-  --color-danger-hover: #f58a9a;
-  --color-danger-on: #1a1206;
-
-  /* Color: status (always paired with a text label and an icon) */
-  --color-status-draft-fg: #9ba2b3;
-  --color-status-draft-bg: #252931;
-  --color-status-sent-fg: #6ca6f7;
-  --color-status-sent-bg: #1f293b;
-  --color-status-paid-fg: #4bd394;
-  --color-status-paid-bg: #1a302d;
-  --color-status-overdue-fg: #f2667a;
-  --color-status-overdue-bg: #312029;
-
-  /* Color: inverse (toast sits on the raised layer) */
-  --color-inverse-bg: #191d27;
-  --color-inverse-text: #eceef3;
-
-  /* Elevation: flat cards; only overlays cast a shadow */
-  --elevation-card: inset 0 0 0 1px var(--color-border-rule);
-  --elevation-overlay: inset 0 0 0 1px var(--color-border-strong), 0 16px 48px rgb(0 0 0 / 0.48);
-  --elevation-toast: inset 0 0 0 1px var(--color-border-strong), 0 16px 48px rgb(0 0 0 / 0.48);
-
-  /* Dimensions */
-  --size-control: 40px;
-  --size-control-touch: 44px;
-  --size-row: 56px;
-  --size-row-touch: 60px;
-  --size-bar: 64px;
-  --size-dock: 64px;
-  --size-tabbar: 64px;
-  --size-sidebar: 248px;
-  --size-slideover: 480px;
-  --size-content: 1144px;
-  --border-hairline: 1px;
-  --border-focus: 2px;
-
-  /* Motion (emil-design-eng curves) */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --dur-press: 160ms;
-  --dur-state: 180ms;
-  --dur-toast: 240ms;
-  --dur-drawer-in: 240ms;
-  --dur-drawer-out: 160ms;
-}
-
-/*
- * Paper: anything the client reads as a document stays light.
- * Re-points the same variables inside the invoice sheet, so its utilities just work.
- */
-.paper {
-  color-scheme: light;
-  --color-bg-surface: #f4f2ec;
-  --color-bg-sunken: #e9e6de;
-  --color-border-rule: #dedad0;
-  --color-border-strong: #8a8578;
-  --color-text-ink: #1a1c22;
-  --color-text-muted: #5e6270;
-  --color-text-faint: #5e6270;
-  --color-status-draft-fg: #5e6270;
-  --color-status-draft-bg: #e7e5de;
-  --color-status-sent-fg: #1f4f99;
-  --color-status-sent-bg: #dfe8f6;
-  --color-status-paid-fg: #17694a;
-  --color-status-paid-bg: #dcefe5;
-  --color-status-overdue-fg: #a61e35;
-  --color-status-overdue-bg: #f9e1e4;
-  --color-accent-default: #8a5a12;
-  --color-focus: #8a5a12;
-  --elevation-card: none;
-}
-
-/*
- * Tailwind theme: utilities read the variables above, so scopes like .paper switch them.
- * Default palette, radii and fonts are cleared so only Orasan tokens exist.
- * Spacing keeps Tailwind's 4px multiplier.
- */
-@theme inline {
+@theme {
+  /* ---- Color: layers ---- */
   --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
-  --color-paper: var(--color-bg-paper);
-  --color-surface: var(--color-bg-surface);
-  --color-sunken: var(--color-bg-sunken);
-  --color-raised: var(--color-bg-raised);
-  --color-scrim: var(--color-bg-scrim);
-  --color-rule: var(--color-border-rule);
-  --color-rule-strong: var(--color-border-strong);
-  --color-ink: var(--color-text-ink);
-  --color-muted: var(--color-text-muted);
-  --color-faint: var(--color-text-faint);
-  --color-cta-fill: var(--color-cta);
-  --color-cta-deep: var(--color-cta-hover);
-  --color-on-cta: var(--color-cta-on);
-  --color-accent: var(--color-accent-default);
-  --color-accent-deep: var(--color-accent-hover);
-  --color-tint: var(--color-accent-tint);
-  --color-on-accent: var(--color-accent-on);
-  --color-rose-ink: var(--color-rose);
-  --color-rose-tint: var(--color-tint-rose);
-  --color-lavender-tint: var(--color-tint-lavender);
-  --color-blend-from: var(--color-tint-blend-from);
-  --color-blend-to: var(--color-tint-blend-to);
-  --color-bar: var(--color-chart-bar);
-  --color-hatch: var(--color-chart-hatch);
-  --color-bar-active: var(--color-chart-active);
-  --color-ring: var(--color-focus);
-  --color-danger: var(--color-danger-default);
-  --color-danger-deep: var(--color-danger-hover);
-  --color-on-danger: var(--color-danger-on);
-  --color-draft: var(--color-status-draft-fg);
-  --color-draft-bg: var(--color-status-draft-bg);
-  --color-sent: var(--color-status-sent-fg);
-  --color-sent-bg: var(--color-status-sent-bg);
-  --color-paid: var(--color-status-paid-fg);
-  --color-paid-bg: var(--color-status-paid-bg);
-  --color-overdue: var(--color-status-overdue-fg);
-  --color-overdue-bg: var(--color-status-overdue-bg);
-  --color-inverse: var(--color-inverse-bg);
-  --color-on-inverse: var(--color-inverse-text);
+  --color-canvas: #0b0d12;
+  --color-surface: #12151c;
+  --color-raised: #191d27;
+  --color-border: #262b38;
+  --color-border-strong: #646b80; /* input + checkbox outlines (3:1+) */
+  --color-scrim: rgb(5 6 9 / 0.72);
 
+  /* ---- Color: text ---- */
+  --color-text: #eceef3;
+  --color-text-secondary: #9ba2b3;
+  --color-text-muted: #858ca0; /* small muted text, 4.5:1+ */
+  --color-muted: #6b7286; /* decorative only: never small text */
+
+  /* ---- Color: accent ---- */
+  --color-amber: #f2b256;
+  --color-amber-hover: #f6c47a;
+  --color-on-amber: #1a1206;
+  --color-amber-tint: #312b24;
+
+  /* ---- Color: status (always with an icon and a word) ---- */
+  --color-overdue: #f2667a;
+  --color-overdue-tint: #312029;
+  --color-sent: #6ca6f7;
+  --color-sent-tint: #1f293b;
+  --color-paid: #4bd394;
+  --color-paid-tint: #1a302d;
+  --color-draft: #9ba2b3;
+  --color-draft-tint: #252931;
+
+  /* ---- Color: chart ---- */
+  --color-bar: #1e2330;
+  --color-bar-hatch: #2a3040;
+
+  /* ---- Color: paper (the invoice document stays light) ---- */
+  --color-paper: #f4f2ec;
+  --color-paper-ink: #1a1c22;
+  --color-paper-muted: #5e6270;
+  --color-paper-rule: #dedad0;
+  --color-paper-accent: #8a5a12;
+  --color-paper-overdue: #a61e35;
+  --color-paper-overdue-tint: #f9e1e4;
+  --color-paper-paid: #17694a;
+  --color-paper-paid-tint: #dcefe5;
+  --color-paper-draft-tint: #e7e5de;
+
+  /* ---- Type ---- */
+  --font-*: initial;
+  --font-sans: 'Manrope Variable', 'Avenir Next', sans-serif;
+
+  --text-display: 28px;
+  --text-display--line-height: 36px;
+  --text-display--font-weight: 800;
+  --text-display--letter-spacing: -0.02em;
+  --text-stat: 26px;
+  --text-stat--line-height: 34px;
+  --text-stat--font-weight: 800;
+  --text-stat--letter-spacing: -0.02em;
+  --text-timer: 48px;
+  --text-timer--line-height: 56px;
+  --text-timer--font-weight: 800;
+  --text-timer--letter-spacing: -0.03em;
+  --text-headline: 18px;
+  --text-headline--line-height: 26px;
+  --text-headline--font-weight: 700;
+  --text-title: 15px;
+  --text-title--line-height: 22px;
+  --text-title--font-weight: 700;
+  --text-body: 14px;
+  --text-body--line-height: 20px;
+  --text-body-mobile: 16px;
+  --text-body-mobile--line-height: 24px;
+  --text-label: 12px;
+  --text-label--line-height: 16px;
+  --text-micro: 11px;
+  --text-micro--line-height: 14px;
+
+  /* ---- Radius ---- */
   --radius-*: initial;
-  --radius-none: 0px;
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -183,95 +98,34 @@
   --radius-xl: 20px;
   --radius-pill: 999px;
 
-  --font-*: initial;
-  --font-sans: 'Manrope Variable', 'Avenir Next', sans-serif;
-
+  /* ---- Elevation: cards are flat; only overlays cast a shadow ---- */
   --shadow-*: initial;
-  --shadow-card: var(--elevation-card);
-  --shadow-overlay: var(--elevation-overlay);
-  --shadow-toast: var(--elevation-toast);
+  --shadow-card: inset 0 0 0 1px var(--color-border);
+  --shadow-overlay: inset 0 0 0 1px var(--color-border-strong), 0 16px 48px rgb(0 0 0 / 0.48);
 
+  /* ---- Breakpoints (mobile first) ---- */
   --breakpoint-*: initial;
-  --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
+  --breakpoint-md: 48rem; /* 768px: tablet layout */
+  --breakpoint-lg: 64rem; /* 1024px: sidebar appears */
+  --breakpoint-xl: 80rem; /* 1280px: two-column dashboard */
+
+  /* ---- Motion (Emil Kowalski curves; transform + opacity only) ---- */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Text styles. Manrope supports tabular figures; tabular-nums is set anyway. */
-@utility type-display {
-  font: 800 28px/36px var(--font-sans);
-  letter-spacing: -0.02em;
-}
-@utility type-statement {
-  font: 700 28px/36px var(--font-sans);
-  letter-spacing: -0.015em;
-  font-variant-numeric: tabular-nums;
-}
-@utility type-statement-mobile {
-  font: 700 22px/30px var(--font-sans);
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-@utility type-stat {
-  font: 800 26px/34px var(--font-sans);
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-@utility type-timer {
-  font: 800 48px/56px var(--font-sans);
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-@utility type-timer-compact {
-  font: 700 16px/24px var(--font-sans);
-  font-variant-numeric: tabular-nums;
-}
-@utility type-headline {
-  font: 700 18px/26px var(--font-sans);
-  letter-spacing: -0.01em;
-}
-@utility type-title {
-  font: 700 16px/24px var(--font-sans);
-}
-@utility type-body {
-  font: 500 14px/20px var(--font-sans);
-}
-@utility type-body-mobile {
-  font: 500 16px/24px var(--font-sans);
-}
-@utility type-figure {
-  font: 600 14px/20px var(--font-sans);
-  font-variant-numeric: tabular-nums;
-}
-@utility type-figure-mobile {
-  font: 600 16px/24px var(--font-sans);
-  font-variant-numeric: tabular-nums;
-}
-@utility type-figure-strong {
-  font: 700 16px/24px var(--font-sans);
-  font-variant-numeric: tabular-nums;
-}
-@utility type-label {
-  font: 500 12px/16px var(--font-sans);
-}
-@utility type-label-strong {
-  font: 700 12px/16px var(--font-sans);
-}
-@utility type-button {
-  font: 700 14px/20px var(--font-sans);
-}
-@utility type-column-head {
-  font: 600 12px/16px var(--font-sans);
-}
-@utility type-doc-title {
-  font: 700 26px/34px var(--font-sans);
-  letter-spacing: -0.01em;
-}
-@utility type-doc-body {
-  font: 500 14px/22px var(--font-sans);
-  font-variant-numeric: tabular-nums;
-}
-@utility type-doc-figure {
-  font: 700 14px/22px var(--font-sans);
-  font-variant-numeric: tabular-nums;
+/* Sizes that aren't Tailwind scales; use as h-(--size-control) etc. */
+:root {
+  --size-control: 40px;
+  --size-control-touch: 44px;
+  --size-row: 56px;
+  --size-sidebar: 248px;
+  --size-dock: 64px;
+  --size-tabbar: 64px;
+  --size-content: 1144px;
+  --duration-press: 160ms;
+  --duration-state: 180ms;
+  --duration-enter: 240ms;
+  --duration-exit: 160ms;
 }
