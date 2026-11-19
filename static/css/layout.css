@@ -1,0 +1,290 @@
+/*
+ * App shell: sidebar + main column on desktop (1024px+);
+ * main column + sticky timer dock + tab bar below that.
+ * Flexbox/grid with gap only. Nothing is absolutely positioned here.
+ */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  display: none;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--color-amber);
+  color: var(--color-on-amber);
+}
+
+.brand-name {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline-lh);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-tight);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-group + .nav-group {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--size-control-touch);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.nav-link--active {
+  background: var(--color-raised);
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+.nav-link--active .icon {
+  color: var(--color-amber);
+}
+
+.nav-link__badge {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-overdue-tint);
+  color: var(--color-overdue);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-bold);
+}
+
+.sidebar__profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-3) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.sidebar__profile-text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+/* ---------- Main column ---------- */
+.app-main {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+}
+
+.app-header__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.app-header .app-header__timer {
+  display: none; /* beats .timer-control's display: flex */
+}
+
+.app-header__new-label {
+  display: none;
+}
+
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: calc(var(--size-content) + 2 * var(--space-4));
+  padding: 0 var(--space-4) var(--space-8);
+}
+
+/* ---------- Mobile chrome: dock above the tab bar ---------- */
+.mobile-chrome {
+  position: sticky; /* sticks to the bottom of the viewport, stays in flow */
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.timer-dock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--size-dock);
+  padding: 0 var(--space-4);
+}
+
+.tab-bar {
+  display: flex;
+  border-top: 1px solid var(--color-border);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-link {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  height: var(--size-tabbar);
+  color: var(--color-text-muted);
+  font-size: var(--text-micro);
+  line-height: var(--text-micro-lh);
+  font-weight: var(--weight-medium);
+}
+
+.tab-link--active {
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+}
+
+.tab-link--active .icon {
+  color: var(--color-amber);
+}
+
+/* ---------- Dashboard grids ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'ready'
+    'chart';
+  gap: var(--space-3);
+}
+
+.dashboard-grid__ready {
+  grid-area: ready;
+}
+
+.dashboard-grid__chart {
+  grid-area: chart;
+}
+
+/* ---------- Tablet ---------- */
+@media (min-width: 768px) {
+  .app-header {
+    padding: var(--space-8) var(--space-8) var(--space-6);
+  }
+
+  .page {
+    max-width: calc(var(--size-content) + 2 * var(--space-8));
+    padding: 0 var(--space-8) var(--space-12);
+    gap: var(--space-5);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .app-header__new-label {
+    display: inline;
+  }
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 1024px) {
+  .app-shell {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    position: sticky; /* stays in flow; pinned while the page scrolls */
+    top: 0;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: var(--space-8);
+    width: var(--size-sidebar);
+    height: 100dvh;
+    padding: var(--space-6) var(--space-4);
+    border-right: 1px solid var(--color-border);
+    background: var(--color-canvas);
+  }
+
+  .app-header {
+    max-width: calc(var(--size-content) + 2 * var(--space-8));
+  }
+
+  .app-header .app-header__timer {
+    display: flex;
+  }
+
+  .mobile-chrome {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-areas: 'chart ready';
+  }
+}

@@ -1,0 +1,742 @@
+/* Components. Class names describe what a thing is, not how it looks. */
+
+/* ---------- Text roles ---------- */
+.page-title {
+  font-size: var(--text-display);
+  line-height: var(--text-display-lh);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-tight);
+}
+
+.page-subtitle {
+  color: var(--color-text-secondary);
+}
+
+.card-title {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline-lh);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.text-label {
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-strong {
+  font-weight: var(--weight-bold);
+}
+
+.figure {
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  width: var(--size-icon);
+  height: var(--size-icon);
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.icon--sm {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--size-control-touch);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-body);
+  line-height: var(--text-body-lh);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.button--primary {
+  background: var(--color-amber);
+  color: var(--color-on-amber);
+}
+
+.button--secondary {
+  background: var(--color-raised);
+  color: var(--color-text);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+}
+
+.button--ghost {
+  padding: 0 var(--space-3);
+  color: var(--color-text-secondary);
+}
+
+.button--block {
+  width: 100%;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-control-touch);
+  height: var(--size-control-touch);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .button,
+  .icon-button {
+    height: var(--size-control);
+  }
+
+  .icon-button {
+    width: var(--size-control);
+  }
+}
+
+/* ---------- Text link ---------- */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-control-touch);
+  color: var(--color-text-secondary);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-bold);
+}
+
+@media (min-width: 768px) {
+  .text-link {
+    min-height: 24px;
+  }
+}
+
+/* ---------- Select pill (project picker) ---------- */
+.select-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  height: var(--size-control-touch);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  box-shadow: 0 0 0 1px var(--color-border-strong) inset;
+  color: var(--color-text);
+}
+
+.select-pill__value {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .select-pill {
+    height: var(--size-control);
+  }
+}
+
+/* ---------- Timer control (header pill and mobile dock) ---------- */
+.timer-control {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.timer-control__running {
+  display: none;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.timer-control__clock {
+  font-size: var(--text-title);
+  line-height: var(--text-title-lh);
+  font-weight: var(--weight-heavy);
+  color: var(--color-amber);
+}
+
+.timer-control__project {
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+}
+
+/* The two buttons share one grid cell, so Start and Stop swap in place. */
+.timer-control__toggle {
+  display: grid;
+  flex: none;
+}
+
+.timer-control__toggle > .button {
+  grid-area: 1 / 1;
+}
+
+.timer-control [data-when='running'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timer-control.is-running [data-when='idle'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timer-control.is-running [data-when='running'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.timer-control.is-running .select-pill {
+  display: none;
+}
+
+.timer-control.is-running .timer-control__running {
+  display: flex;
+}
+
+.header-timer {
+  /* display is set by layout.css (.app-header__timer): hidden below 1024px */
+  align-items: center;
+  gap: var(--space-3);
+  width: 400px;
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+}
+
+.header-timer.is-running {
+  background: var(--color-amber-tint);
+  padding-left: var(--space-4);
+}
+
+.running-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-amber);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+}
+
+.card--flush {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.card__head-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: var(--space-6);
+  }
+
+  .card--flush {
+    padding: 0;
+  }
+}
+
+/* ---------- Stat cards ---------- */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+}
+
+.stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+}
+
+.stat-card__icon--amber {
+  background: var(--color-amber-tint);
+  color: var(--color-amber);
+}
+
+.stat-card__icon--sent {
+  background: var(--color-sent-tint);
+  color: var(--color-sent);
+}
+
+.stat-card__icon--overdue {
+  background: var(--color-overdue-tint);
+  color: var(--color-overdue);
+}
+
+.stat-card__body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.stat-card__value {
+  font-size: var(--text-stat);
+  line-height: var(--text-stat-lh);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-tight);
+}
+
+.stat-card--link {
+  color: inherit;
+}
+
+.stat-card--overdue {
+  box-shadow: 0 0 0 1px var(--color-overdue-tint) inset;
+}
+
+/* ---------- Status chips ---------- */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 var(--space-3) 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.status-chip--draft {
+  background: var(--color-draft-tint);
+  color: var(--color-draft);
+}
+
+.status-chip--sent {
+  background: var(--color-sent-tint);
+  color: var(--color-sent);
+}
+
+.status-chip--paid {
+  background: var(--color-paid-tint);
+  color: var(--color-paid);
+}
+
+.status-chip--overdue {
+  background: var(--color-overdue-tint);
+  color: var(--color-overdue);
+}
+
+.count-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+  color: var(--color-text-secondary);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-bold);
+}
+
+.count-chip--overdue {
+  background: var(--color-overdue-tint);
+  box-shadow: none;
+  color: var(--color-overdue);
+}
+
+/* ---------- Avatar ---------- */
+.avatar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-avatar);
+  height: var(--size-avatar);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+  color: var(--color-text-secondary);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-heavy);
+}
+
+/* ---------- Hours chart ---------- */
+.hours-chart {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.hours-chart__axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+  padding-bottom: 28px; /* day labels */
+  color: var(--color-text-muted);
+  font-size: var(--text-micro);
+  line-height: var(--text-micro-lh);
+  text-align: right;
+}
+
+.hours-chart__plot {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: var(--space-2);
+  /* dashed goal line drawn as a background at --goal from the bottom of the bars */
+  background-image: repeating-linear-gradient(90deg, var(--color-overdue) 0 6px, transparent 6px 12px);
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 calc((200px - 28px) * (1 - var(--goal, 0)));
+}
+
+.hours-chart__day {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hours-chart__track {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: calc(200px - 28px);
+}
+
+.hours-chart__value {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+  font-size: var(--text-micro);
+  line-height: var(--text-micro-lh);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.hours-chart__bar {
+  width: 100%;
+  max-width: 56px;
+  min-height: 6px;
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-xs) var(--radius-xs);
+  background-color: var(--color-bar);
+  background-image: repeating-linear-gradient(135deg, var(--color-bar-hatch) 0 2px, transparent 2px 8px);
+}
+
+.hours-chart__day--today .hours-chart__bar {
+  background: var(--color-bar-today);
+}
+
+.hours-chart__day--today .hours-chart__value {
+  background: var(--color-amber);
+  box-shadow: none;
+  color: var(--color-on-amber);
+}
+
+.hours-chart__label {
+  height: 20px;
+  color: var(--color-text-muted);
+  font-size: var(--text-label);
+  line-height: 20px;
+}
+
+.hours-chart__day--today .hours-chart__label {
+  color: var(--color-amber);
+  font-weight: var(--weight-bold);
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+}
+
+.chart-legend__goal {
+  width: 18px;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--color-overdue) 0 4px, transparent 4px 7px);
+}
+
+.chart-average {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .hours-chart__axis {
+    height: 240px;
+  }
+
+  .hours-chart__track {
+    height: calc(240px - 28px);
+  }
+
+  .hours-chart__plot {
+    gap: var(--space-3);
+    background-position: 0 calc((240px - 28px) * (1 - var(--goal, 0)));
+  }
+}
+
+/* ---------- People list (Ready to invoice) ---------- */
+.people-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.people-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 60px;
+  padding: var(--space-2) var(--space-2);
+  margin: 0 calc(-1 * var(--space-2));
+  border-radius: var(--radius-md);
+}
+
+.people-list > li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.people-row__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.people-row__amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.people-row__action {
+  color: var(--color-amber);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Data table (Invoice tracker) ---------- */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+.section-head__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.data-table th {
+  padding: var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  font-weight: var(--weight-medium);
+  text-align: left;
+}
+
+.data-table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table th:first-child,
+.data-table td:first-child {
+  padding-left: var(--space-5);
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  padding-right: var(--space-5);
+  text-align: right;
+}
+
+.data-table__invoice {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-table__hide-mobile {
+  display: none;
+}
+
+.data-table__mobile-meta {
+  color: var(--color-text-muted);
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+}
+
+@media (min-width: 768px) {
+  .data-table__hide-mobile {
+    display: table-cell;
+  }
+
+  .data-table__mobile-meta {
+    display: none;
+  }
+
+  .data-table td {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+}
+
+/* ---------- Payment-term ring ---------- */
+.term-ring {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.term-ring__track {
+  stroke: var(--color-border);
+}
+
+.term-ring__value {
+  stroke: var(--color-amber);
+}
+
+.term-ring--late .term-ring__value {
+  stroke: var(--color-overdue);
+}
+
+/* ---------- Toast (overlay) ---------- */
+.toast-region {
+  position: fixed; /* overlay */
+  left: var(--space-4);
+  bottom: calc(var(--size-dock) + var(--size-tabbar) + var(--space-3));
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: calc(100vw - 2 * var(--space-4));
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-raised);
+  box-shadow: 0 0 0 1px var(--color-border-strong) inset, var(--shadow-overlay);
+  pointer-events: auto;
+}
+
+.toast__action {
+  min-height: var(--size-control-touch);
+  margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-2)) calc(-1 * var(--space-3)) 0;
+  padding: 0 var(--space-2);
+  color: var(--color-amber);
+  font-weight: var(--weight-bold);
+}
+
+@media (min-width: 1024px) {
+  .toast-region {
+    left: calc(var(--size-sidebar) + var(--space-8));
+    bottom: var(--space-8);
+  }
+}
+
+.select-pill--grow {
+  flex: 1;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.timer-dock__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
