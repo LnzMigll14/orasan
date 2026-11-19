@@ -84,8 +84,7 @@
   margin-left: auto;
   display: flex;
   align-items: center;
-  height: 20px;
-  padding: 0 var(--space-2);
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--color-overdue-tint);
   color: var(--color-overdue);
