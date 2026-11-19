@@ -1,15 +1,38 @@
-import { Link } from 'react-router'
-import { Logo } from '../components/brand/Logo'
+import { Navbar } from './Navbar'
 
-/** Placeholder route. Replace with the Dashboard when you start building. */
+const dashboardDate = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  timeZone: 'Asia/Manila',
+})
+
 export function Home() {
+  const today = new Date()
+
   return (
-    <main className="flex min-h-dvh flex-col justify-center gap-4 px-4 md:px-8">
-      <Logo size={44} />
-      <p className="text-text-secondary">React + Tailwind are set up. Start building in src/.</p>
-      <Link to="/styleguide" className="inline-flex min-h-11 items-center self-start text-label font-bold text-amber hover-fine:text-amber-hover">
-        Open the style guide
-      </Link>
-    </main>
+    <div className="min-h-dvh bg-canvas text-text lg:flex">
+      <Navbar
+        name="Lanz Miguel"
+        email="lanzmiguel@example.com"
+        overdueCount={1}
+      />
+
+      <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:p-8">
+        <header>
+          <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+            Welcome back, Lanz
+          </h1>
+          <time
+            dateTime={today.toISOString()}
+            className="mt-1 block text-sm text-[#9ca7ba]"
+          >
+            {dashboardDate.format(today)}
+          </time>
+        </header>
+
+        {/* Dashboard cards, hours chart, and invoice tracker go here. */}
+      </main>
+    </div>
   )
 }
