@@ -119,6 +119,7 @@
 
 .app-header {
   display: flex;
+  flex-wrap: wrap; /* actions drop below the title when they don't fit */
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
