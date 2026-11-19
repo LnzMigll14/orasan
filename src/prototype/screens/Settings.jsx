@@ -91,29 +91,6 @@ export function Settings() {
           </Select>
         </Group>
 
-        <Group id="s-theme" title="Appearance">
-          <fieldset className="m-0 border-0 p-0">
-            <legend className="mb-2 type-label text-ink">Theme</legend>
-            <div className="flex max-w-90 gap-1 rounded-pill bg-sunken p-1">
-              {[
-                ['light', 'Light'],
-                ['dark', 'Dark'],
-                ['system', 'Match device'],
-              ].map(([v, l]) => (
-                <label
-                  key={v}
-                  className={cn(
-                    'flex h-(--size-control-touch) flex-1 cursor-pointer items-center justify-center rounded-pill type-label-strong has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring md:h-(--size-control)',
-                    settings.theme === v ? 'bg-cta-fill text-on-cta' : 'text-ink hover-fine:bg-sunken',
-                  )}
-                >
-                  <input type="radio" name="theme" value={v} checked={settings.theme === v} onChange={() => dispatch({ type: 'theme', theme: v })} className="sr-only" />
-                  {l}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </Group>
       </div>
     </>
   )

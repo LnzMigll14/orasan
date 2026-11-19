@@ -23,11 +23,12 @@ export function CardHead({ title, id, children, className }) {
   )
 }
 
+/* Cards stay on the surface; the tone colors only the icon circle. */
 const TONE = {
-  rose: 'bg-rose-tint',
-  lavender: 'bg-lavender-tint',
-  blend: 'bg-linear-to-r from-blend-from to-blend-to',
-  plain: 'bg-surface shadow-card',
+  rose: 'bg-rose-tint text-rose-ink',
+  lavender: 'bg-lavender-tint text-accent',
+  blend: 'bg-blend-from text-sent',
+  plain: 'bg-sunken text-ink',
 }
 
 /** Pastel stat card: icon in a white circle, label, big tabular value, small unit. */
@@ -37,13 +38,12 @@ export function StatCard({ tone = 'lavender', icon, label, value, unit, note, to
     <Root
       to={to}
       className={cn(
-        'flex min-w-0 items-center gap-3 rounded-lg p-4 no-underline',
-        to && 'pressable cursor-pointer ring-rose-ink/0 hover-fine:ring-2 hover-fine:ring-rose-ink/30',
-        TONE[tone],
+        'flex min-w-0 items-center gap-4 rounded-lg bg-surface px-5 py-4 no-underline shadow-card',
+        to && 'pressable cursor-pointer hover-fine:bg-sunken',
         className,
       )}
     >
-      <span className="flex size-10 flex-none items-center justify-center rounded-pill bg-surface text-ink">
+      <span className={cn('flex size-11 flex-none items-center justify-center rounded-pill', TONE[tone])}>
         <Icon name={icon} size={18} />
       </span>
       <div className="flex min-w-0 flex-col">
@@ -59,7 +59,7 @@ export function StatCard({ tone = 'lavender', icon, label, value, unit, note, to
   )
 }
 
-const AVATAR_TONES = ['bg-lavender-tint', 'bg-rose-tint', 'bg-tint', 'bg-paid-bg', 'bg-sunken']
+const AVATAR_TONES = ['bg-sunken']
 
 /** Initials avatar with a stable pastel tone per name. */
 export function Avatar({ name = '', size = 40, className }) {
@@ -74,7 +74,7 @@ export function Avatar({ name = '', size = 40, className }) {
     <span
       aria-hidden="true"
       style={{ width: size, height: size }}
-      className={cn('inline-flex flex-none items-center justify-center rounded-pill type-label-strong text-ink', tone, className)}
+      className={cn('inline-flex flex-none items-center justify-center rounded-pill type-label-strong text-muted shadow-card', tone, className)}
     >
       {initials || '·'}
     </span>

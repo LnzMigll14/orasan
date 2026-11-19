@@ -158,18 +158,6 @@ const StoreContext = createContext(null)
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, undefined, () => seed('filled'))
 
-  // Theme: .dark on <html>. "system" follows the OS live.
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const apply = () => {
-      const dark = state.settings.theme === 'dark' || (state.settings.theme === 'system' && mq.matches)
-      document.documentElement.classList.toggle('dark', dark)
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#121219' : '#EFEFF5')
-    }
-    apply()
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
-  }, [state.settings.theme])
 
   const api = useMemo(
     () => ({

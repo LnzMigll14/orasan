@@ -144,7 +144,7 @@ Orasan is a dark, quiet working surface, the kind you keep open all day beside c
 
 The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light). Implementations:
 - **`static/`**: the reference build of this system: plain HTML + CSS for import into Figma with html.to.design. Tokens in `static/css/tokens.css`.
-- **`src/`** (React prototype) still uses the soft dashboard tokens (tag `soft-dashboard-v1`) and has not been ported yet.
+- **`src/`**: the React prototype, ported on 19 Nov 2026. Same values in `src/styles/tokens.css` (variable names kept from earlier directions: `paper` = canvas, `sunken`/`raised` = raised layer, `cta` = amber). The invoice sheet uses the `.paper` scope, which re-points the same variables to the paper colors. Dark only, so the theme switch was removed.
 - Earlier directions: tag `ledger-v1` (paper ledger), tag `soft-dashboard-v1` (soft lavender dashboard).
 
 The layout keeps what the user liked about the soft dashboard: a desktop sidebar with icon navigation, a greeting header, three money cards, an hours chart with values on the bars, an avatar list, and tables with progress rings and status chips.

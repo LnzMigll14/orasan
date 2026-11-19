@@ -1,10 +1,8 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
-@import '@fontsource-variable/mulish/index.css';
+@import '@fontsource-variable/manrope/index.css';
 
-/* Dark mode is a class on <html>, toggled from app state. */
-@custom-variant dark (&:where(.dark, .dark *));
 /* Hover effects only on devices that really hover. */
 @custom-variant hover-fine {
   @media (hover: hover) and (pointer: fine) {
