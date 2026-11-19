@@ -60,10 +60,10 @@ Orasan is built around how Filipino freelancers actually get paid. Each user set
 - **Everything a client sees is in English.**
 - **No marketing copy inside the product.**
 - **Visual constraints the user made binding** (DESIGN.md turns these into specifics):
-  - **Direction (changed 18 Nov 2026 by the user):** a calm, soft dashboard, modelled on a health-dashboard reference the user supplied. They asked to "restyle Orasan like this" and named four things they like:
+  - **Direction (changed 19 Nov 2026 by the user): "Midnight amber".** The user supplied the palette: canvas #0B0D12, surface #12151C, raised #191D27, border #262B38, text #ECEEF3, secondary #9BA2B3, muted #6B7286, amber #F2B256 (text on amber #1A1206), overdue #F2667A, sent #6CA6F7, paid #4BD394. It is dark only. The reference build is the static HTML/CSS in `static/`, made for import into Figma with html.to.design.
+  - The layout keeps what the user liked in the earlier soft dashboard (18 Nov 2026, tag `soft-dashboard-v1`), which was modelled on a health-dashboard reference they supplied:
     - the chart: bars with values on them, today highlighted, a dashed reference line;
-    - color and softness: a lavender-grey background, white rounded panels, pastel tints, light shadows;
-    - layout and nav: a desktop sidebar with grouped, icon-labelled sections, a greeting header, one dark call to action;
+    - layout and nav: a desktop sidebar with grouped, icon-labelled sections, a greeting header, one call to action;
     - lists and tables: people rows with avatars and quick actions, tables with progress rings and status chips.
   - Numbers still lead. The answer to "how much am I owed?" is the first thing on the Dashboard.
   - Still ruled out: Inter, Roboto, Arial or system-font defaults; glassmorphism, glows or blurred blobs; emoji; marketing copy inside the product; centered empty states with huge padding. Icons are allowed for navigation, stat cards and actions, from one consistent icon set.

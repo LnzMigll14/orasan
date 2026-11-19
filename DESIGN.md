@@ -1,82 +1,92 @@
 ---
 name: Orasan
-description: Time tracking and invoicing for Filipino freelancers. A calm, soft dashboard where money owed comes first.
+description: Time tracking and invoicing for Filipino freelancers. "Midnight amber": a dark, quiet dashboard where money owed comes first and amber marks the one thing to do next.
 colors:
-  paper: "#EFEFF5"
-  surface: "#FFFFFF"
-  sunken: "#F5F5FA"
-  rule: "#E6E6EF"
-  rule-strong: "#7C7C94"
-  ink: "#1B1B29"
-  ink-muted: "#5A5A6F"
-  ink-faint: "#6B6B80"
-  cta: "#1B1B29"
-  on-cta: "#FFFFFF"
-  accent: "#5357C4"
-  accent-tint: "#E8E9FA"
-  rose: "#C0285F"
-  tint-rose: "#FBE5ED"
-  tint-lavender: "#ECEAFB"
-  chart-bar: "#F1F1F7"
-  chart-active: "#8E92E6"
-  status-draft-fg: "#5A5A6F"
-  status-draft-bg: "#EFEFF5"
-  status-sent-fg: "#4A4EBE"
-  status-sent-bg: "#E8E9FA"
-  status-paid-fg: "#1D7553"
-  status-paid-bg: "#E1F3EA"
-  status-overdue-fg: "#C0285F"
-  status-overdue-bg: "#FBE5ED"
-  dark-paper: "#121219"
-  dark-surface: "#1B1B26"
-  dark-ink: "#ECECF4"
-  dark-cta: "#ECECF4"
-  dark-accent: "#A3A6F4"
+  canvas: "#0B0D12"
+  surface: "#12151C"
+  raised: "#191D27"
+  border: "#262B38"
+  border-strong: "#646B80"
+  text: "#ECEEF3"
+  text-secondary: "#9BA2B3"
+  text-muted: "#858CA0"
+  muted-decorative: "#6B7286"
+  amber: "#F2B256"
+  amber-hover: "#F6C47A"
+  on-amber: "#1A1206"
+  amber-tint: "#312B24"
+  overdue: "#F2667A"
+  overdue-tint: "#312029"
+  sent: "#6CA6F7"
+  sent-tint: "#1F293B"
+  paid: "#4BD394"
+  paid-tint: "#1A302D"
+  draft: "#9BA2B3"
+  draft-tint: "#252931"
+  bar: "#1E2330"
+  bar-hatch: "#2A3040"
+  toggle-off: "#3A4052"
+  paper: "#F4F2EC"
+  paper-ink: "#1A1C22"
+  paper-muted: "#5E6270"
+  paper-rule: "#DEDAD0"
+  paper-accent: "#8A5A12"
+  paper-overdue: "#A61E35"
+  paper-overdue-tint: "#F9E1E4"
+  paper-paid: "#17694A"
+  paper-paid-tint: "#DCEFE5"
+  paper-draft-tint: "#E7E5DE"
 typography:
   display:
-    fontFamily: "Mulish Variable, sans-serif"
+    fontFamily: "Manrope, sans-serif"
     fontSize: "28px"
-    fontWeight: 700
+    fontWeight: 800
     lineHeight: "36px"
-    letterSpacing: "-0.015em"
+    letterSpacing: "-0.02em"
   stat:
-    fontFamily: "Mulish Variable, sans-serif"
-    fontSize: "24px"
-    fontWeight: 700
-    lineHeight: "32px"
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "26px"
+    fontWeight: 800
+    lineHeight: "34px"
+    letterSpacing: "-0.02em"
     fontFeature: "tnum"
   timer:
-    fontFamily: "Mulish Variable, sans-serif"
-    fontSize: "44px"
-    fontWeight: 700
-    lineHeight: "52px"
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "48px"
+    fontWeight: 800
+    lineHeight: "56px"
+    letterSpacing: "-0.03em"
     fontFeature: "tnum"
   headline:
-    fontFamily: "Mulish Variable, sans-serif"
-    fontSize: "20px"
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "18px"
     fontWeight: 700
-    lineHeight: "28px"
+    lineHeight: "26px"
   title:
-    fontFamily: "Mulish Variable, sans-serif"
-    fontSize: "16px"
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "15px"
     fontWeight: 700
-    lineHeight: "24px"
+    lineHeight: "22px"
   body:
-    fontFamily: "Mulish Variable, sans-serif"
+    fontFamily: "Manrope, sans-serif"
     fontSize: "14px"
     fontWeight: 500
     lineHeight: "20px"
-  figure:
-    fontFamily: "Mulish Variable, sans-serif"
-    fontSize: "14px"
-    fontWeight: 600
-    lineHeight: "20px"
-    fontFeature: "tnum"
+  body-mobile:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "16px"
+    fontWeight: 500
+    lineHeight: "24px"
   label:
-    fontFamily: "Mulish Variable, sans-serif"
+    fontFamily: "Manrope, sans-serif"
     fontSize: "12px"
     fontWeight: 500
     lineHeight: "16px"
+  micro:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "11px"
+    fontWeight: 700
+    lineHeight: "14px"
 rounded:
   xs: "4px"
   sm: "8px"
@@ -85,18 +95,32 @@ rounded:
   xl: "20px"
   pill: "999px"
 spacing:
-  base: "4px"
+  "1": "4px"
+  "2": "8px"
+  "3": "12px"
+  "4": "16px"
+  "5": "20px"
+  "6": "24px"
+  "8": "32px"
+  "10": "40px"
+  "12": "48px"
+  "16": "64px"
 components:
   button-primary:
-    backgroundColor: "{colors.cta}"
-    textColor: "{colors.on-cta}"
+    backgroundColor: "{colors.amber}"
+    textColor: "{colors.on-amber}"
     rounded: "{rounded.pill}"
     height: "40px"
     padding: "0 20px"
   button-secondary:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.raised}"
+    textColor: "{colors.text}"
     rounded: "{rounded.pill}"
+    height: "40px"
+  input:
+    backgroundColor: "{colors.raised}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.md}"
     height: "40px"
   card:
     backgroundColor: "{colors.surface}"
@@ -104,130 +128,157 @@ components:
   status-chip:
     rounded: "{rounded.pill}"
     height: "28px"
+  invoice-sheet:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.paper-ink}"
+    rounded: "{rounded.lg}"
 ---
 
 # Design System: Orasan
 
 ## Overview
 
-**Creative North Star: "The Calm Clinic Desk"**
+**Creative North Star: "Midnight amber"**
 
-Orasan looks like a calm, well-kept dashboard: a soft lavender-grey page, white rounded panels that float slightly above it, pastel tints for the numbers that matter, and one dark pill for the main action. The direction came from a reference the user supplied (a health dashboard) and replaced the earlier "paper ledger" look on 18 Nov 2026. That earlier system is tagged `ledger-v1` (commit `14e704f`).
+Orasan is a dark, quiet working surface, the kind you keep open all day beside chat and email. Near-black layers do the structure; one warm amber marks the single thing to do next (start the timer on its own screen, send the invoice, mark it paid) and today's bar on the chart. Status colors (overdue rose, sent blue, paid green) only ever appear with an icon and a word. The invoice is the exception to the dark: it stays a light paper sheet, because clients read, print and forward it as a document.
 
-Numbers still lead. The Dashboard opens with three pastel stat cards that answer "how much am I owed?" before anything else: unbilled time, money waiting on sent invoices, and money overdue. Currencies are never added together.
+The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light). Implementations:
+- **`static/`**: the reference build of this system: plain HTML + CSS for import into Figma with html.to.design. Tokens in `static/css/tokens.css`.
+- **`src/`** (React prototype) still uses the soft dashboard tokens (tag `soft-dashboard-v1`) and has not been ported yet.
+- Earlier directions: tag `ledger-v1` (paper ledger), tag `soft-dashboard-v1` (soft lavender dashboard).
+
+The layout keeps what the user liked about the soft dashboard: a desktop sidebar with icon navigation, a greeting header, three money cards, an hours chart with values on the bars, an avatar list, and tables with progress rings and status chips.
 
 **Key characteristics:**
-- Lavender-grey page (`paper`), white panels (`surface`) with a soft two-layer shadow. Dark mode swaps shadows for hairline borders.
-- One dark pill call to action per view (`cta`). Periwinkle (`accent`) marks today, the running timer, links and selection.
-- Pastel tints (lavender, rose, and a lavender-to-rose blend) only on stat cards.
-- Mulish throughout, bold headings, tabular figures for every amount and duration.
-- Pills everywhere you click: buttons, chips, the timer's inputs, segmented controls.
-- Icons from one set (Lucide, 1.75 stroke) for navigation, stat cards, status chips and actions.
+- Four dark layers: canvas → surface (cards) → raised (inputs, pills, overlays) → border.
+- One amber call to action per view. Amber also marks today and the running timer's clock.
+- Text in three steps: text, secondary, muted. Small text never uses the decorative muted value.
+- Cards are flat: a 1px inset border, no drop shadow. Only overlays cast a shadow.
+- Manrope throughout, with tabular figures for every amount and duration.
+- Lucide icons, 1.75 stroke, for navigation, stat cards, status and actions.
 
 ## Colors
 
-### Semantic tokens (Light and Dark)
+All text pairs below pass WCAG AA (4.5:1) on every dark layer; control outlines pass 3:1.
 
-Source of truth for code: `src/styles/tokens.css`. Every text pair passes WCAG AA (4.5:1) in both modes, and control borders pass 3:1. The Figma file still shows the earlier ledger system and needs rebuilding once Figma is unpaused.
+### Dark layers
+| Token | Hex | Use |
+|---|---|---|
+| `--color-canvas` | #0B0D12 | Page background, sidebar, billed (locked) rows |
+| `--color-surface` | #12151C | Cards, lists, mobile chrome |
+| `--color-raised` | #191D27 | Inputs, secondary buttons, pills, dialog, slide-over, toast |
+| `--color-border` | #262B38 | Card outlines, row dividers (decorative, not a control boundary) |
+| `--color-border-strong` | #646B80 | Input, select and checkbox outlines (3.2–3.7:1) |
 
-| Token (CSS) | Light | Dark | Use |
+### Text
+| Token | Hex | Contrast on surface | Use |
 |---|---|---|---|
-| `--color-bg-paper` | #EFEFF5 | #121219 | Page background |
-| `--color-bg-surface` | #FFFFFF | #1B1B26 | Cards, inputs, invoice sheet |
-| `--color-bg-sunken` | #F5F5FA | #16161F | Hover rows, total pills, message box |
-| `--color-bg-raised` | #FFFFFF | #242432 | Slide-over, dialog |
-| `--color-border-rule` | #E6E6EF | #2E2E3E | Row dividers, secondary button outline |
-| `--color-border-strong` | #7C7C94 | #77778F | Input and checkbox borders (3:1) |
-| `--color-text-ink` | #1B1B29 | #ECECF4 | Primary text and figures |
-| `--color-text-muted` | #5A5A6F | #A7A7BD | Secondary text |
-| `--color-text-faint` | #6B6B80 | #9090A7 | Placeholders, axis labels, billed rows |
-| `--color-cta` / `-on` | #1B1B29 / #FFFFFF | #ECECF4 / #16161F | The one dark pill per view |
-| `--color-accent-default` | #5357C4 | #A3A6F4 | Today, links, focus, running timer, toggles |
-| `--color-accent-tint` | #E8E9FA | #262848 | Running timer band, sent chip |
-| `--color-tint-lavender` | #ECEAFB | #25233B | Stat card |
-| `--color-tint-rose` | #FBE5ED | #3B1F2C | Stat card (overdue) |
-| `--color-tint-blend-from/to` | #ECEAFB → #F8E7F0 | #25233B → #33202D | Stat card (waiting) |
-| `--color-rose` | #C0285F | #F38DB0 | Goal line, overdue |
-| `--color-chart-bar` / `-hatch` | #F1F1F7 / #E4E4EE | #22222F / #2C2C3C | Chart bars (hatched) |
-| `--color-chart-active` | #8E92E6 | #7D81DC | Today's bar |
-| Status draft fg / bg | #5A5A6F / #EFEFF5 | #B5B5C9 / #25252F | Draft chip |
-| Status sent fg / bg | #4A4EBE / #E8E9FA | #AEB1F6 / #252849 | Sent chip |
-| Status paid fg / bg | #1D7553 / #E1F3EA | #74D4AB / #16302A | Paid chip |
-| Status overdue fg / bg | #C0285F / #FBE5ED | #F38DB0 / #3B1F2C | Overdue chip |
+| `--color-text` | #ECEEF3 | 15.7:1 | Primary text and figures |
+| `--color-text-secondary` | #9BA2B3 | 7.1:1 | Secondary text, subtitles |
+| `--color-text-muted` | #858CA0 | 5.4:1 | Small muted text: meta lines, labels, axis ticks |
+| `--color-muted` | #6B7286 | 3.8:1 | **Decorative only**: disabled fills, inactive icons. Never small text. |
+
+The user's palette named #6B7286 as "Muted"; at 3.8:1 it fails AA for small text, so small muted text uses #858CA0 and #6B7286 stays for decoration.
+
+### Accent and status
+| Token | Hex | Tint (on surface) | Use |
+|---|---|---|---|
+| `--color-amber` / `--color-on-amber` | #F2B256 / #1A1206 | #312B24 | Primary action (10:1), today's bar, running clock, active nav icon |
+| `--color-overdue` | #F2667A | #312029 | Overdue chip and figures, goal line |
+| `--color-sent` | #6CA6F7 | #1F293B | Sent chip |
+| `--color-paid` | #4BD394 | #1A302D | Paid chip |
+| `--color-draft` | #9BA2B3 | #252931 | Draft chip |
+
+Tints are solid hex values (the color at 14% over surface), so Figma imports exact fills. Chip text on its tint is 5.1:1 or higher.
+
+### Paper (the invoice document)
+| Token | Hex | Use |
+|---|---|---|
+| `--color-paper` | #F4F2EC | Invoice sheet background |
+| `--color-paper-ink` | #1A1C22 | Invoice text (15.2:1) |
+| `--color-paper-muted` | #5E6270 | Labels and secondary lines (5.4:1) |
+| `--color-paper-rule` | #DEDAD0 | Line-item dividers |
+| `--color-paper-overdue` / `-tint` | #A61E35 / #F9E1E4 | Overdue chip on paper |
+| `--color-paper-paid` / `-tint` | #17694A / #DCEFE5 | Paid chip on paper |
+| `--color-paper-draft-tint` | #E7E5DE | Draft chip on paper |
 
 ### Named rules
+**The One Amber Rule.** At most one amber button per view. Everything else is secondary (raised pill with a border) or ghost. The idle timer's Start is secondary in the header and dock; only the Timer screen's large Start is amber.
 
-**The One Dark Pill Rule.** Each view has at most one `cta` button. Everything else is secondary (white pill with a light outline) or ghost. The idle timer's Start is secondary in the header and dock; only the Timer screen's large timer uses the dark pill.
+**The Label Rule.** Status is never color alone: every chip carries an icon and its word (Draft · file-pen, Sent · send, Paid · circle-check, Overdue · triangle-alert).
 
-**The Pastel Is for Numbers Rule.** Lavender, rose and the blend appear only on stat cards. Panels are white; the page is lavender-grey.
+**The Separate Currencies Rule.** PHP and USD are never added together. A money card shows the default currency large and the other below ("and $141").
 
-**The Label Rule.** Status is never color alone: every chip carries an icon and its word.
-
-**The Disjoint Cards Rule.** The three money cards never overlap: sent-and-not-due excludes overdue, so no amount is counted twice.
-
-**The Separate Currencies Rule.** PHP and USD are never added together. A stat card shows the default currency large and the other below ("and $141").
+**The Paper Rule.** Anything the client sees as a document (builder preview, invoice detail, public invoice) is drawn on paper, not on the dark layers.
 
 ## Typography
 
-**Font:** Mulish (variable, self-hosted via `@fontsource-variable/mulish`), fallback Avenir Next. Its figures are tabular by default; `font-variant-numeric: tabular-nums` is set anyway on every figure style.
+**Font:** Manrope (Google Fonts, weights 500/600/700/800), fallback Avenir Next. `font-variant-numeric: tabular-nums` on the body, so every figure lines up.
 
-| Style | Weight · size/line | Use |
+| Role | Weight · size/line | Use |
 |---|---|---|
-| `type-display` | 700 · 28/36 | Page titles, "Welcome back, Mika!" |
-| `type-stat` | 700 · 24/32, tnum | Stat card values, chart average |
-| `type-timer` | 700 · 44/52, tnum | Clock on the Timer screen |
-| `type-headline` | 700 · 20/28 | Card titles |
-| `type-title` | 700 · 16/24 | Day headers, project groups |
-| `type-body` / `-mobile` | 500 · 14/20 and 16/24 | Rows and descriptions; inputs are 16px on mobile |
-| `type-figure` / `-strong` | 600 · 14/20, 700 · 16/24, tnum | Amounts and durations |
-| `type-label` / `-strong` | 500 / 700 · 12/16 | Meta lines, chips, nav |
-| `type-column-head` | 600 · 12/16 | Table headers (sentence case) |
+| Display | 800 · 28/36, −0.02em | Page titles |
+| Stat | 800 · 26/34, tnum | Money card values, builder total, chart average |
+| Timer | 800 · 48/56, tnum | Clock on the Timer screen |
+| Headline | 700 · 18/26 | Card and section titles |
+| Title | 700 · 15/22 | Running-clock pill, invoice business name |
+| Body / Body mobile | 500 · 14/20 and 16/24 | Rows; inputs are 16px on mobile so the browser doesn't zoom |
+| Label | 500 · 12/16 | Meta lines, chips, links |
+| Micro | 700 · 11/14 | Tab labels, chart ticks, invoice column heads (uppercase, +0.04em on paper) |
 
-**The Format Rule.** Amounts are `₱48,200.00` / `$1,250.00`; stat cards may drop centavos. Durations are `2:45` in rows and `00:01:12` on the clock. Totals (day, week, chart, client, builder summary) are `38.5 h`. The invoice document's Hours column is a billing quantity, written `18.50`.
+**The Format Rule.** Amounts `₱48,200.00` / `$1,250.00`; money cards may drop centavos. Durations `2:45` in rows, `00:01:12` on the clock; totals `38.5 h`. The invoice Hours column is a billing quantity, written `18.50`.
 
 ## Layout
 
-- **Desktop (lg, 1024px+):** a 248px sidebar on the page background with the brand mark, grouped icon nav (Dashboard, Timer, Clients, Invoices; then Settings), an overdue count badge on Invoices, and the profile at the bottom. The content column (max 1180px, left-aligned, 32px side padding) has a header strip holding the timer pill on the right.
-- **Mobile and tablet (below lg):** no sidebar. The timer dock (64px) sits directly above an icon-over-label tab bar (64px). Content uses 16px side padding and stacks.
-- **Dashboard:** greeting and the dark "New invoice" pill (hidden on first run); three disjoint stat cards (Unbilled · Sent, not due yet · Overdue, which links to the overdue invoice); "Ready to invoice" beside an "Hours tracked" chart (Ready comes first below xl); the "Invoice tracker" table, whose rings read "6 days left" or "11 days late".
-- **Spacing:** 4px base. Cards use 20px padding on mobile and 24px on desktop, with 12px gaps between cards.
+- **Desktop (1024px+):** a 248px sidebar on the canvas (brand mark, icon nav with an overdue badge, Settings, profile) and a main column (max 1144px, 32px gutters). The header holds the title on the left and the timer pill plus the page's amber action on the right.
+- **Below 1024px:** no sidebar. A sticky bottom block holds the timer dock (64px) above an icon tab bar (64px). The page's amber action shrinks to an icon pill beside the title.
+- **Dashboard:** three money cards (3 columns from 768px), then "Ready to invoice" beside "Hours tracked" from 1280px (Ready comes first below that), then the invoice tracker.
+- **Builder:** entries by project, with a 540px sticky column (total + actions, then the paper preview) from 1280px.
+- **Spacing:** 4px base; 12px between cards, 16–24px between sections, 20–24px card padding.
+- **Figma-friendly by construction:** flexbox and grid with `gap` only. Sidebar and mobile chrome are `position: sticky`; only toasts, the dialog and the slide-over are fixed overlays.
 
 ## Elevation & Depth
 
-Light mode floats white cards on the lavender-grey page with a soft two-layer shadow (`0 1px 2px` + `0 6px 20px` at 4% ink). Overlays and toasts use a deeper shadow. Dark mode is flat: a 1px border in `rule` replaces the card shadow, and overlays use `rule-strong`. No glass, blur or glow.
+Flat. Depth comes from the four dark layers and 1px inset borders. Only overlays (dialog, slide-over, toast) cast a shadow (`0 16px 48px rgba(0,0,0,0.48)`) over a scrim of `rgba(5,6,9,0.72)`.
 
 ## Shapes
 
-Radius scale: 4 (checkbox), 8 (brand mark), 12 (inputs, message box), 16 (cards, invoice sheet), 20 (slide-over, dialog, onboarding card), pill (buttons, chips, timer pill, segmented controls, avatars).
+Radius: 4 (checkbox), 8 (brand mark), 12 (inputs, message box), 16 (cards, invoice sheet), 20 (dialog, slide-over, onboarding card), pill (buttons, chips, select pills, avatars, toggles).
 
 ## Components
 
-- **Button:** primary = dark pill (`cta`), secondary = white pill with a `rule` outline, ghost, danger, and danger-ghost (quiet delete). 44px on touch widths, 40px from md. Press scales to 0.97.
-- **StatCard:** pastel tint, white circular icon, muted label, `type-stat` value, muted note.
-- **BarChart:** hatched bars on `chart-bar`; today solid `chart-active` with an accent value pill; values printed on every bar; a dashed rose goal line set in Settings → Daily goal (off hides it); faint axis labels; a screen-reader table with the same data. 160px tall on mobile, 224px from md.
-- **Card / CardHead:** white rounded-16 panel; headline title with optional controls on the right.
-- **Avatar:** initials on a stable pastel tone. **ProgressRing:** a small ring, always followed by its percentage.
-- **Badge (status chip):** pill with icon and word: Draft (file-pen), Sent (send), Paid (circle-check), Overdue (triangle-alert).
-- **TimerControl:** header pill (desktop), dock (mobile) and hero card (Timer screen). Running header pill and dock use the accent tint with a pulsing dot; the running hero stays white with a periwinkle clock, a "Tracking" tag and a dark Stop pill (Start and Stop are never visible together).
-- **EntryRow:** inside day cards; tap the description to edit; a play button (mobile) or "Resume" (desktop); billed rows are locked with the invoice number.
-- **SlideOver / Dialog:** raised, radius 20, overlay shadow; the slide-over floats 8px from the right edge on desktop and is a full sheet on mobile.
-- **Sidebar / TabBar / NavItem:** icon + label; the active sidebar item is a white pill.
+- **Button:** primary amber pill; secondary raised pill with a 1px border; ghost. 44px tall below 768px, 40px from 768px.
+- **Select pill:** raised pill with a strong border and a chevron (project picker).
+- **Timer control:** header pill and mobile dock. Running = amber-tint band, breathing amber dot, amber clock; Start and Stop share one grid cell and crossfade.
+- **Money card (stat card):** icon in a tinted circle, label, stat value, muted note. The Overdue card links to the invoice.
+- **Hours chart:** hatched bars, today in solid amber with an amber value pill, values printed on every bar, a dashed goal line plus a legend, axis ticks in muted text, and a screen-reader table with the same data.
+- **Status chip:** pill, icon + word, tinted background.
+- **Entry row:** description, project · client, time range, duration, Resume (play icon on mobile). Billed rows sit on the canvas with a lock and the invoice number.
+- **Lists:** avatar + name + email rows; rate pills; right-aligned tabular amounts.
+- **Invoice sheet:** paper; sender, title + status, billed-to/issued/due/amount, line items (hours and rate columns collapse into the line below 520px container width), totals, How to pay with copy buttons.
+- **Forms:** raised inputs and selects with strong outlines; toggles (amber when on, 44px hit area); amber checkboxes.
+- **Overlays:** dialog (bottom sheet on mobile, centered from 768px) and slide-over (full screen on mobile, 480px floating panel from 768px). Both open with `:target` in the static build.
+- **Toast:** raised, bottom-left (above the dock on mobile), 5s, pauses on hover, optional amber action.
 
 ## Motion
 
-| Moment | What happens | Duration · easing |
-|---|---|---|
-| Press | scale 0.97 | 160ms · `cubic-bezier(0.23, 1, 0.32, 1)` |
-| Timer start/stop | Start and Stop crossfade in place; the band tints | 150ms · same |
-| Running dot | opacity pulse | 2s loop |
-| Slide-over / dialog | 16px slide or 0.97 scale, with a fade | 220ms in / 160ms out |
-| Toast | rises 8px with a fade | 160ms in / 120ms out |
-| Status change | chip crossfade | 150ms |
+Transform and opacity only; Emil Kowalski's ease-out `cubic-bezier(0.23, 1, 0.32, 1)`; exits faster than entrances.
 
-Hover effects apply only on devices that hover. Under reduced motion, movement becomes short fades and the dot stops pulsing.
+| Moment | What happens | Duration |
+|---|---|---|
+| Press | scale 0.97 (toggles and copy buttons 0.95) | 160ms |
+| Hover | opacity 0.86, only on devices that hover | 160ms |
+| Timer start/stop | Start and Stop crossfade in place | 180ms |
+| Running dot | opacity breath 1 → 0.35 | 2s loop |
+| Toast | rises 8px and fades in; leaves 4px down | 240ms in / 160ms out |
+| Dialog | scales 0.97 → 1 with the scrim fade | 240ms in / 160ms out |
+| Slide-over | moves in 24px with the scrim fade | 240ms in / 160ms out |
+| Toggle knob | slides 18px | 180ms |
+
+Under `prefers-reduced-motion`, everything becomes a 120ms opacity fade, the dot stops breathing, and nothing moves.
 
 ## Do's and Don'ts
 
-**Do:** lead the Dashboard with the three money stat cards; print values on chart bars; keep one dark pill per view; give every status chip an icon and a word; keep the timer one tap away (header pill, dock).
+**Do:** keep one amber action per view; give every status chip an icon and a word; keep the invoice on paper; use #858CA0 for small muted text; keep the timer one tap away (header pill, mobile dock).
 
-**Don't:** use Inter, Roboto or system fonts; use glass, blur, glows or blobs; use emoji; add PHP and USD together; use pastel tints on anything but stat cards; write marketing copy in the product; put Taglish in labels or anything the client sees.
+**Don't:** use #6B7286 for small text; add drop shadows to cards; use Inter, Roboto or system fonts; use glass, blur, glows or blobs; use emoji; add PHP and USD together; put Taglish in labels or anything the client sees; write marketing copy in the product.
