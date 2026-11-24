@@ -145,7 +145,7 @@ Orasan is a dark, quiet working surface, the kind you keep open all day beside c
 The user supplied this palette on 19 Nov 2026. It replaces the earlier "soft dashboard" (lavender, light).
 
 Where things live:
-- **`src/`**: a clean React + Vite + Tailwind 4 boilerplate (JavaScript). The tokens below are defined in `src/styles/tokens.css` inside Tailwind's `@theme`, so each one is also a utility (`bg-surface`, `text-text-secondary`, `rounded-lg`, `text-display`). No screens are built yet. Brand mark: `src/components/brand/Logo.jsx` (`Logo`, `LogoMark`) and `public/favicon.svg`. A style guide at `/styleguide` shows every token with its class. Extra type helpers: `figure` (bold, tabular) and `caps-label` (invoice labels).
+- **`src/`** contains the React, Vite, TypeScript, and Tailwind CSS v4 frontend. The tokens in `src/shared/styles/tokens.css` use Tailwind's `@theme` and map to utilities such as `bg-surface`, `text-text-secondary`, `rounded-lg`, and `text-display`. The brand mark lives in `src/shared/components/brand/Logo.tsx` (`Logo`, `LogoMark`) and `public/favicon.svg`. The `/styleguide` route shows the tokens and classes, including `figure` for bold tabular numbers and `caps-label` for invoice labels.
 - **`design/screenshots/`**: full-page 2× screenshots of every screen at 1440 and 375, the visual reference for building.
 - **Tag `prototype-v1`**: the finished prototypes this system was proven on: the static HTML/CSS pages for Figma (`static/`) and the React prototype (`src/`), both in Midnight amber.
 - Earlier directions: tag `ledger-v1` (paper ledger), tag `soft-dashboard-v1` (soft lavender dashboard).
@@ -234,7 +234,7 @@ Tints are solid hex values (the color at 14% over surface), so Figma imports exa
 ## Layout
 
 - **Desktop (1024px+):** a 248px sidebar on the canvas (brand mark, icon nav with an overdue badge, Settings, profile) and a main column (max 1144px, 32px gutters). The header holds the title on the left and the timer pill plus the page's amber action on the right.
-- **Below 1024px:** no sidebar. A sticky bottom block holds the timer dock (64px) above an icon tab bar (64px). The page's amber action shrinks to an icon pill beside the title.
+- **Below 1024px**, a compact top bar shows the wordmark and a 44px menu button. The expanded menu lists the sidebar destinations. The planned timer dock keeps timer controls within easy reach.
 - **Dashboard:** three money cards (3 columns from 768px), then "Ready to invoice" beside "Hours tracked" from 1280px (Ready comes first below that), then the invoice tracker.
 - **Builder:** entries by project, with a 540px sticky column (total + actions, then the paper preview) from 1280px.
 - **Spacing:** 4px base; 12px between cards, 16–24px between sections, 20–24px card padding.

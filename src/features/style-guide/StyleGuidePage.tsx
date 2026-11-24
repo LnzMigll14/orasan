@@ -1,9 +1,10 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router'
-import { Logo, LogoMark } from '../components/brand/Logo'
+import { Logo, LogoMark } from '../../shared/components/brand/Logo'
 
 /**
- * Style guide: every Midnight amber token with its Tailwind class, for reference while building.
- * Values mirror src/styles/tokens.css; DESIGN.md explains when to use each.
+ * The style guide shows samples of Orasan's design tokens and their Tailwind classes.
+ * Keep the listed samples in sync with src/shared/styles/tokens.css. DESIGN.md explains their intended use.
  */
 
 const COLOR_GROUPS = [
@@ -64,8 +65,9 @@ const COLOR_GROUPS = [
       ['paper-paid', '#17694A', 'Paid on paper'],
     ],
   },
-]
+] as const
 
+// Each typography sample pairs a utility class with its specification and preview text.
 const TYPE = [
   ['text-display', '28 / 36 · 800', 'Welcome back, Mika'],
   ['text-stat', '26 / 34 · 800', '₱42,075.00'],
@@ -76,7 +78,7 @@ const TYPE = [
   ['text-body-mobile', '16 / 24 · 500', 'Inputs on phones use 16px'],
   ['text-label', '12 / 16 · 500', 'VA retainer · Northwind Remote LLC'],
   ['text-micro', '11 / 14 · 500', 'Tab labels, chart ticks'],
-]
+] as const
 
 const RADII = [
   ['rounded-xs', '4px', 'Checkbox'],
@@ -85,9 +87,15 @@ const RADII = [
   ['rounded-lg', '16px', 'Cards, invoice'],
   ['rounded-xl', '20px', 'Dialog'],
   ['rounded-pill', '999px', 'Buttons, chips'],
-]
+] as const
 
-function Section({ title, note, children }) {
+type SectionProps = {
+  title: string
+  note?: string
+  children: ReactNode
+}
+
+function Section({ title, note, children }: SectionProps) {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
@@ -99,7 +107,13 @@ function Section({ title, note, children }) {
   )
 }
 
-function Swatch({ name, hex, use }) {
+type SwatchProps = {
+  name: string
+  hex: string
+  use: string
+}
+
+function Swatch({ name, hex, use }: SwatchProps) {
   return (
     <div className="flex items-center gap-3 rounded-lg bg-surface p-3 shadow-card">
       <span className="size-12 flex-none rounded-md shadow-card" style={{ background: hex }} />
@@ -112,15 +126,14 @@ function Swatch({ name, hex, use }) {
   )
 }
 
-export function StyleGuide() {
+export function StyleGuidePage() {
   return (
     <main className="mx-auto flex w-full max-w-(--size-content) flex-col gap-12 px-4 py-8 md:px-8 md:py-12">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           <h1 className="text-display text-text">Style guide</h1>
           <p className="text-text-secondary">
-            Midnight amber tokens and their Tailwind classes. Source: <code>src/styles/tokens.css</code>, rules in
-            DESIGN.md.
+            Midnight amber tokens and their Tailwind classes. See <code>src/shared/styles/tokens.css</code> and DESIGN.md.
           </p>
         </div>
         <Link to="/" className="inline-flex min-h-11 items-center text-label font-bold text-text-secondary hover-fine:text-text">
@@ -137,17 +150,18 @@ export function StyleGuide() {
         </div>
       </Section>
 
-      {COLOR_GROUPS.map((g) => (
-        <Section key={g.title} title={g.title} note={g.note}>
+      {COLOR_GROUPS.map(({ title, note, colors }) => (
+        <Section key={title} title={title} note={note}>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {g.colors.map(([name, hex, use]) => (
+            {colors.map(([name, hex, use]) => (
               <Swatch key={name} name={name} hex={hex} use={use} />
             ))}
           </div>
+          {/* Use the first token in each group to demonstrate how Tailwind names its utilities. */}
           <p className="text-label text-text-muted">
-            Use as <code className="text-text-secondary">bg-{g.colors[0][0]}</code>,{' '}
-            <code className="text-text-secondary">text-{g.colors[0][0]}</code>,{' '}
-            <code className="text-text-secondary">border-{g.colors[0][0]}</code>, and so on.
+            Use as <code className="text-text-secondary">bg-{colors[0][0]}</code>,{' '}
+            <code className="text-text-secondary">text-{colors[0][0]}</code>,{' '}
+            <code className="text-text-secondary">border-{colors[0][0]}</code>, and so on.
           </p>
         </Section>
       ))}

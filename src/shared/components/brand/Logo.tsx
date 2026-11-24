@@ -3,7 +3,15 @@
  * Same mark as public/favicon.svg. Colors come from the tokens (amber / on-amber / text).
  */
 
-export function LogoMark({ size = 32, className = '' }) {
+type LogoProps = {
+  size?: number
+  className?: string
+}
+
+export function LogoMark({ size = 32, className = '' }: LogoProps) {
+  // Keep the SVG square and proportional as the badge scales.
+  const glyphSize = Math.round(size * 0.56)
+
   return (
     <span
       className={`inline-flex flex-none items-center justify-center rounded-sm bg-amber text-on-amber ${className}`}
@@ -11,8 +19,8 @@ export function LogoMark({ size = 32, className = '' }) {
       aria-hidden="true"
     >
       <svg
-        width={Math.round(size * 0.56)}
-        height={Math.round(size * 0.56)}
+        width={glyphSize}
+        height={glyphSize}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -29,11 +37,11 @@ export function LogoMark({ size = 32, className = '' }) {
 }
 
 /** Mark + wordmark. When it is a link's only content, give the link an aria-label ("Orasan home"). */
-export function Logo({ size = 32, className = '' }) {
+export function Logo({ size = 32, className = '', wordmarkClassName = '' }: LogoProps & { wordmarkClassName?: string }) {
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <LogoMark size={size} />
-      <span className="text-headline font-extrabold tracking-tight text-text">orasan</span>
+      <span className={`text-headline font-extrabold tracking-tight text-text ${wordmarkClassName}`}>orasan</span>
     </span>
   )
 }

@@ -103,7 +103,7 @@
   --shadow-card: inset 0 0 0 1px var(--color-border);
   --shadow-overlay: inset 0 0 0 1px var(--color-border-strong), 0 16px 48px rgb(0 0 0 / 0.48);
 
-  /* ---- Breakpoints (mobile first) ---- */
+  /* Breakpoints start with unprefixed mobile styles. The reset leaves only md, lg, and xl. */
   --breakpoint-*: initial;
   --breakpoint-md: 48rem; /* 768px: tablet layout */
   --breakpoint-lg: 64rem; /* 1024px: sidebar appears */

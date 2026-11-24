@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Figma first: the full prototype is designed and approved in Figma before any code is written. After that, a responsive React web app that works from 375px to 1440px and can be installed as a PWA. The framework details, hosting and backend are still undecided.
+The design is Figma-first. The frontend uses React, Vite, TypeScript, Tailwind CSS v4, and React Router. It targets 375px to 1440px, with PWA installation planned. The backend will use Supabase for Postgres, Auth, Storage, and Edge Functions. Frontend hosting is still open.
 
 ## Users
 
@@ -67,7 +67,7 @@ Orasan is built around how Filipino freelancers actually get paid. Each user set
     - lists and tables: people rows with avatars and quick actions, tables with progress rings and status chips.
   - Numbers still lead. The answer to "how much am I owed?" is the first thing on the Dashboard.
   - Still ruled out: Inter, Roboto, Arial or system-font defaults; glassmorphism, glows or blurred blobs; emoji; marketing copy inside the product; centered empty states with huge padding. Icons are allowed for navigation, stat cards and actions, from one consistent icon set.
-  - On mobile, the desktop sidebar becomes the bottom tab bar with the timer dock above it (priority 1 stays: one tap to start or stop).
+  - On mobile, the desktop sidebar becomes a menu in the top bar. The planned timer dock keeps start and stop one tap away.
   - The earlier "precise instrument / paper ledger" direction is tagged `ledger-v1` (commit 14e704f).
 
 ## Evidence on Hand
