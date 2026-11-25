@@ -11,7 +11,9 @@ The build is a static site in `dist/`, so any static host works. Connect the Git
 - **Vercel** reads `vercel.json`.
 - **Netlify** and **Cloudflare Pages** read `public/_redirects` and `public/_headers`, which the build copies into `dist/`.
 
-These files send every path to `index.html`, so links such as `/invoices/…` work on reload. They also set strict security headers, including a content security policy that only allows the app's own files. If you change the headers, update both `vercel.json` and `public/_headers`. Run `npm run build` then `npm run preview` to test locally with the same headers.
+These files route frontend URLs to `index.html`, so links such as `/invoices/…` work on reload. They also set security headers for the app. If you change the app-wide headers, update both `vercel.json` and `public/_headers`. Run `npm run build` then `npm run preview` to test the frontend locally.
+
+On Vercel, [`api/sensitive.ts`](api/sensitive.ts) serves `POST /api/sensitive` as a BotID verification endpoint. The browser initializes BotID through [`src/security/botid.ts`](src/security/botid.ts), and `vercel.json` routes BotID's challenge requests on the same origin. No app flow currently calls this endpoint.
 
 The site URL (`https://orasan-gold.vercel.app`) is written into `index.html` (canonical, Open Graph and structured data), `public/robots.txt` and `public/sitemap.xml`. Update all three if you add a custom domain. Only the landing page at `/` is indexed: app screens set `noindex` through `usePageMeta` in `src/shared/seo.ts`.
 
