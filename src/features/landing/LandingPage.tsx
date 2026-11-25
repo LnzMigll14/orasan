@@ -1,8 +1,10 @@
+import { useEffect, useRef, type CSSProperties } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Clock3, Coins, FileText, Wallet } from "lucide-react";
 import { Logo, LogoMark } from "../../shared/components/brand/Logo";
 import { usePageMeta } from "../../shared/seo";
 import { button, card } from "../../shared/ui";
+import "./Landing.css";
 
 const features = [
   {
@@ -57,9 +59,41 @@ const faqs = [
   },
 ];
 
+/** Custom properties that stagger the motion in Landing.css. */
+const order = (name: "--rise-i" | "--reveal-i" | "--step-i", index: number) => ({ [name]: index }) as CSSProperties;
+
+/** Marks each [data-reveal] element visible once it scrolls into view, so Landing.css can fade it up. */
+function useScrollReveal() {
+  const root = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const items = root.current?.querySelectorAll<HTMLElement>("[data-reveal]") ?? [];
+    // Without IntersectionObserver, show everything at once.
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((item) => item.setAttribute("data-visible", ""));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.setAttribute("data-visible", "");
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
+  return root;
+}
+
 /** The public front page for visitors with no saved data. It's the only page search engines index. */
 export function LandingPage() {
   usePageMeta(null, { index: true });
+  const root = useScrollReveal();
 
   const start = (
     <Link to="/welcome" className={`${button.primary} min-h-12 px-6 text-title`}>
@@ -69,8 +103,8 @@ export function LandingPage() {
   );
 
   return (
-    <div className="min-h-dvh bg-canvas text-text">
-      <header className="mx-auto flex w-full max-w-(--size-content) items-center justify-between gap-4 px-4 py-5 md:px-8">
+    <div ref={root} className="landing min-h-dvh overflow-x-clip bg-canvas text-text">
+      <header className="landing-hero-item mx-auto flex w-full max-w-(--size-content) items-center justify-between gap-4 px-4 py-5 md:px-8">
         <Link to="/" aria-label="Orasan home" className="rounded-lg">
           <Logo size={36} />
         </Link>
@@ -82,37 +116,50 @@ export function LandingPage() {
       <main className="mx-auto w-full max-w-(--size-content) px-4 md:px-8">
         <section aria-labelledby="hero-title" className="grid items-center gap-10 py-10 md:py-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div className="space-y-6">
-            <p className="text-label font-bold tracking-wide text-amber uppercase">For Filipino freelancers and VAs</p>
-            <h1 id="hero-title" className="text-[2.5rem] leading-[1.1] font-extrabold tracking-tight md:text-[3.5rem]">
+            <p className="landing-hero-item text-label font-bold tracking-wide text-amber uppercase" style={order("--rise-i", 1)}>
+              For Filipino freelancers and VAs
+            </p>
+            <h1
+              id="hero-title"
+              className="landing-hero-item text-[2.5rem] leading-[1.1] font-extrabold tracking-tight md:text-[3.5rem]"
+              style={order("--rise-i", 2)}
+            >
               Time tracking and invoicing that knows how you get paid
             </h1>
-            <p className="max-w-xl text-title font-medium text-text-secondary md:text-headline md:font-medium">
+            <p
+              className="landing-hero-item max-w-xl text-title font-medium text-text-secondary md:text-headline md:font-medium"
+              style={order("--rise-i", 3)}
+            >
               Track your hours, turn them into PHP or USD invoices with your GCash, Maya, bank, Wise or PayPal details, and
               always know how much you're owed.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="landing-hero-item flex flex-wrap items-center gap-4" style={order("--rise-i", 4)}>
               {start}
               <p className="text-label text-text-muted">Free in beta · No sign-up · Your data stays on your device</p>
             </div>
           </div>
-          <div className="flex justify-center lg:justify-end">
-            <LogoMark size={240} className="max-w-[60vw]" />
+          <div className="landing-hero-item flex justify-center lg:justify-end" style={order("--rise-i", 3)}>
+            <div className="landing-mascot">
+              <LogoMark size={240} className="max-w-[60vw]" />
+            </div>
           </div>
         </section>
 
         <section aria-labelledby="features-title" className="py-10 md:py-14">
-          <h2 id="features-title" className="text-display">
+          <h2 id="features-title" data-reveal="" className="text-display">
             Everything between the timer and getting paid
           </h2>
           <ul className="mt-6 grid gap-4 md:grid-cols-2">
-            {features.map(({ icon: Icon, title, body }) => (
-              <li key={title} className={`${card} flex gap-4 p-5 md:p-6`}>
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-amber-tint text-amber">
-                  <Icon aria-hidden="true" size={20} strokeWidth={1.75} />
-                </span>
-                <div>
-                  <h3 className="text-title">{title}</h3>
-                  <p className="mt-1 text-body text-text-secondary">{body}</p>
+            {features.map(({ icon: Icon, title, body }, index) => (
+              <li key={title} data-reveal="" style={order("--reveal-i", index % 2)}>
+                <div className={`${card} landing-card flex h-full gap-4 p-5 md:p-6`}>
+                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-amber-tint text-amber">
+                    <Icon aria-hidden="true" size={20} strokeWidth={1.75} />
+                  </span>
+                  <div>
+                    <h3 className="text-title">{title}</h3>
+                    <p className="mt-1 text-body text-text-secondary">{body}</p>
+                  </div>
                 </div>
               </li>
             ))}
@@ -120,27 +167,44 @@ export function LandingPage() {
         </section>
 
         <section aria-labelledby="how-title" className="py-10 md:py-14">
-          <h2 id="how-title" className="text-display">
+          <h2 id="how-title" data-reveal="" className="text-display">
             How it works
           </h2>
-          <ol className="mt-6 grid gap-4 md:grid-cols-4">
+          <div className="relative mt-6">
+          {/* The track joins the step numbers (centred 36px into each card) across the four columns;
+              a dot runs along it like a timer. It sits over the cards' backgrounds and under the numbers. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-[35px] right-[calc((100%_-_48px)_/_4_-_36px)] left-9 z-[1] hidden h-0.5 bg-border-strong md:block"
+          >
+            <span className="landing-comet absolute inset-0 flex items-center justify-end">
+              <span className="-mr-1.5 size-3 rounded-full bg-amber" />
+            </span>
+          </div>
+          <ol className="grid gap-4 md:grid-cols-4">
             {steps.map(({ title, body }, index) => (
-              <li key={title} className={`${card} p-5`}>
-                <span className="grid size-8 place-items-center rounded-full bg-amber text-label font-extrabold text-on-amber">
-                  {index + 1}
-                </span>
-                <h3 className="mt-3 text-title">{title}</h3>
-                <p className="mt-1 text-body text-text-secondary">{body}</p>
+              <li key={title} data-reveal="" style={order("--reveal-i", index)}>
+                <div className={`${card} h-full p-5`}>
+                  <span
+                    className="landing-step-badge relative z-[2] grid size-8 place-items-center rounded-full bg-amber text-label font-extrabold text-on-amber"
+                    style={order("--step-i", index)}
+                  >
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-3 text-title">{title}</h3>
+                  <p className="mt-1 text-body text-text-secondary">{body}</p>
+                </div>
               </li>
             ))}
           </ol>
+          </div>
         </section>
 
         <section aria-labelledby="faq-title" className="py-10 md:py-14">
-          <h2 id="faq-title" className="text-display">
+          <h2 id="faq-title" data-reveal="" className="text-display">
             Questions
           </h2>
-          <div className={`${card} mt-6 divide-y divide-border`}>
+          <div data-reveal="" className={`${card} mt-6 divide-y divide-border`}>
             {faqs.map(({ q, a }) => (
               <details key={q} className="group px-5 py-4 md:px-6">
                 <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-title [&::-webkit-details-marker]:hidden">
@@ -155,7 +219,11 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section aria-labelledby="cta-title" className={`${card} my-10 flex flex-col items-start gap-5 p-6 md:my-14 md:flex-row md:items-center md:justify-between md:p-8`}>
+        <section
+          aria-labelledby="cta-title"
+          data-reveal=""
+          className={`${card} my-10 flex flex-col items-start gap-5 p-6 md:my-14 md:flex-row md:items-center md:justify-between md:p-8`}
+        >
           <div>
             <h2 id="cta-title" className="text-headline">
               Know how much you're owed, in pesos and dollars
