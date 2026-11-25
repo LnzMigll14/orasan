@@ -9,6 +9,7 @@ import { usePageMeta } from "../../shared/seo";
 import { todayKey } from "../../shared/time";
 import { RecoveryScreen } from "../gates";
 import { Navbar } from "./Navbar";
+import { Analytics } from "@vercel/analytics/react"
 
 export function AppLayout() {
   const { data, loadError, saveFailed } = useStoreState();
@@ -47,6 +48,7 @@ export function AppLayout() {
         </footer>
       </div>
       <Toaster />
+      <Analytics mode="production" />
     </div>
   );
 }
