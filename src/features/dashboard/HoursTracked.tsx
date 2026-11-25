@@ -1,33 +1,26 @@
 import { useId } from "react";
+import { formatWeekday } from "../../shared/time";
 
-// This sample week stores whole minutes. Display labels convert them to hours.
-const week = [
-  { day: "Thu", minutes: 378 },
-  { day: "Fri", minutes: 300 },
-  { day: "Sat", minutes: 0 },
-  { day: "Sun", minutes: 0 },
-  { day: "Mon", minutes: 318 },
-  { day: "Tue", minutes: 420 },
-  { day: "Wed", minutes: 90, isToday: true },
-];
-
-const goalHours = 8;
 const historicalFill =
   "repeating-linear-gradient(135deg, var(--color-bar) 0 7px, var(--color-bar-hatch) 7px 9px)";
 
-// Divide by the days with logged time to get the average for a day worked.
-const workedDays = week.filter(({ minutes }) => minutes > 0).length;
-const totalMinutes = week.reduce((sum, { minutes }) => sum + minutes, 0);
-const averageHours = workedDays ? totalMinutes / workedDays / 60 : 0;
+type Day = { day: string; minutes: number; isToday: boolean };
 
-// Round the axis up to five equal steps so it includes the goal and the tallest bar.
-const peakHours = Math.max(goalHours, ...week.map(({ minutes }) => minutes / 60));
-const tickStep = Math.max(2, Math.ceil(peakHours / 5));
-const maxHours = tickStep * 5;
-const ticks = Array.from({ length: 6 }, (_, index) => (5 - index) * tickStep);
-
-export function HoursTracked() {
+/** The last seven days of tracked time, today highlighted. goalHours 0 hides the goal line. */
+export function HoursTracked({ days, goalHours }: { days: Day[]; goalHours: number }) {
   const headingId = useId();
+  const week = days.map((item) => ({ ...item, label: formatWeekday(item.day) }));
+
+  // Divide by the days with logged time to get the average for a day worked.
+  const workedDays = week.filter(({ minutes }) => minutes > 0).length;
+  const totalMinutes = week.reduce((sum, { minutes }) => sum + minutes, 0);
+  const averageHours = workedDays ? totalMinutes / workedDays / 60 : 0;
+
+  // Round the axis up to five equal steps so it includes the goal and the tallest bar.
+  const peakHours = Math.max(goalHours, ...week.map(({ minutes }) => minutes / 60));
+  const tickStep = Math.max(2, Math.ceil(peakHours / 5));
+  const maxHours = tickStep * 5;
+  const ticks = Array.from({ length: 6 }, (_, index) => (5 - index) * tickStep);
 
   return (
     <section
@@ -40,15 +33,17 @@ export function HoursTracked() {
         </h2>
 
         <div className="flex items-center gap-3 text-label text-text-secondary">
-          <span className="inline-flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="w-5 border-t-2 border-dashed border-overdue"
-            />
-            {goalHours} h goal
-          </span>
+          {goalHours > 0 && (
+            <span className="inline-flex items-center gap-2 border-r border-border pr-3">
+              <span
+                aria-hidden="true"
+                className="w-5 border-t-2 border-dashed border-overdue"
+              />
+              {goalHours} h goal
+            </span>
+          )}
 
-          <p className="border-l border-border pl-3">
+          <p>
             <strong className="text-stat text-text">
               {averageHours.toFixed(1)}
             </strong>
@@ -75,10 +70,12 @@ export function HoursTracked() {
         </div>
 
         <div className="relative grid h-44 grid-cols-7 gap-1 md:h-52 md:gap-3">
-          <div
-            className="absolute inset-x-0 border-t-2 border-dashed border-overdue"
-            style={{ bottom: `${(goalHours / maxHours) * 100}%` }}
-          />
+          {goalHours > 0 && (
+            <div
+              className="absolute inset-x-0 border-t-2 border-dashed border-overdue"
+              style={{ bottom: `${(goalHours / maxHours) * 100}%` }}
+            />
+          )}
 
           {week.map(({ day, minutes, isToday }) => (
             <div key={day} className="relative min-w-0">
@@ -107,12 +104,12 @@ export function HoursTracked() {
         </div>
 
         <div className="col-start-2 grid grid-cols-7 gap-1 text-center text-micro md:gap-3 md:text-label">
-          {week.map(({ day, isToday }) => (
+          {week.map(({ day, label, isToday }) => (
             <span
               key={day}
               className={isToday ? "font-bold text-amber" : "text-text-muted"}
             >
-              {day}
+              {label}
             </span>
           ))}
         </div>
@@ -129,9 +126,9 @@ export function HoursTracked() {
             </tr>
           </thead>
           <tbody>
-            {week.map(({ day, minutes, isToday }) => (
+            {week.map(({ day, label, minutes, isToday }) => (
               <tr key={day}>
-                <th scope="row">{isToday ? `${day} (today)` : day}</th>
+                <th scope="row">{isToday ? `${label} (today)` : `${label} ${day}`}</th>
                 <td>{(minutes / 60).toFixed(1)}</td>
               </tr>
             ))}

@@ -1,4 +1,5 @@
 import { CircleCheck, FilePenLine, Send, TriangleAlert } from "lucide-react";
+import type { InvoiceStatus } from "../../data/types";
 
 export const invoiceStatusStyles = {
   overdue: {
@@ -25,4 +26,4 @@ export const invoiceStatusStyles = {
     borderClass: "border-paid-tint",
     colorClass: "bg-paid-tint text-paid",
   },
-};
+} satisfies Record<InvoiceStatus, unknown>;

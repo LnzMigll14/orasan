@@ -2,7 +2,21 @@
 
 Orasan is a time tracking and invoicing app in development for Filipino freelancers and virtual assistants. The planned workflow connects tracked hours, PHP or USD invoices, and manual payment records.
 
-The current frontend uses React, Vite, TypeScript, Tailwind CSS v4, and React Router. It includes a responsive dashboard shell at `/` and a design token reference at `/styleguide`. The timer, clients, invoices, and settings screens are planned.
+The current frontend uses React, Vite, TypeScript, Tailwind CSS v4, and React Router. It covers the full loop: first-time setup, the timer, clients and projects, invoices (build, send, mark as paid, public page, print to PDF), settings, and JSON export and import. A design token reference lives at `/styleguide`.
+
+## Data
+
+All data is stored in the browser's localStorage for now, under the key `orasan:data`. Everything that reads or writes it lives in `src/data/`:
+
+- `types.ts`: the data shape and `DATA_VERSION`.
+- `storage.ts`: the storage adapter. To move to Supabase or another backend, write an adapter with the same methods and pass it to the store.
+- `store.ts`: the single store, its `useAppData()` hook, and every action that changes data (add client, stop timer, create invoice, and so on). Components never touch storage directly.
+- `migrations.ts`: when the shape changes, bump `DATA_VERSION` and add a migration. Saved data and imported files both run through it.
+- `validate.ts`: checks saved and imported data, including the links between records.
+- `selectors.ts` and `invoicing.ts`: pure functions for totals, statuses and invoice lines.
+- `backup.ts`: export and import files (`{ app, version, exportedAt, data }`).
+
+If saved data can't be read, the app shows a recovery screen instead of overwriting it.
 
 ## Run locally
 

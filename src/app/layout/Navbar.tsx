@@ -44,20 +44,12 @@ const itemClasses =
   "sidebar-item group relative flex min-h-11 items-center gap-3 rounded-full border border-transparent px-3 py-2 text-body font-medium text-[#9ca7ba] lg:min-h-12 lg:gap-0 lg:px-0 lg:text-sm";
 
 type NavbarProps = {
-  name?: string;
-  email?: string;
-  overdueCount?: number;
-  availableRoutes?: readonly string[];
+  name: string;
+  email: string;
+  overdueCount: number;
 };
 
-export function Navbar({
-  // Demo values for the dashboard mockup.
-  name = "Lanz Miguel",
-  email = "LanzMiguel14@example.com",
-  overdueCount = 1,
-  // Add paths here or pass availableRoutes as pages are registered in the router.
-  availableRoutes = ["/"],
-}: NavbarProps = {}) {
+export function Navbar({ name, email, overdueCount }: NavbarProps) {
   const [mobileMenu, setMobileMenu] = useState({ open: false, animate: false });
   const [sidebar, setSidebar] = useState({ collapsed: false, animate: false });
   const isDesktop = useSyncExternalStore(
@@ -87,8 +79,9 @@ export function Navbar({
     indicator.style.transform = `translateY(${activeLink.offsetTop}px)`;
   }, [pathname, isDesktop]);
 
-  const initials = name
-    .trim()
+  const displayName = name.trim() || "Your profile";
+  const displayEmail = email.trim();
+  const initials = displayName
     .split(/\s+/)
     .slice(0, 2)
     .map((part) => part[0] ?? "")
@@ -204,7 +197,6 @@ export function Navbar({
                 <NavigationItem
                   key={item.to}
                   item={item}
-                  available={availableRoutes.includes(item.to)}
                   title={isDesktop && sidebar.collapsed ? item.label : undefined}
                   overdueCount={overdueCount}
                   onClick={handleNavigationClick}
@@ -214,19 +206,24 @@ export function Navbar({
           </div>
         </nav>
 
-        <div className="mt-auto hidden items-center border-t border-[#252a36] pt-5 pl-px lg:flex">
+        <Link
+          to="/settings"
+          title={isDesktop && sidebar.collapsed ? "Edit your profile" : undefined}
+          aria-label={`${displayName}, edit your profile`}
+          className="mt-auto hidden items-center rounded-md border-t border-[#252a36] pt-5 pl-px hover-fine:text-text lg:flex"
+        >
           <span aria-hidden="true" className="sidebar-icon-slot">
             <span className="grid size-9 place-items-center rounded-full border border-[#252a36] bg-raised text-xs font-bold text-[#9ca7ba]">
               {initials}
             </span>
           </span>
-          <div className="sidebar-label min-w-0">
-            <p className="truncate text-xs font-bold text-text">{name}</p>
-            <p className="truncate text-xs text-[#9ca7ba]" title={email}>
-              {email}
+          <div className="sidebar-label flex min-w-0 flex-col gap-0.5">
+            <p className="truncate text-xs font-bold text-text">{displayName}</p>
+            <p className="truncate text-xs text-[#9ca7ba]" title={displayEmail || undefined}>
+              {displayEmail || "No email set"}
             </p>
           </div>
-        </div>
+        </Link>
       </div>
     </aside>
   );
@@ -234,7 +231,6 @@ export function Navbar({
 
 type NavigationItemProps = {
   item: (typeof navigation)[number];
-  available: boolean;
   title: string | undefined;
   overdueCount: number;
   onClick: MouseEventHandler<HTMLAnchorElement>;
@@ -242,7 +238,6 @@ type NavigationItemProps = {
 
 function NavigationItem({
   item: { label, to, icon: Icon, divider },
-  available,
   title,
   overdueCount,
   onClick,
@@ -284,22 +279,16 @@ function NavigationItem({
           : undefined
       }
     >
-      {/* NavLink adds aria-current to the active route. Future routes appear as disabled labels. */}
-      {available ? (
-        <NavLink
-          to={to}
-          end={to === "/"}
-          title={title}
-          onClick={onClick}
-          className={`${itemClasses} hover-fine:text-text aria-[current=page]:font-semibold aria-[current=page]:text-text`}
-        >
-          {content}
-        </NavLink>
-      ) : (
-        <span role="link" aria-disabled="true" title={title} className={itemClasses}>
-          {content}
-        </span>
-      )}
+      {/* NavLink adds aria-current to the active route, including nested pages such as /clients/:id. */}
+      <NavLink
+        to={to}
+        end={to === "/"}
+        title={title}
+        onClick={onClick}
+        className={`${itemClasses} hover-fine:text-text aria-[current=page]:font-semibold aria-[current=page]:text-text`}
+      >
+        {content}
+      </NavLink>
     </li>
   );
 }

@@ -1,180 +1,119 @@
+import { useMemo } from "react";
+import { Link } from "react-router";
+import { invoiceStatus, paymentTerm } from "../../data/selectors";
+import type { AppData } from "../../data/types";
 import { formatInvoiceDate } from "../../shared/FormatInvoiceDate";
 import { formatMoney } from "../../shared/formatMoney";
-import { invoiceStatusStyles } from "../invoices/invoiceStatusStyles";
+import { button } from "../../shared/ui";
+import { StatusChip } from "../invoices/StatusChip";
 
-const invoices = [
-  {
-    id: "INV-0009",
-    client: "Reyes Studio",
-    issued: "2026-10-24",
-    due: "2026-11-07",
-    status: "overdue",
-    amountMinor: 3_600_000,
-    currency: "PHP",
-    term: {
-      label: "11 days late",
-      progress: 100,
-      color: "var(--color-overdue)",
-    },
-  },
-  {
-    id: "INV-0011",
-    client: "Kalye Coffee Co.",
-    issued: "2026-11-10",
-    due: "2026-11-24",
-    status: "sent",
-    amountMinor: 855_000,
-    currency: "PHP",
-    term: { label: "6 days left", progress: 57, color: "var(--color-amber)" },
-  },
-  {
-    id: "INV-0012",
-    client: "Northwind Remote LLC",
-    issued: "2026-11-13",
-    due: "2026-11-27",
-    status: "draft",
-    amountMinor: 6_900,
-    currency: "USD",
-    term: null,
-  },
-] as const;
+const statusOrder = { overdue: 0, sent: 1, draft: 2, paid: 3 } as const;
 
-type InvoiceTrackerProps = {
-  onViewAll?: () => void;
-};
-
-export function InvoiceTracker({ onViewAll }: InvoiceTrackerProps) {
-  const overdueCount = invoices.filter(
-    ({ status }) => status === "overdue",
-  ).length;
+/** Unpaid invoices: overdue first, then by due date. */
+export function InvoiceTracker({ data, today }: { data: AppData; today: string }) {
+  const invoices = useMemo(
+    () =>
+      data.invoices
+        .map((invoice) => ({ invoice, status: invoiceStatus(invoice, today), term: paymentTerm(invoice, today) }))
+        .filter(({ status }) => status !== "paid")
+        .sort((a, b) => statusOrder[a.status] - statusOrder[b.status] || a.invoice.dueOn.localeCompare(b.invoice.dueOn))
+        .slice(0, 6),
+    [data.invoices, today],
+  );
+  const overdueCount = invoices.filter(({ status }) => status === "overdue").length;
 
   return (
-    <section aria-label="Invoice tracker" className="min-w-0 space-y-3">
+    <section aria-labelledby="invoice-tracker" className="min-w-0 space-y-3">
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
         <div className="flex items-center gap-2">
-          <h2 className="text-headline">invoice tracker</h2>
-
+          <h2 id="invoice-tracker" className="text-headline">
+            Invoice tracker
+          </h2>
           {overdueCount > 0 && (
             <span className="rounded-pill bg-overdue-tint px-2.5 py-1 text-label font-bold text-overdue">
               {overdueCount} overdue
             </span>
           )}
         </div>
-
-        <button
-          type="button"
-          onClick={onViewAll}
-          disabled={!onViewAll}
-          className="min-h-11 text-label font-bold text-text-secondary enabled:hover:text-text"
-        >
+        <Link to="/invoices" className={button.link}>
           All invoices
-        </button>
+        </Link>
       </header>
 
-      <div className="rounded-lg border border-border bg-surface">
-        {/* The focusable region lets keyboard users scroll the table horizontally. */}
-        <div
-          role="region"
-          aria-label="Invoice table"
-          tabIndex={0}
-          className="overflow-x-auto rounded-lg focus-visible:-outline-offset-2"
-        >
-          <table className="w-full min-w-[760px] text-left">
-            <colgroup>
-              <col className="w-[21%]" />
-              <col className="w-[19%]" />
-              <col className="w-[15%]" />
-              <col className="w-[15%]" />
-              <col className="w-[16%]" />
-              <col className="w-[14%]" />
-            </colgroup>
-
-            <thead className="border-b border-border text-label text-text-secondary">
-              <tr>
-                <th scope="col" className="px-4 py-3 font-medium">
-                  Invoice
-                </th>
-                <th scope="col" className="px-4 py-3 font-medium">
-                  Payment term
-                </th>
-                <th scope="col" className="px-4 py-3 font-medium">
-                  Issued
-                </th>
-                <th scope="col" className="px-4 py-3 font-medium">
-                  Due
-                </th>
-                <th scope="col" className="px-4 py-3 font-medium">
-                  Status
-                </th>
-                <th scope="col" className="px-4 py-3 text-right font-medium">
-                  Amount
-                </th>
-              </tr>
-            </thead>
-
-            <tbody className="divide-y divide-border text-body">
-              {invoices.map((invoice) => {
-                const { label, icon: StatusIcon, colorClass } =
-                  invoiceStatusStyles[invoice.status];
-
-                return (
-                  <tr key={invoice.id}>
+      {invoices.length === 0 ? (
+        <p className="rounded-lg border border-border bg-surface px-4 py-5 text-body text-text-secondary">
+          {data.invoices.length ? "Bayad na lahat! Every invoice is paid." : "No invoices yet. Create one from your unbilled time."}
+        </p>
+      ) : (
+        <div className="rounded-lg border border-border bg-surface">
+          {/* The focusable region lets keyboard users scroll the table horizontally. */}
+          <div role="region" aria-label="Unpaid invoices" tabIndex={0} className="overflow-x-auto rounded-lg focus-visible:-outline-offset-2">
+            <table className="w-full min-w-[760px] text-left">
+              <colgroup>
+                <col className="w-[21%]" />
+                <col className="w-[19%]" />
+                <col className="w-[15%]" />
+                <col className="w-[15%]" />
+                <col className="w-[16%]" />
+                <col className="w-[14%]" />
+              </colgroup>
+              <thead className="border-b border-border text-label text-text-secondary">
+                <tr>
+                  <th scope="col" className="px-4 py-3 font-medium">Invoice</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Payment term</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Issued</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Due</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Status</th>
+                  <th scope="col" className="px-4 py-3 text-right font-medium">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border text-body">
+                {invoices.map(({ invoice, status, term }) => (
+                  <tr key={invoice.id} className="relative hover-fine:bg-raised">
                     <th scope="row" className="px-4 py-4 font-normal">
-                      <span className="block font-bold text-text">{invoice.id}</span>
-                      <span className="block text-label text-text-muted">{invoice.client}</span>
+                      {/* The link stretches over the row so the whole row opens the invoice. */}
+                      <Link to={`/invoices/${invoice.id}`} className="block font-bold text-text after:absolute after:inset-0">
+                        {invoice.number}
+                      </Link>
+                      <span className="block text-label text-text-muted">{invoice.billedTo.name}</span>
                     </th>
-
                     <td className="px-4 py-4">
-                      {invoice.term ? (
+                      {term ? (
                         <div className="flex items-center gap-2 whitespace-nowrap">
                           <span
                             aria-hidden="true"
                             className="grid size-[18px] shrink-0 place-items-center rounded-full"
                             style={{
-                              background: `conic-gradient(${invoice.term.color} 0 ${invoice.term.progress}%, var(--color-border) ${invoice.term.progress}% 100%)`,
+                              background: `conic-gradient(${term.overdue ? "var(--color-overdue)" : "var(--color-amber)"} 0 ${term.progress}%, var(--color-border) ${term.progress}% 100%)`,
                             }}
                           >
                             <span className="size-3 rounded-full bg-surface" />
                           </span>
-
-                          <span className="font-bold">{invoice.term.label}</span>
+                          <span className="font-bold">{term.label}</span>
                         </div>
                       ) : (
                         <span className="text-text-muted">Not sent</span>
                       )}
                     </td>
-
                     <td className="whitespace-nowrap px-4 py-4 text-text-secondary">
-                      <time dateTime={invoice.issued}>
-                        {formatInvoiceDate(invoice.issued)}
-                      </time>
+                      <time dateTime={invoice.issuedOn}>{formatInvoiceDate(invoice.issuedOn)}</time>
                     </td>
-
                     <td className="whitespace-nowrap px-4 py-4 text-text-secondary">
-                      <time dateTime={invoice.due}>
-                        {formatInvoiceDate(invoice.due)}
-                      </time>
+                      <time dateTime={invoice.dueOn}>{formatInvoiceDate(invoice.dueOn)}</time>
                     </td>
-
                     <td className="px-4 py-4">
-                      <span
-                        className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill px-2.5 py-1.5 text-label font-bold ${colorClass}`}
-                      >
-                        <StatusIcon aria-hidden="true" size={14} strokeWidth={1.75} />
-                        {label}
-                      </span>
+                      <StatusChip status={status} />
                     </td>
-
                     <td className="whitespace-nowrap px-4 py-4 text-right font-bold tabular-nums">
-                      {formatMoney(invoice.amountMinor, invoice.currency, "narrow")}
+                      {formatMoney(invoice.totalMinor, invoice.currency, "narrow")}
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

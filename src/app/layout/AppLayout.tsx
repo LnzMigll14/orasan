@@ -1,33 +1,49 @@
-import { Outlet } from 'react-router'
-import { Navbar } from './Navbar'
-
-// Enable navigation links for the screens registered under this layout.
-const availableRoutes = ['/', '/timer', '/clients', '/invoices'] as const
+import { useEffect } from "react";
+import { Navigate, Outlet, useLocation } from "react-router";
+import { TriangleAlert } from "lucide-react";
+import { overdueCount } from "../../data/selectors";
+import { useStoreState } from "../../data/store";
+import { Toaster } from "../../shared/components/Toast";
+import { todayKey } from "../../shared/time";
+import { RecoveryScreen } from "../gates";
+import { Navbar } from "./Navbar";
 
 export function AppLayout() {
+  const { data, loadError, saveFailed } = useStoreState();
+  const { pathname } = useLocation();
+
+  // Start each new page at the top.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  if (loadError) return <RecoveryScreen errors={loadError} />;
+  // No saved data yet: collect the user's details first.
+  if (!data) return <Navigate to="/welcome" replace />;
+
   return (
     <div className="flex min-h-dvh flex-col bg-canvas text-text lg:flex-row">
-      <Navbar
-        name="Lanz Miguel"
-        email="lanzmiguel@example.com"
-        overdueCount={1}
-        availableRoutes={availableRoutes}
-      />
+      <Navbar name={data.profile.name} email={data.profile.email} overdueCount={overdueCount(data, todayKey())} />
 
       <div className="flex min-w-0 flex-1 flex-col">
+        {saveFailed && (
+          <p role="alert" className="flex items-center gap-2 border-b border-overdue-tint bg-overdue-tint px-4 py-3 text-body text-overdue md:px-6 lg:px-8">
+            <TriangleAlert aria-hidden="true" size={16} className="shrink-0" />
+            Your last change couldn't be saved in this browser. It will be lost when you close the page. Export your data
+            from Settings, then free up browser storage.
+          </p>
+        )}
         <main className="flex-1 px-4 py-6 md:px-6 lg:p-8">
-          {/* Child routes replace this outlet while the navigation and footer stay mounted. */}
           <Outlet />
         </main>
 
         <footer className="grid min-h-15 place-items-center border-t border-border px-4 py-4 md:px-6 lg:px-8">
           <p className="max-w-(--size-content) text-center text-balance text-body text-text-secondary">
-            © {new Date().getFullYear()}{' '}
-            <span className="font-semibold text-text">Orasan</span>
-            {' - All rights reserved'}
+            © {new Date().getFullYear()} <span className="font-semibold text-text">Orasan</span> - All rights reserved
           </p>
         </footer>
       </div>
+      <Toaster />
     </div>
-  )
+  );
 }

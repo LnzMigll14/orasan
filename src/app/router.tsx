@@ -1,43 +1,38 @@
-import type { ComponentType } from 'react'
-import { createBrowserRouter } from 'react-router'
-import { ClientsPage } from '../features/clients/ClientsPage'
-import { DashboardPage } from '../features/dashboard/DashboardPage'
-import { InvoicesPage } from '../features/invoices/InvoicesPage'
-import { StyleGuidePage } from '../features/style-guide/StyleGuidePage'
-import { AppLayout } from './layout/AppLayout'
-
-function TimerPlaceholder() {
-  return (
-    <section>
-      <h1 className="text-display">Timer</h1>
-      <p className="mt-1 text-body text-text-secondary">The Timer page is in development.</p>
-    </section>
-  )
-}
+import { createBrowserRouter } from "react-router";
+import { ClientDetailPage } from "../features/clients/ClientDetailPage";
+import { ClientsPage } from "../features/clients/ClientsPage";
+import { DashboardPage } from "../features/dashboard/DashboardPage";
+import { InvoiceBuilderPage } from "../features/invoices/InvoiceBuilderPage";
+import { InvoiceDetailPage } from "../features/invoices/InvoiceDetailPage";
+import { InvoicesPage } from "../features/invoices/InvoicesPage";
+import { PublicInvoicePage } from "../features/invoices/PublicInvoicePage";
+import { SettingsPage } from "../features/settings/SettingsPage";
+import { StyleGuidePage } from "../features/style-guide/StyleGuidePage";
+import { TimerPage } from "../features/timer/TimerPage";
+import { AppLayout } from "./layout/AppLayout";
+import { NotFoundPage, OnboardingRoute, PublicRoute, RouteErrorPage } from "./gates";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
+    // The layout redirects to /welcome until onboarding is finished.
     element: <AppLayout />,
-    // An index route fills the layout's Outlet at the parent URL, here `/`.
+    errorElement: <RouteErrorPage />,
     children: [
       { index: true, element: <DashboardPage /> },
-      {
-        path: 'timer',
-        // Render a placeholder while the timer route loads on an initial visit.
-        HydrateFallback: TimerPlaceholder,
-        lazy: async () => {
-          // Keep timer code out of the initial bundle and allow a placeholder-only module.
-          const page = (await import('../features/timer/TimerPage')) as {
-            TimerPage?: ComponentType
-          }
-          return { Component: page.TimerPage ?? TimerPlaceholder }
-        },
-      },
-      { path: 'clients', element: <ClientsPage /> },
-      { path: 'invoices', element: <InvoicesPage /> },
+      { path: "timer", element: <TimerPage /> },
+      { path: "clients", element: <ClientsPage /> },
+      { path: "clients/:clientId", element: <ClientDetailPage /> },
+      { path: "invoices", element: <InvoicesPage /> },
+      { path: "invoices/new", element: <InvoiceBuilderPage /> },
+      { path: "invoices/:invoiceId/edit", element: <InvoiceBuilderPage /> },
+      { path: "invoices/:invoiceId", element: <InvoiceDetailPage /> },
+      { path: "settings", element: <SettingsPage /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
-  // A top-level route renders the style guide as a standalone page.
-  { path: '/styleguide', element: <StyleGuidePage /> },
-])
+  { path: "/welcome", element: <OnboardingRoute />, errorElement: <RouteErrorPage /> },
+  // The client-facing invoice page has no app chrome.
+  { path: "/i/:invoiceId", element: <PublicRoute><PublicInvoicePage /></PublicRoute>, errorElement: <RouteErrorPage /> },
+  { path: "/styleguide", element: <StyleGuidePage /> },
+]);
