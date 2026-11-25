@@ -15,6 +15,8 @@ export type StorageAdapter = {
   readRaw(): string | null;
   /** Calls back when the data changes outside this tab. Returns an unsubscribe function. */
   subscribe?(onExternalChange: () => void): () => void;
+  /** Asks the browser not to clear this data when the device runs low on space. */
+  requestPersistence?(): void;
 };
 
 export const STORAGE_KEY = "orasan:data";
@@ -36,6 +38,10 @@ export const localStorageAdapter: StorageAdapter = {
     } catch {
       return null;
     }
+  },
+  requestPersistence() {
+    // Best effort: some browsers grant it silently, others decide from site engagement.
+    void navigator.storage?.persist?.().catch(() => undefined);
   },
   subscribe(onExternalChange) {
     const listener = (event: StorageEvent) => {

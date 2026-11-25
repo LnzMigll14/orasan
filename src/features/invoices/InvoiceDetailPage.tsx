@@ -9,9 +9,10 @@ import { toast } from "../../shared/components/Toast";
 import { copyText } from "../../shared/hooks";
 import { formatInvoiceDate } from "../../shared/FormatInvoiceDate";
 import { button, card } from "../../shared/ui";
+import { features } from "../../app/features";
 import { NotFoundPage } from "../../app/gates";
 import { InvoiceDocument } from "./InvoiceDocument";
-import { invoiceMessage, publicInvoiceUrl } from "./invoiceMessages";
+import { invoiceMessage, publicInvoiceUrl, sentToast } from "./invoiceMessages";
 import { MarkPaidDialog } from "./MarkPaidDialog";
 import { StatusChip } from "./StatusChip";
 
@@ -84,7 +85,7 @@ export function InvoiceDetailPage() {
                 type="button"
                 onClick={() => {
                   sendInvoice(invoice.id);
-                  toast("Invoice ready to send. Copy the link or message to your client.");
+                  toast(sentToast);
                 }}
                 className={button.primary}
               >
@@ -94,10 +95,12 @@ export function InvoiceDetailPage() {
             </>
           ) : (
             <>
-              <button type="button" onClick={() => copy(publicInvoiceUrl(invoice), "Link")} className={button.secondary}>
-                <Link2 aria-hidden="true" size={15} />
-                Copy link
-              </button>
+              {features.publicInvoiceLinks && (
+                <button type="button" onClick={() => copy(publicInvoiceUrl(invoice), "Link")} className={button.secondary}>
+                  <Link2 aria-hidden="true" size={15} />
+                  Copy link
+                </button>
+              )}
               {invoice.status === "sent" && (
                 <button
                   type="button"
@@ -176,11 +179,14 @@ export function InvoiceDetailPage() {
             {invoice.status !== "draft" && (
               <>
                 <Link to={`/i/${invoice.id}`} className={`${button.ghost} w-full`}>
-                  Preview client page
+                  Preview client view
                 </Link>
-                <p className="text-label text-text-muted">
-                  The client link opens on this device only until Orasan syncs online. For now, send the PDF along with the message.
-                </p>
+                {!features.publicInvoiceLinks && (
+                  <p className="text-label text-text-muted">
+                    Your data stays on this device, so clients can't open invoice links yet. Save the PDF and send it with the
+                    copied message.
+                  </p>
+                )}
                 <button type="button" onClick={() => setConfirm("delete")} className={`${button.ghost} w-full text-overdue hover-fine:text-overdue`}>
                   <Trash2 aria-hidden="true" size={15} />
                   Delete invoice

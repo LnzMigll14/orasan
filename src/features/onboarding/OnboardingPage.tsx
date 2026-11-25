@@ -133,7 +133,9 @@ export function OnboardingPage() {
 
         {step === 0 && (
           <div className="mt-2 grid gap-4">
-            <p className="text-body text-text-secondary">These print on every invoice you send.</p>
+            <p className="text-body text-text-secondary">
+              These print on every invoice you send. Everything you enter stays in this browser, on this device.
+            </p>
             <Field label="Your name" value={profile.name} error={profileErrors.name} autoComplete="name" autoFocus maxLength={120} onChange={setField("name")} />
             <Field
               label="Business name"

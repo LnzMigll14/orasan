@@ -1,0 +1,13 @@
+# Netlify and Cloudflare Pages read this file. Vercel uses vercel.json: keep the two in sync.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Cache-Control: no-cache
+
+# Vite fingerprints these file names, so they can be cached for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

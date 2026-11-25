@@ -1,0 +1,2 @@
+# Single-page app: every path that isn't a file loads index.html, so /invoices/… works on reload.
+/*  /index.html  200

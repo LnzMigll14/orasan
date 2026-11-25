@@ -13,6 +13,7 @@ import { addDays, dateKey, entrySeconds, formatDuration, formatHours, formatShor
 import { button, card } from "../../shared/ui";
 import { NotFoundPage } from "../../app/gates";
 import { InvoiceDocument } from "./InvoiceDocument";
+import { sentToast } from "./invoiceMessages";
 
 /** /invoices/new picks a client; /invoices/new?client=… and /invoices/:id/edit build the invoice. */
 export function InvoiceBuilderPage() {
@@ -128,7 +129,7 @@ function Builder({ client, draftId }: { client: Client; draftId: string | null }
     const ids = chosen.map((entry) => entry.id);
     const result = draftId ? updateDraftInvoice(draftId, ids, send) : createInvoice({ clientId: client.id, entryIds: ids, send });
     if (!result.ok) return setError(result.error);
-    toast(send ? "Invoice ready to send. Copy the link or message to your client." : "Draft saved");
+    toast(send ? sentToast : "Draft saved");
     navigate(`/invoices/${result.value}`, { replace: true });
   }
 

@@ -77,8 +77,15 @@ function persist(data: AppData | null) {
   }
 }
 
+let persistenceRequested = false;
+
 function setData(data: AppData | null) {
   const saved = persist(data);
+  // All data lives in this browser, so ask once per visit that it isn't evicted.
+  if (data && !persistenceRequested) {
+    persistenceRequested = true;
+    adapter.requestPersistence?.();
+  }
   state = { data, loadError: null, saveFailed: !saved };
   emit();
   return saved;

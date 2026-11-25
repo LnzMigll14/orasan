@@ -4,6 +4,17 @@ Orasan is a time tracking and invoicing app in development for Filipino freelanc
 
 The current frontend uses React, Vite, TypeScript, Tailwind CSS v4, and React Router. It covers the full loop: first-time setup, the timer, clients and projects, invoices (build, send, mark as paid, public page, print to PDF), settings, and JSON export and import. A design token reference lives at `/styleguide`.
 
+## Deploy
+
+The build is a static site in `dist/`, so any static host works. Connect the GitHub repository and use build command `npm run build` and output directory `dist`.
+
+- **Vercel** reads `vercel.json`.
+- **Netlify** and **Cloudflare Pages** read `public/_redirects` and `public/_headers`, which the build copies into `dist/`.
+
+These files send every path to `index.html`, so links such as `/invoices/…` work on reload. They also set strict security headers, including a content security policy that only allows the app's own files. If you change the headers, update both `vercel.json` and `public/_headers`. Run `npm run build` then `npm run preview` to test locally with the same headers.
+
+While data lives in the browser, client invoice links are switched off in `src/app/features.ts`, and the copied message tells the client the invoice is attached as a PDF. Turn `publicInvoiceLinks` on once a backend stores invoices.
+
 ## Data
 
 All data is stored in the browser's localStorage for now, under the key `orasan:data`. Everything that reads or writes it lives in `src/data/`:

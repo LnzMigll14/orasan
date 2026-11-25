@@ -1,3 +1,4 @@
+import { features } from "../../app/features";
 import type { Invoice, Profile } from "../../data/types";
 import { formatInvoiceDate } from "../../shared/FormatInvoiceDate";
 import { formatMoney } from "../../shared/formatMoney";
@@ -15,5 +16,14 @@ export function invoiceMessage(invoice: Invoice, profile: Profile, overdue: bool
   const body = overdue
     ? `A friendly reminder that invoice ${invoice.number} for ${amount} was due on ${due}.`
     : `Here's invoice ${invoice.number} for ${amount}, due on ${due}.`;
-  return `${greeting}\n\n${body} You can view it and the payment details here:\n${publicInvoiceUrl(invoice)}\n\nThank you!\n${sender}`;
+  // Without shared storage a link would open on this device only, so point to the attached PDF.
+  const details = features.publicInvoiceLinks
+    ? `You can view it and the payment details here:\n${publicInvoiceUrl(invoice)}`
+    : "The invoice is attached as a PDF, with the payment details.";
+  return `${greeting}\n\n${body} ${details}\n\nThank you!\n${sender}`;
 }
+
+/** Shown after an invoice is marked as sent. */
+export const sentToast = features.publicInvoiceLinks
+  ? "Invoice ready to send. Copy the link or message to your client."
+  : "Invoice marked as sent. Save the PDF and copy the message for your client.";
