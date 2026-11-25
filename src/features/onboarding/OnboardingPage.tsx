@@ -150,7 +150,7 @@ export function OnboardingPage() {
               label="TIN"
               placeholder="Optional"
               value={profile.tin}
-              help="Optional. Prints on your invoices. Orasan does not make BIR-compliant receipts."
+              help="Optional. Prints on your billing statements. Orasan invoices aren't BIR-registered."
               maxLength={40}
               onChange={setField("tin")}
             />

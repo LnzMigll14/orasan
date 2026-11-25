@@ -52,8 +52,8 @@ const faqs = [
     a: "No. Clients pay you directly through GCash, Maya, your bank, Wise, PayPal or Payoneer. You record each payment in Orasan with its reference number.",
   },
   {
-    q: "Does Orasan make BIR-compliant receipts?",
-    a: "No. You can add your TIN so it prints on your invoices, but Orasan doesn't issue official receipts.",
+    q: "Can I use Orasan invoices for the BIR?",
+    a: "No. Orasan invoices are billing statements for your clients, not BIR-registered invoices. If you're registered with the BIR, you may still need to issue your own registered invoice. Ask your accountant.",
   },
 ];
 
