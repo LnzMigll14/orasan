@@ -1,0 +1,11 @@
+# Only the landing page is public. App screens and invoices hold each person's private data.
+User-agent: *
+Allow: /$
+Disallow: /i/
+Disallow: /invoices
+Disallow: /clients
+Disallow: /settings
+Disallow: /timer
+Disallow: /welcome
+
+Sitemap: https://orasan-gold.vercel.app/sitemap.xml

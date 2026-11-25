@@ -13,6 +13,8 @@ The build is a static site in `dist/`, so any static host works. Connect the Git
 
 These files send every path to `index.html`, so links such as `/invoices/…` work on reload. They also set strict security headers, including a content security policy that only allows the app's own files. If you change the headers, update both `vercel.json` and `public/_headers`. Run `npm run build` then `npm run preview` to test locally with the same headers.
 
+The site URL (`https://orasan-gold.vercel.app`) is written into `index.html` (canonical, Open Graph and structured data), `public/robots.txt` and `public/sitemap.xml`. Update all three if you add a custom domain. Only the landing page at `/` is indexed: app screens set `noindex` through `usePageMeta` in `src/shared/seo.ts`.
+
 While data lives in the browser, client invoice links are switched off in `src/app/features.ts`, and the copied message tells the client the invoice is attached as a PDF. Turn `publicInvoiceLinks` on once a backend stores invoices.
 
 ## Data

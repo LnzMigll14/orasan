@@ -8,6 +8,7 @@ import { ImportBackupButton } from "../features/settings/ImportBackupButton";
 import { Logo } from "../shared/components/brand/Logo";
 import { ConfirmDialog } from "../shared/components/Modal";
 import { Toaster } from "../shared/components/Toast";
+import { usePageMeta } from "../shared/seo";
 import { button, card } from "../shared/ui";
 
 /** Shows onboarding on first visit and sends returning users to the app. */
@@ -17,6 +18,7 @@ export function OnboardingRoute() {
   if (data) return <Navigate to="/" replace />;
   return (
     <>
+      <PageMeta title="Get started" />
       <OnboardingPage />
       <Toaster />
     </>
@@ -28,7 +30,17 @@ export function PublicRoute({ children }: { children: ReactNode }) {
   const { data, loadError } = useStoreState();
   if (loadError) return <RecoveryScreen errors={loadError} />;
   if (!data) return <Navigate to="/welcome" replace />;
-  return children;
+  return (
+    <>
+      <PageMeta title="Invoice" />
+      {children}
+    </>
+  );
+}
+
+function PageMeta({ title }: { title: string }) {
+  usePageMeta(title);
+  return null;
 }
 
 /**

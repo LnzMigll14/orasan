@@ -3,7 +3,9 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import { TriangleAlert } from "lucide-react";
 import { overdueCount } from "../../data/selectors";
 import { useStoreState } from "../../data/store";
+import { LandingPage } from "../../features/landing/LandingPage";
 import { Toaster } from "../../shared/components/Toast";
+import { usePageMeta } from "../../shared/seo";
 import { todayKey } from "../../shared/time";
 import { RecoveryScreen } from "../gates";
 import { Navbar } from "./Navbar";
@@ -18,11 +20,12 @@ export function AppLayout() {
   }, [pathname]);
 
   if (loadError) return <RecoveryScreen errors={loadError} />;
-  // No saved data yet: collect the user's details first.
-  if (!data) return <Navigate to="/welcome" replace />;
+  // No saved data yet: visitors see the public landing page at "/", and setup everywhere else.
+  if (!data) return pathname === "/" ? <LandingPage /> : <Navigate to="/welcome" replace />;
 
   return (
     <div className="flex min-h-dvh flex-col bg-canvas text-text lg:flex-row">
+      <AppPageMeta pathname={pathname} />
       <Navbar name={data.profile.name} email={data.profile.email} overdueCount={overdueCount(data, todayKey())} />
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -46,4 +49,15 @@ export function AppLayout() {
       <Toaster />
     </div>
   );
+}
+
+/** Names each app screen in the tab title and keeps it out of search results. */
+function AppPageMeta({ pathname }: { pathname: string }) {
+  const [section = "", detail] = pathname.split("/").filter(Boolean);
+  const titles: Record<string, string> = { timer: "Timer", clients: "Clients", invoices: "Invoices", settings: "Settings" };
+  let title = titles[section] ?? "Dashboard";
+  if (section === "clients" && detail) title = "Client";
+  if (section === "invoices" && detail) title = detail === "new" ? "New invoice" : "Invoice";
+  usePageMeta(title);
+  return null;
 }
